@@ -13,4 +13,8 @@ var connect_DB = mysql.createConnection({
     database: "simbsc"
 });
 
+connect_DB.connect(function(err) {
+    if (err) throw err;
+});
+
 module.exports = connect_DB;
