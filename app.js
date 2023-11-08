@@ -8,7 +8,9 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 
 const homepageRoute = require('./routes/homepage');
-const documentManagementRoute = require('./routes/document_management')
+const documentManagementRoute = require('./routes/document_management');
+const loanManagementRoute = require('./routes/loan_management');
+
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -39,6 +41,10 @@ app.use(session({
 }));
 
 app.use("/api/homepage", homepageRoute);
+
 app.use("/api/documentManagement", documentManagementRoute);
+
+app.use("/api/loanManagement", loanManagementRoute)
+
 
 app.listen(8080);
