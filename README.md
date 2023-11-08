@@ -58,5 +58,9 @@ Trang localhost:3000 sẽ khởi chạy tự động trên trình duyệt mặc 
 - Trang web có vài thiết lập liên quan đến bảo mật thông qua các thư viện: `helmet`, `express-rate-limit`.
 - Trang web đã cấu hình proxy cho ReactJS để đảm bảo ReactJS và NodeJS server tương tác được (không bị lỗi cors)
 - Đối với backend server, cần restart server nếu muốn code đã thay đổi chạy được.
+```
+netstat -ano | findstr :<PORT>
+taskkill /PID <PID> /F
+```
 
 Lời cuối, chúc tất cả một ngày tốt lành!
