@@ -62,5 +62,6 @@ Trang localhost:3000 sẽ khởi chạy tự động trên trình duyệt mặc 
 netstat -ano | findstr :<PORT>
 taskkill /PID <PID> /F
 ```
+hoặc ```Ctrl+C```
 
 Lời cuối, chúc tất cả một ngày tốt lành!
