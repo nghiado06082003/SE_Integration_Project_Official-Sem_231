@@ -1,22 +1,54 @@
 1. Module mượn sách
 a. Datbase: 
-	REQUESTBORROW (request Book loan) STATUS: "process" / "approve" / "deny";
+	REQUESTBORROW (request Book loan) state:
+		+ 0: đang xử lí
+		+ 1: đưuọc chấp thuận, chờ nhaanj tài liệu
+		+ 2: bị từ chối
+		+ 3: đã nhận sách (đang mượn)
+		+ 4: đã trả sách
 b. Code:
 	+ 500: DATABASE_FAILED
 	+ 300: OK
 c. API:
 * Get loan (book borrow) list:
+
 - Manager:
 API: /api/loanManagement/manager/list
 Res: 
 	+ Failed:  JSON {code: 500}
-	+ Successed: JSON {loanList: {"student_id": <INT>,"document_id": <INT>,"request_date": <DATE>, "status": <TEXT>,"update_date": <DATE>,}}
+	+ Successed: JSON {loanList: {"id": <INT>, "student_id": <INT>, "student_name": <VARCHAR>, "doc_name": <VARCHAR>,"request_date": <DATE>}}
+
 - User: (User request book history)
-API: /api/loanMangement/customer/history?id=<INT>
+API: /api/loanManagement/customer/loanhistory?id=<INT>
 Res: 
 	+ Failed:  JSON {code: 500}
-	+ Successed: JSON {loanHistory: {"student_id": <INT>,"document_id": <INT>,"request_date": <DATE>, "status": <TEXT>,"update_date": <DATE>,}}
+	+ Successed: JSON {loanHistory: {"id": <INT>, "request_day": <DATE>, "doc_name": <VARCHAR>, "state": <INT>, "update_date": <DATE>}}
+
+* Get borrowed book history:
+API: /api/loanManagement/customer/borrowhistory?id=<INT>
+Res: 
+	+ Failed:  JSON {code: 500}
+	+ Successed: JSON {borrowHistory: {"received_day": <DATE>, "doc_name": <VARCHAR>, "state": <INT>, "returned_day": <DATE>}}
+
+* Approve request: 
+
+- Manager: 
+API: /api/loanManagement/manager/request/approve?id=<INT>
+Res: 
+	+ Failed:  JSON {code: 500}
+	+ Successed: JSON { code: 300}
+
+* Deny request:
+
+- Manager: 
+API: /api/loanManagement/manager/request/deny?id=<INT>
+Res: 
+	+ Failed:  JSON {code: 500}
+	+ Successed: JSON { code: 300}
+
+
 * Request book:
+
 - User:
 API: /api/loanManagement/customer/request?stu_id=<INT>&book_id=<INT>
 Res: 
