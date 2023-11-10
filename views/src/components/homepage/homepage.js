@@ -6,18 +6,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import axios from 'axios'
 import { useState, useEffect } from "react";
+import Header from '../shared/header'
+import Hero from "./hero";
 
 function Homepage() {
     const [greetingFromServer, setGreetingFromServer] = useState(null);
     useEffect(() => {
-        axios.get('/api/homepage').then(
+        axios.get('http://localhost:8080/api/homepage').then(
             (respond) => { setGreetingFromServer(respond.data.greeting) }
         )
     }, []);
     return (
         <>
-            <h1>Đây là trang chủ</h1>
-            <h6>{!greetingFromServer ? "Đang tải, chờ server chút...": greetingFromServer}</h6>
+            <Hero/>
         </>
     );
 }
