@@ -7,7 +7,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import axios from 'axios'
 
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaSearch, FaDownload, FaBook } from "react-icons/fa"; 
 import dummyData from "./dummyData"; 
@@ -15,12 +15,26 @@ import Book from "./book.png";
 
 function DocDetail() {
   const { document_id } = useParams();
-  const selectedDoc = dummyData.docList.find((doc) => doc.document_id === parseInt(document_id, 10));
-
+  const [selectedDoc, setSelectedDoc] = useState({});
+  useEffect(() => {
+    const fetchData = async() => {
+      axios.get('/api/documentManagement/detail', {
+        params: {
+          document_id: parseInt(document_id)
+        }
+      })
+      .then((response) => {
+        setSelectedDoc(JSON.parse(response.data.docList)[0])
+      })
+    }
+    fetchData()
+  }, [])
+  // const selectedDoc = dummyData.docList.find((doc) => doc.document_id === parseInt(document_id, 10));
+  
   if (!selectedDoc) {
     return <div>Document not found</div>;
   }
-
+  
   return (
     <div className="container mt-3">
       <div className="row mb-3 top">

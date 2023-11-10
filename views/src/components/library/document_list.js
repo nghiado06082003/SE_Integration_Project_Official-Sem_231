@@ -31,19 +31,27 @@ import { FaUpload } from "react-icons/fa";
 import './styles.css';
 import DocItem from "./doc-item";
 import dummyData from "./dummyData";
+import axios from "axios";
 
 function Document_List() {
-  const [documentList, setDocumentList] = useState(null);
-
+  const [documentList, setDocumentList] = useState([]);
+  
   useEffect(() => {
     const fetchData = async () => {
-      const response = { data: dummyData };
-      setDocumentList(response.data.docList);
+      // const response = { data: dummyData };
+      // setDocumentList(response.data.docList);
+      axios.get("/api/documentManagement")
+      .then((response) => {
+        setDocumentList(JSON.parse(response.data.docList));
+      })
+      .catch((error) => {
+        console.error(error.message);
+      })
     };
-
+    
     fetchData();
   }, []);
-
+  
   return (
     <div className="container mt-3">
       <div className="row mb-3 top">
@@ -53,8 +61,7 @@ function Document_List() {
           </button>
         </div>
         <div className="col-md-6 text-right">
-
-       
+        
           <input type="text" className="form-control" placeholder="Search" ></input>
         
         </div>
