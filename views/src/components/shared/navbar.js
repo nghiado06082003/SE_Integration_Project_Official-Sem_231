@@ -12,7 +12,7 @@ export default function Navbar(props){
 
     const [authInfo,setAuthInfo] = useState({
         isLogin: true,
-        isAdmin: true,
+        isAdmin: false,
         isAdminMode: false
     })
 
@@ -32,7 +32,7 @@ export default function Navbar(props){
             </NavLink>
             <ul className="dropdown-menu">
                     <li>
-                        <NavLink className="dropdown-item" to="/feedManager/post">
+                        <NavLink className="dropdown-item" to="/feedManager/event">
                             Bài viết
                         </NavLink>
                     </li>
@@ -110,8 +110,8 @@ export default function Navbar(props){
             </NavLink>
             <ul className="dropdown-menu">
                 <li>
-                    <NavLink className="dropdown-item" to="/feed/post">
-                        Bài đăng
+                    <NavLink className="dropdown-item" to="/feed/event">
+                        Sự kiện
                     </NavLink>
                 </li>
                 <li>
@@ -129,7 +129,7 @@ export default function Navbar(props){
 
         if (authInfo.isLogin){
             rightNavItem1 = <li className="nav-item">
-                <NavLink className="nav-link" to="/borrow">
+                <NavLink className="nav-link" to="/bookBorrow">
                     Mượn sách
                 </NavLink>
             </li>
@@ -198,7 +198,7 @@ export default function Navbar(props){
 
     return (
         <nav className="navbar container-fluid">
-            <ul className="navmenu me-auto mb-2 mb-lg-0">
+            <ul className="navmenu me-auto mb-lg-0">
                 {leftNavItem1}
                 {leftNavItem2}
                 <li className="nav-item navbar-brand">

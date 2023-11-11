@@ -6,7 +6,6 @@
     justify-items: stretch;
     
     flex: 1;
-    /* Your custom styles for the navbar */
 }
 nav.navbar.container-fluid
 {
@@ -23,7 +22,8 @@ nav.navbar.container-fluid
     list-style-type: none;
     background-color: #172C5A;
     color: white;
-    
+    font-weight: bold;
+    font-size:120%;
 }
 
 .nav-item{
@@ -41,7 +41,6 @@ nav.navbar.container-fluid
 
 
 .navbar .nav-link {
-    /* Your custom styles for the navigation links */
     margin: 0 10px; /* Adjust the spacing between nav-items */
 }
 
@@ -49,15 +48,4 @@ nav.navbar.container-fluid
 .navbar-logo img {
     max-height: 100%; /* Ensure the image height doesn't exceed the navbar height */
     width: auto; /* Adjust the width as needed */
-    /* Additional custom styles for the logo */
 }
-
-
-/* .dropdown-menu {
-    
-} 
-
-
-.dropdown-item {
-    
-}  */

@@ -4,29 +4,45 @@ import Popper from 'popper.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { useState } from "react";
+import { FaUpload } from "react-icons/fa";
 
 import dummyUserData from "./dummyUserData";
 
 export default function ReviewHistoryList(){
-
-    const dummyDetail = dummyUserData.userData.userReview.reviewData[0]
-
+    const reviewData = dummyUserData.userData.userReview.reviewData
     return(
-        <main>
-            <h1>Chi tiết bài review về {dummyDetail.bookName}</h1>
-            <section className="post-meta">
-                <div>Tác giả: {dummyDetail.author}</div>
-                <time>Ngày gửi: {dummyDetail.sendDate}</time> |
-                <div>Trạng thái: {dummyDetail.status}</div>
-            </section>
-            <hr></hr>
-            <section className="post-detail">
-                <p>{dummyDetail.reviewDescription}</p>
-            </section>
-            {dummyDetail.clubComment && <section className="club-comment">
-                <h3>Bình luận của câu lạc bộ</h3>
-                <p>{dummyDetail.clubComment}</p>
-            </section>}
+        <main className="container p-3" style={{maxWidth: '960px'}}>
+            <h1>Lịch sử review</h1>
+            <div className="mt-2">
+                <button className="btn btn-primary">
+                    <FaUpload className="mr-2" /> Gửi bài review
+                </button>
+            </div>
+            <div>
+                <table className="table mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">Ngày gửi bài</th>
+                            <th scope="col">Tên tác phẩm review</th>
+                            <th scope="col">Trạng thái duyệt</th>
+                            <th scope="col">Ngày cập nhật</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {reviewData &&
+                            reviewData.map((doc) => (
+                                <tr>
+                                    <td>{doc.sendDate}</td>
+                                    <td><Link key={doc.id} to={`/my/post/reviewHistory/reviewDetail/${doc.id}`}>{doc.bookName}
+                                    </Link></td>
+                                    <td>{doc.status}</td>
+                                    <td>{doc.updateDate}</td>
+                                </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            
         </main>
     )
 }

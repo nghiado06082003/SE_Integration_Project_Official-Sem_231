@@ -16,19 +16,21 @@ export default function ReviewDetail(){
         return <div>Document not found</div>;
     }
     return(
-        <main>
-            <h1>Chi tiết bài review về {dummyDetail.bookName}</h1>
-            <section className="post-meta">
-                <div>Tác giả: {dummyDetail.author}</div>
-                <time>Ngày gửi: {dummyDetail.sendDate}</time> |
+        <main className="container p-3" style={{maxWidth: '960px'}}>
+            <h1>Chi tiết bài review</h1>
+            <h2 className="m-0">Tựa tác phẩm: {dummyDetail.bookName}</h2>
+            <section className="post-meta d-flex p-1">
+                <div className="me-2">Tác giả: {dummyDetail.author}</div>
+                <time className="me-2">Ngày gửi: {dummyDetail.sendDate}</time>
                 <div>Trạng thái: {dummyDetail.status}</div>
             </section>
             <hr></hr>
             <section className="post-detail">
                 <p>{dummyDetail.reviewDescription}</p>
             </section>
+            <hr></hr>
             {dummyDetail.clubComment && <section className="club-comment">
-                <h3>Bình luận của câu lạc bộ</h3>
+                <h4>Bình luận của câu lạc bộ</h4>
                 <p>{dummyDetail.clubComment}</p>
             </section>}
         </main>
