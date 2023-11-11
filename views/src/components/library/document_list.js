@@ -38,14 +38,14 @@ function Document_List() {
   
   useEffect(() => {
     const fetchData = async () => {
-      // const response = { data: dummyData };
-      // setDocumentList(response.data.docList);
       axios.get("/api/documentManagement")
       .then((response) => {
-        setDocumentList(JSON.parse(response.data.docList));
+        if (response.status === 200 && 'docList' in response.data) {
+          setDocumentList(JSON.parse(response.data.docList));
+        }
       })
       .catch((error) => {
-        console.error(error.message);
+        console.error(error);
       })
     };
     

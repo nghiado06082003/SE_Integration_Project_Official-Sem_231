@@ -15,6 +15,7 @@ import Book from "./book.png";
 
 function DocDetail() {
   const { document_id } = useParams();
+  
   const [selectedDoc, setSelectedDoc] = useState({});
   useEffect(() => {
     const fetchData = async() => {
@@ -24,7 +25,12 @@ function DocDetail() {
         }
       })
       .then((response) => {
-        setSelectedDoc(JSON.parse(response.data.docList)[0])
+        if (response.status === 200 && 'docDetail' in response.data) {
+          setSelectedDoc(JSON.parse(response.data.docDetail))
+        }
+      })
+      .catch((error) => {
+        console.error(error);
       })
     }
     fetchData()
