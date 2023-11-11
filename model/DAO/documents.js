@@ -57,7 +57,7 @@ function getDocDetail(res, document_id) {
         else if (result.length == 0)
             res.json({ status: 404 });
         else
-            res.json({ docList: JSON.stringify(result) });
+            res.json({ docDetail: JSON.stringify(result[0]) });
     });
 }
 
