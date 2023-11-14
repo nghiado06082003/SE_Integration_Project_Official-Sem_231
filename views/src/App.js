@@ -17,16 +17,27 @@ import Profile from './components/profile/profile';
 import NoPage from './components/nopage/nopage';
 import ReviewHistoryList from './components/profile/reviewHistoryList';
 import ReviewDetail from './components/profile/reviewDetail';
+import SignIn from './components/signin/signin'
 import axios from 'axios'
+import PrivateRoutes from './components/shared/private_routes';
+import ProtectedTest from './components/(test_only)protected_test/protected_test';
+import PublicTest from './components/(test_only)public_test/public_test';
+import SignUp from './components/signup/signup';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Header />}>
         <Route index element={<Homepage />} />
+        <Route path='signin' element={<SignIn />} />
+        <Route path='signup' element={<SignUp />} />
+        <Route path='publicTest' element={<PublicTest />} />
+        <Route element={<PrivateRoutes validateRoute={"protectedTest"} />} >
+          <Route path='protectedTest' element={<ProtectedTest />} />
+        </Route>
         <Route path='feed'>
-          <Route path='event' element={<EventPost/>}></Route>
-          <Route path='review' element={<Review_List/>}></Route>
+          <Route path='event' element={<EventPost />}></Route>
+          <Route path='review' element={<Review_List />}></Route>
         </Route>
         <Route path="library" >
           <Route index element={<Document_List />} />
@@ -37,13 +48,13 @@ function App() {
           <Route path='borrowManagement' element={<Borrow_Management />} />
         </Route>
         <Route path='my'>
-          <Route index element={<Profile/>}/>
+          <Route index element={<Profile />} />
           <Route path='post/reviewHistory'>
-            <Route index element={<ReviewHistoryList/>}/>
-            <Route path='reviewDetail/:review_id' element={<ReviewDetail/>}></Route>
+            <Route index element={<ReviewHistoryList />} />
+            <Route path='reviewDetail/:review_id' element={<ReviewDetail />}></Route>
           </Route>
         </Route>
-        
+
         <Route path="*" element={<NoPage />} />
       </Route>
     </Routes>
