@@ -15,11 +15,11 @@ module.exports = {
                     registration_model.register(res, member);
                 })
                 .catch((error) => {
-                    res.json({ status: 500 });
+                    res.status(500).json({ message: "Hệ thống gặp vấn đề. Vui lòng thử lại sau" });
                 })
         }
         else {
-            res.json({ status: 400, message: "Vui lòng không bỏ trống mật khẩu!" });
+            res.status(400).json({ message: "Vui lòng không để trống trường nào!" });
         }
     }
 }

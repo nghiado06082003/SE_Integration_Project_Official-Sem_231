@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route, Link, NavLink, Outlet, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, NavLink, Outlet, Navigate, useNavigate } from "react-router-dom";
 import $ from 'jquery';
 import Popper from 'popper.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -16,24 +16,26 @@ function SignUp() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState(null);
+    const navigate = useNavigate();
     // const [login, setLogin] = useState(false);
     const handleSubmit = (e) => {
+        e.preventDefault();
         axios.post("/api/register", {
             student_id,
             student_name,
             email,
             password
         })
-            .then((result) => {
-                cookies.set("TOKEN", result.data.token, {
+            .then((response) => {
+                cookies.set("TOKEN", response.data.token, {
                     path: "/",
                 });
-                return <Navigate to={"/protectedTest"} />;
+                navigate("/publicTest");
             })
             .catch((error) => {
-                setErrorMessage("Lỗi đăng ký");
-                console.log(error.response.message);
-                console.log(error.response.status);
+                if (error.response) {
+                    setErrorMessage(error.response.data.message);
+                }
             })
     }
     return (

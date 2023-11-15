@@ -1,7 +1,7 @@
 var authentication_model = require("../model/DAO/authentication")
 
 module.exports = {
-    signin: function(req, res) {
+    signin: function (req, res) {
         let obj = {
             email: req.body.email,
             password: req.body.password
@@ -10,7 +10,7 @@ module.exports = {
             authentication_model.signin(res, obj);
         }
         else {
-            res.json({ status: 400, message: "Vui lòng không bỏ trống bất kỳ thông tin đăng nhập nào!" });
+            res.status(400).json({ message: "Không bỏ trống bất kỳ trường thông tin đăng nhập nào!" });
         }
     }
 }

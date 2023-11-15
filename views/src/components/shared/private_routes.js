@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route, Link, NavLink, Outlet, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, NavLink, Outlet, Navigate, useNavigate } from "react-router-dom";
 import $ from 'jquery';
 import Popper from 'popper.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,23 +10,29 @@ import Header from '../shared/header';
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
-function PrivateRoutes(validateRoute) {
+function PrivateRoutes(prop) {
     const token = cookies.get("TOKEN");
-    if (!token) {
-        return <Navigate to={"/signin"} />;
-    }
-    else {
-        let url = "/api/" + validateRoute + "/authorization";
-        axios.post(url, {}, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then((respond) => {
-            return <Outlet />;
-        }).catch((error) => {
-            return <Navigate to={"/signin"} />;
-        })
-    }
+    const navigate = useNavigate();
+    const [decision, setDecision] = useState(null);
+    useEffect(() => {
+        if (!token) {
+            setDecision(<Navigate to={"/signin"} />);
+        }
+        else {
+            let url = "/api/" + prop.validateRoute + "/authorization";
+            axios.post(url, {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then((response) => {
+                setDecision(<Outlet />);
+
+            }).catch((error) => {
+                setDecision(<Navigate to={"/signin"} />);
+            });
+        }
+    }, [])
+    return decision;
 }
 
 export default PrivateRoutes;

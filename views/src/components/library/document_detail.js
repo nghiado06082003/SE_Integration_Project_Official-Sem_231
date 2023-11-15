@@ -18,23 +18,20 @@ function DocDetail() {
   
   const [selectedDoc, setSelectedDoc] = useState({});
   useEffect(() => {
-    const fetchData = async() => {
-      axios.get('/api/documentManagement/detail', {
-        params: {
-          document_id: parseInt(document_id)
-        }
-      })
-      .then((response) => {
-        if (response.status === 200 && 'docDetail' in response.data) {
-          setSelectedDoc(JSON.parse(response.data.docDetail))
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-    }
-    fetchData()
-  }, [])
+    axios.get('/api/documentManagement/detail', {
+      params: {
+        document_id: parseInt(document_id)
+      }
+    })
+    .then((response) => {
+      if (response.status === 200 && 'docDetail' in response.data) {
+        setSelectedDoc(JSON.parse(response.data.docDetail));
+      }
+    })
+    .catch((error) => {
+      console.error("Error!!!!!!", error);
+    });
+  }, []);
   // const selectedDoc = dummyData.docList.find((doc) => doc.document_id === parseInt(document_id, 10));
   
   if (!selectedDoc) {

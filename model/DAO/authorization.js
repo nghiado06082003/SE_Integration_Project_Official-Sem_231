@@ -11,7 +11,7 @@ async function loadCurMember(req, res, next) {
         next();
     }
     catch (error) {
-        res.json({ status: 401, message: "Người dùng chưa đăng nhập hoặc phiên đã hết hạn!" });
+        res.status(401).json({ message: "Người dùng chưa đăng nhập hoặc phiên đã hết hạn" });
     }
 }
 
@@ -25,14 +25,14 @@ async function authorizeCollaborator(req, res, next) {
             req.cur_member.permission
         ], function (err, result, field) {
             if (err) {
-                res.json({ status: 500 });
+                res.status(500).json({ message: "Hệ thống gặp vấn đề. Vui lòng thử lại sau" });
             }
             else if (result.length == 0) {
-                res.json({ status: 400, message: "Người dùng không tồn tại!" });
+                res.status(400).json({ message: "Người dùng không tồn tại. Vui lòng kiểm tra" });
             }
             else {
                 if (result[0].state != "Đang hoạt động") {
-                    res.json({ status: 403, message: "Người dùng đang bị khoá!" });
+                    res.status(403).json({ message: "Người dùng đang bị khoá!" });
                 }
                 else {
                     next();
@@ -41,7 +41,7 @@ async function authorizeCollaborator(req, res, next) {
         })
     }
     else {
-        res.json({ status: 401, message: "Người dùng chưa đăng nhập hoặc phiên đã hết hạn!" });
+        res.status(401).json({ message: "Người dùng không xác định. Vui lòng kiểm tra" });
     }
 }
 
@@ -55,17 +55,17 @@ async function authorizeMediaMember(req, res, next) {
             req.cur_member.permission
         ], function (err, result, field) {
             if (err) {
-                res.json({ status: 500 });
+                res.status(500).json({ message: "Hệ thống gặp vấn đề. Vui lòng thử lại sau" });
             }
             else if (result.length == 0) {
-                res.json({ status: 400, message: "Người dùng không tồn tại!" });
+                res.status(400).json({ message: "Người dùng không tồn tại. Vui lòng kiểm tra" });
             }
             else {
                 if (result[0].state != "Đang hoạt động") {
-                    res.json({ status: 403, message: "Người dùng đang bị khoá!" });
+                    res.status(403).json({ message: "Người dùng đang bị khoá!" });
                 }
                 else if (result[0].permission != "Thành viên ban truyền thông" && result[0].permission != "Thành viên ban chủ nhiệm") {
-                    res.json({ status: 403, message: "Người dùng không được phép truy cập vào trang hoặc tính năng này!" });
+                    res.status(403).json({ message: "Người dùng không có quyền truy cập trang hay tác vụ này!" });
                 }
                 else {
                     next();
@@ -74,7 +74,7 @@ async function authorizeMediaMember(req, res, next) {
         })
     }
     else {
-        res.json({ status: 401, message: "Người dùng chưa đăng nhập hoặc phiên đã hết hạn!" });
+        res.status(401).json({ message: "Người dùng không xác định. Vui lòng kiểm tra" });
     }
 }
 
@@ -88,17 +88,17 @@ async function authorizeContentMember(req, res, next) {
             req.cur_member.permission
         ], function (err, result, field) {
             if (err) {
-                res.json({ status: 500 });
+                res.status(500).json({ message: "Hệ thống gặp vấn đề. Vui lòng thử lại sau" });
             }
             else if (result.length == 0) {
-                res.json({ status: 400, message: "Người dùng không tồn tại!" });
+                res.status(400).json({ message: "Người dùng không tồn tại. Vui lòng kiểm tra" });
             }
             else {
                 if (result[0].state != "Đang hoạt động") {
-                    res.json({ status: 403, message: "Người dùng đang bị khoá!" });
+                    res.status(403).json({ message: "Người dùng đang bị khoá!" });
                 }
                 else if (result[0].permission != "Thành viên ban nội dung" && result[0].permission != "Thành viên ban chủ nhiệm") {
-                    res.json({ status: 403, message: "Người dùng không được phép truy cập vào trang hoặc tính năng này!" });
+                    res.status(403).json({ message: "Người dùng không có quyền truy cập trang hay tác vụ này!" });
                 }
                 else {
                     next();
@@ -107,7 +107,7 @@ async function authorizeContentMember(req, res, next) {
         })
     }
     else {
-        res.json({ status: 401, message: "Người dùng chưa đăng nhập hoặc phiên đã hết hạn!" });
+        res.status(401).json({ message: "Người dùng không xác định. Vui lòng kiểm tra" });
     }
 }
 
@@ -121,17 +121,17 @@ async function authorizeLogisticMember(req, res, next) {
             req.cur_member.permission
         ], function (err, result, field) {
             if (err) {
-                res.json({ status: 500 });
+                res.status(500).json({ message: "Hệ thống gặp vấn đề. Vui lòng thử lại sau" });
             }
             else if (result.length == 0) {
-                res.json({ status: 400, message: "Người dùng không tồn tại!" });
+                res.status(400).json({ message: "Người dùng không tồn tại. Vui lòng kiểm tra" });
             }
             else {
                 if (result[0].state != "Đang hoạt động") {
-                    res.json({ status: 403, message: "Người dùng đang bị khoá!" });
+                    res.status(403).json({ message: "Người dùng đang bị khoá!" });
                 }
                 else if (result[0].permission != "Thành viên ban hậu cần" && result[0].permission != "Thành viên ban chủ nhiệm") {
-                    res.json({ status: 403, message: "Người dùng không được phép truy cập vào trang hoặc tính năng này!" });
+                    res.status(403).json({ message: "Người dùng không có quyền truy cập trang hay tác vụ này!" });
                 }
                 else {
                     next();
@@ -140,7 +140,7 @@ async function authorizeLogisticMember(req, res, next) {
         })
     }
     else {
-        res.json({ status: 401, message: "Người dùng chưa đăng nhập hoặc phiên đã hết hạn!" });
+        res.status(401).json({ message: "Người dùng không xác định. Vui lòng kiểm tra" });
     }
 }
 
@@ -154,17 +154,17 @@ async function authorizeAdmin(req, res, next) {
             req.cur_member.permission
         ], function (err, result, field) {
             if (err) {
-                res.json({ status: 500 });
+                res.status(500).json({ message: "Hệ thống gặp vấn đề. Vui lòng thử lại sau" });
             }
             else if (result.length == 0) {
-                res.json({ status: 400, message: "Người dùng không tồn tại!" });
+                res.status(400).json({ message: "Người dùng không tồn tại. Vui lòng kiểm tra" });
             }
             else {
                 if (result[0].state != "Đang hoạt động") {
-                    res.json({ status: 403, message: "Người dùng đang bị khoá!" });
+                    res.status(403).json({ message: "Người dùng đang bị khoá!" });
                 }
                 else if (result[0].permission != "Thành viên ban chủ nhiệm") {
-                    res.json({ status: 403, message: "Người dùng không được phép truy cập vào trang hoặc tính năng này!" });
+                    res.status(403).json({ message: "Người dùng không có quyền truy cập trang hay tác vụ này!" });
                 }
                 else {
                     next();
@@ -173,7 +173,7 @@ async function authorizeAdmin(req, res, next) {
         })
     }
     else {
-        res.json({ status: 401, message: "Người dùng chưa đăng nhập hoặc phiên đã hết hạn!" });
+        res.status(401).json({ message: "Người dùng không xác định. Vui lòng kiểm tra" });
     }
 }
 

@@ -16,16 +16,16 @@ function checkNoEmpty(obj) {
 function signin(res, obj) {
     connect_DB.query("SELECT * FROM members WHERE email = ?", [obj.email], function (err, result, field) {
         if (err) {
-            res.json({ status: 500 });
+            res.status(500).json({ message: "Hệ thống gặp vấn đề. Vui lòng thử lại sau" });
         }
         else if (result.length == 0) {
-            res.json({ status: 400, message: "Địa chỉ email không tồn tại!" });
+            res.status(400).json({ message: "Người dùng không tồn tại hoặc sai thông tin đăng nhập. Vui lòng thử lại" });
         }
         else {
             bcrypt.compare(obj.password, result[0].password)
                 .then((passwordCheck) => {
                     if (!passwordCheck) {
-                        res.json({ status: 400, message: "Mật khẩu không khớp!" });
+                        res.status(400).json({ message: "Người dùng không tồn tại hoặc sai thông tin đăng nhập. Vui lòng thử lại" });
                     }
                     else {
                         let member = {
@@ -34,12 +34,12 @@ function signin(res, obj) {
                             state: result[0].state,
                             permission: result[0].permission
                         };
-                        const token = jwt.sign(member, "RANDOM-TOKEN", { expiresIn: "24h" });
-                        res.json({ status: 200, member: member, token });
+                        const token = jwt.sign(member, "RANDOM-TOKEN", { expiresIn: "5m" });
+                        res.json({ member: member, token });
                     }
                 })
                 .catch((error) => {
-                    res.json({ status: 400, message: "Mật khẩu không khớp!" });
+                    res.status(400).json({ message: "Người dùng không tồn tại hoặc sai thông tin đăng nhập. Vui lòng thử lại" });
                 })
         }
     })

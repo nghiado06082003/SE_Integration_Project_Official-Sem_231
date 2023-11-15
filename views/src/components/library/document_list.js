@@ -4,26 +4,21 @@ import { FaUpload } from "react-icons/fa";
 
 import './styles.css';
 import DocItem from "./doc-item";
-import dummyData from "./dummyData";
 import axios from "axios";
 
 function Document_List() {
   const [documentList, setDocumentList] = useState([]);
   
   useEffect(() => {
-    const fetchData = async () => {
-      axios.get("/api/documentManagement")
-      .then((response) => {
-        if (response.status === 200 && 'docList' in response.data) {
-          setDocumentList(JSON.parse(response.data.docList));
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-    };
-    
-    fetchData();
+    axios.get("/api/documentManagement")
+    .then((response) => {
+      if (response.status === 200 && 'docList' in response.data) {
+        setDocumentList(JSON.parse(response.data.docList));
+      }
+    })
+    .catch((error) => {
+      console.error("Error!!!!!!", error);
+    });
   }, []);
   
   return (
