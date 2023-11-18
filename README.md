@@ -2,6 +2,7 @@
 Đây là repository chính thức cho môn Đồ án tồng hợp - hướng Công nghệ phần mềm HK231.
 
 ***(Cập nhật đầu tiên 5/11/2023: ReactJS được cài đặt trong thư mục views của project này, các thành viên làm pront-end vui lòng làm trong thư mục views)***
+***(Cập nhật tiếp theo 15/11/2023): Cập nhật hệ thống đăng nhập đăng ký (vẫn đang kiểm thử), sử dụng cơ chế tokenization***
 
 ## Setup ngay sau khi clone project lần đầu
 ### Setup cơ sở dữ liệu MySQL và khởi chạy server MySQL trên máy
@@ -10,6 +11,7 @@ Trước hết, ***vui lòng cài đặt MySQL lên máy nếu chưa có, rồi 
 - Nếu dùng XAMPP, cài đặt xong thì vui lòng run as administrator ứng dụng, khi cửa sổ bật ra thì bấm nút Start ở dòng MySQL và Apache. Sau đó vào trình duyệt bất kỳ trên máy, nhập localhost rồi enter. Trang Welcome sẽ hiện ra.
 - Trên thanh điều hướng, nhấn vào mục `phpMyAdmin`. Trang quản lý sẽ hiện ra, và trên thanh điều hướng mới lúc này sẽ có nút Import hoặc nhập. Bấm vào đó, khi trang hiện lên sẽ thấy khung chọn tệp. Chọn tệp `simbsc.sql` rồi bấm nhập. Sau khi xong, để ý dashboard bên trái màn hình, cái list với mấy cái icon hình trụ ấy, nếu thấy một dòng tên `simbsc` xuất hiện nghĩa là file database đã nhập thành công. Có thể nhấp vào dòng đó để bắt đầu xem trong cái database đó có gì.
 - Sau đó, trong ứng dụng XAMPP bạn có thể stop Apache đi nếu không cần vọc nữa (nếu cần tương tác trên môi trường tiếp thì giữ cũng được), nhưng tuyệt đối không tắt MySQL. Do hiện sử dụng localhost để host server database, nếu bạn tắt nó đi nghĩa là server database sẽ offline và web chắc chắn sẽ bị lỗi ở những trang cần truy cứu database. Chỉ stop MySQL đi khi bạn muốn tắt máy đi nghỉ không debug cho project này nữa, hoặc chỉ đơn giản là đã suffer với project này quá đủ rồi, đang muốn làm cái khác và không còn nhu cầu bật cái web của project này nữa thì tắt :). Nhớ mỗi khi cần bật cái web của project này lên thì phải start MySQL trong XAMPP trước.
+- Mỗi khi kiểm tra thấy repo có cập nhật, nên drop cái database cũ, rồi import lại file `simbsc.sql` hiện tại trong project vì có thể có những thay đổi trên DB. Các bạn khi làm xong nếu có đổi gì trong database cũng export file sql mới rồi bỏ vào repo này để người sau còn cập nhật theo.
 ### Setup các thư viện cho project
 Do việc push kèm thư mục node_modules (thư mục chứa các thư viện cho NodeJS và ReactJS) sẽ khiến project trở nên rất nặng (thư mục node_modules của ReactJS có dung lượng loanh quanh 300-400 MB), cũng như git sẽ không thể track được toàn bộ thay đổi.
 

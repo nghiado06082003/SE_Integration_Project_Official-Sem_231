@@ -10,16 +10,22 @@ import Header from '../shared/header'
 import Hero from "./hero";
 
 function Homepage() {
-    const [greetingFromServer, setGreetingFromServer] = useState(null);
-    useEffect(() => {
-        axios.get('http://localhost:8080/api/homepage').then(
-            (respond) => { setGreetingFromServer(respond.data.greeting) }
-        )
-    }, []);
-    return (
-        <>
-            <Hero/>
-        </>
-    );
+  const [greetingFromServer, setGreetingFromServer] = useState(null);
+  useEffect(() => {
+    axios.get('/api/homepage')
+    .then((respond) => {
+      console.log(respond);
+      setGreetingFromServer(respond.data.greeting);
+    })
+    .catch((error) => {
+      console.error("Error!!!!!!", error);
+    })
+  }, []);
+  console.log(greetingFromServer);
+  return (
+    <>
+      <Hero/>
+    </>
+  );
 }
 export default Homepage

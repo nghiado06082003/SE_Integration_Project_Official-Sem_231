@@ -10,6 +10,10 @@ var cookieParser = require('cookie-parser');
 const homepageRoute = require('./routes/homepage');
 const documentManagementRoute = require('./routes/document_management');
 const loanManagementRoute = require('./routes/loan_management');
+const signinRoute = require('./routes/signin');
+const protectedTestRoute = require("./routes/protected_test");
+const registrationRoute = require("./routes/registration");
+const publicTestRoute = require("./routes/public_test");
 
 
 const limiter = rateLimit({
@@ -44,7 +48,15 @@ app.use("/api/homepage", homepageRoute);
 
 app.use("/api/documentManagement", documentManagementRoute);
 
-app.use("/api/loanManagement", loanManagementRoute)
+app.use("/api/loanManagement", loanManagementRoute);
+
+app.use("/api/signin", signinRoute);
+
+app.use("/api/protectedTest", protectedTestRoute);
+
+app.use("/api/register", registrationRoute);
+
+app.use("/api/publicTest", publicTestRoute);
 
 
 app.listen(8080);
