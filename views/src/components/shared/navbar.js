@@ -12,8 +12,8 @@ export default function Navbar(props){
 
     const [authInfo,setAuthInfo] = useState({
         isLogin: true,
-        isAdmin: false,
-        isAdminMode: false
+        isAdmin: true,
+        isAdminMode: true
     })
 
 

@@ -18,6 +18,7 @@ import NoPage from './components/nopage/nopage';
 import ReviewHistoryList from './components/profile/reviewHistoryList';
 import ReviewDetail from './components/profile/reviewDetail';
 import axios from 'axios'
+import Book_Borrow_Management from './components/admin/book_borrow_management/book_borrow_management';
 
 function App() {
   return (
@@ -42,6 +43,9 @@ function App() {
             <Route index element={<ReviewHistoryList/>}/>
             <Route path='reviewDetail/:review_id' element={<ReviewDetail/>}></Route>
           </Route>
+        </Route>
+        <Route path='documentManagement'>
+          <Route path='loan' element={<Book_Borrow_Management/>}/>
         </Route>
         
         <Route path="*" element={<NoPage />} />
