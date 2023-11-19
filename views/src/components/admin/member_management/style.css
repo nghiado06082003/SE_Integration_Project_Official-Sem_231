@@ -10,3 +10,7 @@ table,th,tr,td
 {
     color: white;
 }
+.dimmed 
+{
+    opacity: 0.5; /* Thiết lập độ mờ cho bảng */
+}
