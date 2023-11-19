@@ -16,8 +16,26 @@ export default {
       {
         "MSSV": 2110641,
         name: "Trang Sĩ Trọng",
-        "Tựa đề sách": "Cách để trở thành vua hề",
+        "Tựa đề sách": "How to Be a Clown",
         "Ngày đăng ký": "18/11/2023",
+      },
+      {
+        "MSSV": 2110641,
+        name: "Trần Lê Quốc Khánh",
+        "Tựa đề sách": "Practical Reverse Engineering",
+        "Ngày đăng ký": "18/11/2023",
+      },
+      {
+        "MSSV": 2110641,
+        name: "Cao Minh Quân",
+        "Tựa đề sách": "Calculus 1",
+        "Ngày đăng ký": "18/11/2023",
+      },
+      {
+        "MSSV": 2110000,
+        name: "Từ Huy B",
+        "Tựa đề sách": "How Great Leaders Inspire Everyone to Take Action",
+        "Ngày đăng ký": "01/10/2023"
       },
     ],
   };

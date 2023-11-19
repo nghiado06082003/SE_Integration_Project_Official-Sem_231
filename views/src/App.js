@@ -24,6 +24,7 @@ import PrivateRoutes from './components/shared/private_routes';
 import ProtectedTest from './components/(test_only)protected_test/protected_test';
 import PublicTest from './components/(test_only)public_test/public_test';
 import SignUp from './components/signup/signup';
+import Member_Management from './components/admin/member_management/member_management';
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
         <Route path='documentManagement'>
           <Route path='loan' element={<Book_Borrow_Management/>}/>
         </Route>
+        <Route path='memberManagement' element={<Member_Management />}/>
         <Route path="*" element={<NoPage />} />
       </Route>
     </Routes>
