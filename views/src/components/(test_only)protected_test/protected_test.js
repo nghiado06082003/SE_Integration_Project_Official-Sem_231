@@ -15,13 +15,11 @@ function ProtectedTest() {
     const token = cookies.get("TOKEN");
     const navigate = useNavigate();
     useEffect(() => {
-        console.log("Sắp tới rồi");
         axios.post("/api/protectedTest", {}, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         }).then((response) => {
-            console.log("Nên chạy ở đây");
             setMessage(response.data.message);
 
         }).catch((error) => {

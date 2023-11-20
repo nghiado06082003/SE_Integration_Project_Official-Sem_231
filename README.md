@@ -2,7 +2,10 @@
 Đây là repository chính thức cho môn Đồ án tồng hợp - hướng Công nghệ phần mềm HK231.
 
 ***(Cập nhật đầu tiên 5/11/2023: ReactJS được cài đặt trong thư mục views của project này, các thành viên làm pront-end vui lòng làm trong thư mục views)***
+
 ***(Cập nhật tiếp theo 15/11/2023): Cập nhật hệ thống đăng nhập đăng ký (vẫn đang kiểm thử), sử dụng cơ chế tokenization***
+
+***(Cập nhật 20/11/2023: Cập nhật thư viện cors vào expressJS với hi vọng giải quyết dứt điểm lỗi này)***
 
 ## Setup ngay sau khi clone project lần đầu
 ### Setup cơ sở dữ liệu MySQL và khởi chạy server MySQL trên máy
@@ -58,7 +61,7 @@ Trang localhost:3000 sẽ khởi chạy tự động trên trình duyệt mặc 
 - Trang web được viết theo mô hình MVC (Model - View - Controller), trong đó phần views sử dụng ReactJS để hiện thực. Các thành viên nên tìm hiểu qua mô hình này, cách triển khai mô hình trên NodeJS để hiện thực theo mô hình này.
 - Nếu có đổi database về sau, chỉ cần thay đổi file `connect_db` và các file model đối tượng liên quan trong thư mục `model`. Code hiện tại đã cố gắng chia tách phần model kết nối database này với phần model của từng page trong web nhằm đảm bảo khi hiện thực hoặc đổi database, chỉ cần thay đổi kết nối trong `connect_db` và thay đổi các câu lệnh truy vấn trong các file model đối tượng liên quan, còn API mà các file đối tượng cung cấp ra là không đổi và không cần sửa (tuân thủ tối da bộ quy tắc quan trọng trong lập trình: SOLID)
 - Trang web có vài thiết lập liên quan đến bảo mật thông qua các thư viện: `helmet`, `express-rate-limit`.
-- Trang web đã cấu hình proxy cho ReactJS để đảm bảo ReactJS và NodeJS server tương tác được (không bị lỗi cors)
+- Trang web đã cấu hình proxy cho ReactJS để đảm bảo ReactJS và NodeJS server tương tác được (không bị lỗi cors). Hiện đã cập nhật thêm thư viện cors cho server.
 - Đối với backend server, cần restart server nếu muốn code đã thay đổi chạy được.
 ```
 netstat -ano | findstr :<PORT>

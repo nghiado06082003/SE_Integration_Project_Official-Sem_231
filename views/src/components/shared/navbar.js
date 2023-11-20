@@ -32,12 +32,12 @@ export default function Navbar(props){
             </NavLink>
             <ul className="dropdown-menu">
                     <li>
-                        <NavLink className="dropdown-item" to="/feedManager/event">
+                        <NavLink className="dropdown-item" to="/feed/event">
                             Bài viết
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink className="dropdown-item" to="/feedManager/review">
+                        <NavLink className="dropdown-item" to="/feed/review">
                             Review
                         </NavLink>
                     </li>
@@ -54,7 +54,7 @@ export default function Navbar(props){
             </NavLink>
             <ul className="dropdown-menu">
                     <li>
-                        <NavLink className="dropdown-item" to="/documentManagement/library">
+                        <NavLink className="dropdown-item" to="/library">
                             Thư viện
                         </NavLink>
                     </li>
