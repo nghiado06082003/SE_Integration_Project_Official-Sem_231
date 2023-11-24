@@ -12,9 +12,8 @@ import Hero from "./hero";
 function Homepage() {
   const [greetingFromServer, setGreetingFromServer] = useState(null);
   useEffect(() => {
-    axios.get('/api/homepage')
+    axios.get('http://localhost:8080/api/homepage')
     .then((respond) => {
-      console.log(respond);
       setGreetingFromServer(respond.data.greeting);
     })
     .catch((error) => {

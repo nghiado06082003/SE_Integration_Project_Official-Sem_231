@@ -9,7 +9,7 @@ export default function Hero() {
       <img 
         className="heroImg"
         src={hero}
-        alt="logo"
+        alt="Home Background"
       />
     </div>
   )

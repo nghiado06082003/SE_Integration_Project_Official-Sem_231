@@ -2,7 +2,8 @@
   "scripts": {
     "server": "node app.js",
     "client": "npm run start --prefix views",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "concurrently \"nodemon app.js\" \"npm run client\""
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -18,5 +19,8 @@
     "jsonwebtoken": "^9.0.2",
     "mysql": "^2.18.1",
     "universal-cookie": "^6.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
