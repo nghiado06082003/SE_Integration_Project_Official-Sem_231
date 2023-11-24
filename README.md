@@ -7,6 +7,8 @@
 
 ***(Cập nhật 20/11/2023: Cập nhật thư viện cors vào expressJS với hi vọng giải quyết dứt điểm lỗi này)***
 
+***(Cập nhật 24/11/2023: Cập nhật thư viện http-proxy-middleware vào ReactJS với hi vọng giải quyết dứt điểm lỗi cors)***
+
 ## Setup ngay sau khi clone project lần đầu
 ### Setup cơ sở dữ liệu MySQL và khởi chạy server MySQL trên máy
 Trước hết, ***vui lòng cài đặt MySQL lên máy nếu chưa có, rồi nhập file `simbsc.sql` vào***. Nếu chưa biết cách cài đặt thì đây là hướng dẫn:
