@@ -1,8 +1,22 @@
-import React from "react";
-import dataBorrow from "./data_borrow_user";
+import React, { useEffect, useState }  from "react";
 import './styles.css'; 
+import axios from "axios";
 
 function Book_Borrow() {
+  const [borrowHistory, setBorrowHistory] = useState([]);
+  
+  useEffect(() => {
+    axios.get("http://localhost:8080/api/loanManagement/customer/borrowhistory")
+    .then((response) => {
+      if (response.status === 200 && 'borrowHistory' in response.data) {
+        setBorrowHistory(JSON.parse(response.data.borrowHistory));
+      }
+    })
+    .catch((error) => {
+      console.error("Error!!!!!!", error);
+    });
+  }, []);
+
   return (
     <div className="container">
       <div className="d-flex justify-content-center">
@@ -25,13 +39,13 @@ function Book_Borrow() {
           </tr>
         </thead>
         <tbody>
-          {dataBorrow.BorrowList.map((borrowItem) => (
-            <tr key={borrowItem.id}>
-              <th scope="row">{borrowItem.id}</th>
-              <td>{borrowItem.name}</td>
-              <td>{borrowItem["Ngày mượn"]}</td>
-              <td>{borrowItem["Trạng thái"]}</td>
-              <td>{borrowItem["Ngày trả"]}</td>
+          {borrowHistory.map((borrowItem) => (
+            <tr key={borrowItem.document_id}>
+              <th scope="row">{borrowItem.document_id}</th>
+              <td>{borrowItem.doc_name}</td>
+              <td>{borrowItem.received_day}</td>
+              <td>{borrowItem.state}</td>
+              <td>{borrowItem.returned_day}</td>
             </tr>
           ))}
         </tbody>

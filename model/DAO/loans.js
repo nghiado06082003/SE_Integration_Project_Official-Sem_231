@@ -37,7 +37,7 @@ function getLoanHistory(req, res) {
 
 function getBorrowHistory(req, res) {
     var id = req.query.id;
-    connect_DB.query(`SELECT received_day, doc_name, state, returned_day FROM (requestborrow NATURAL JOIN documents) WHERE student_id = ${id} AND (state = 3 OR state = 4)`, function (err, result, fields) {
+    connect_DB.query(`SELECT document_id, received_day, doc_name, state, returned_day FROM (requestborrow NATURAL JOIN documents) WHERE student_id = ${id} AND (state = 3 OR state = 4)`, function (err, result, fields) {
         if (err) res.json({ code: 500 });
         res.json({ borrowHistory: JSON.stringify(result) });
     });
