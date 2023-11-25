@@ -4,6 +4,7 @@ import axios from "axios";
 
 function Book_Borrow_Management() {
   const [BorrowList, setBorrowList] = useState([]);
+  const [render, rerender] = useState(false);
   
   useEffect(() => {
     axios.get("http://localhost:8080/api/loanManagement/manager/list")
@@ -16,6 +17,32 @@ function Book_Borrow_Management() {
       console.error("Error!!!!!!", error);
     });
   }, []);
+
+  const approve = () => {
+    axios.get("http://localhost:8080/api/loanManagement/manager/request/approve")
+    .then((response) => {
+      console.log(response);
+      if (response.status === 200 && response.data.code === 300) {
+        window.location.reload();
+      }
+    })
+    .catch((error) => {
+      console.error("Error!!!!!!", error);
+    });
+  };
+
+  const deny = () => {
+    axios.get("http://localhost:8080/api/loanManagement/manager/request/deny")
+    .then((response) => {
+      console.log(response);
+      if (response.status === 200 && response.data.code === 300) {
+        window.location.reload();
+      }
+    })
+    .catch((error) => {
+      console.error("Error!!!!!!", error);
+    });
+  };
 
   return (
     <div className="container">
@@ -46,8 +73,8 @@ function Book_Borrow_Management() {
               <td class="text-center">{borrowItem.doc_name}</td>
               <td class="text-center">{borrowItem.request_day}</td>
               <td class="text-center">
-                    <button class="btn btn-success btn-sm m-2" type="button">Đồng ý</button>
-                    <button class="btn btn-danger btn-sm m-2" type="button">Từ chối</button>
+                    <button class="btn btn-success btn-sm m-2" type="button" onClick={()=>approve()}>Đồng ý</button>
+                    <button class="btn btn-danger btn-sm m-2" type="button" onClick={()=>deny()}>Từ chối</button>
                 </td>
             </tr>
           ))}
