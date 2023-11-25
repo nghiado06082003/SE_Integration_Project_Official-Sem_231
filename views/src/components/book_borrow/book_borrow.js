@@ -3,19 +3,19 @@ import './styles.css';
 import axios from "axios";
 
 function Book_Borrow() {
-  const [borrowHistory, setBorrowHistory] = useState([]);
+  // const [borrowHistory, setBorrowHistory] = useState([]);
   
-  useEffect(() => {
-    axios.get("http://localhost:8080/api/loanManagement/customer/borrowhistory")
-    .then((response) => {
-      if (response.status === 200 && 'borrowHistory' in response.data) {
-        setBorrowHistory(JSON.parse(response.data.borrowHistory));
-      }
-    })
-    .catch((error) => {
-      console.error("Error!!!!!!", error);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get("http://localhost:8080/api/loanManagement/customer/borrowhistory", { params: { id: student_id } })
+  //   .then((response) => {
+  //     if (response.status === 200 && 'borrowHistory' in response.data) {
+  //       setBorrowHistory(JSON.parse(response.data.borrowHistory));
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error!!!!!!", error);
+  //   });
+  // }, []);
 
   return (
     <div className="container">
@@ -39,7 +39,7 @@ function Book_Borrow() {
           </tr>
         </thead>
         <tbody>
-          {borrowHistory.map((borrowItem) => (
+          {/* {borrowHistory.map((borrowItem) => (
             <tr key={borrowItem.document_id}>
               <th scope="row">{borrowItem.document_id}</th>
               <td>{borrowItem.doc_name}</td>
@@ -47,7 +47,7 @@ function Book_Borrow() {
               <td>{borrowItem.state}</td>
               <td>{borrowItem.returned_day}</td>
             </tr>
-          ))}
+          ))} */}
         </tbody>
       </table>
     </div>
