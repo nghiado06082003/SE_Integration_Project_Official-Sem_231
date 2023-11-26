@@ -9,6 +9,7 @@ function Book_Borrow_Management() {
     axios.get("http://localhost:8080/api/loanManagement/manager/list")
     .then((response) => {
       if (response.status === 200 && 'loanList' in response.data) {
+        console.log(response.data.loanList);
         setBorrowList(JSON.parse(response.data.loanList));
       }
     })
@@ -68,7 +69,7 @@ function Book_Borrow_Management() {
               <th scope="row" class="text-center">{borrowItem.student_id}</th>
               <td class="text-center">{borrowItem.student_name}</td>
               <td class="text-center">{borrowItem.doc_name}</td>
-              <td class="text-center">{borrowItem.request_day}</td>
+              <td class="text-center">{(borrowItem.request_day).substring(0, 10)}</td>
               <td class="text-center">
                     <button class="btn btn-success btn-sm m-2" type="button" onClick={()=>approve(borrowItem.id)}>Đồng ý</button>
                     <button class="btn btn-danger btn-sm m-2" type="button" onClick={()=>deny(borrowItem.id)}>Từ chối</button>
