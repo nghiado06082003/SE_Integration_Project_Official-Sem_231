@@ -9,7 +9,6 @@ function Book_Borrow_Management() {
     axios.get("http://localhost:8080/api/loanManagement/manager/list")
     .then((response) => {
       if (response.status === 200 && 'loanList' in response.data) {
-        console.log(response.data.loanList);
         setBorrowList(JSON.parse(response.data.loanList));
       }
     })
@@ -19,7 +18,7 @@ function Book_Borrow_Management() {
   }, []);
 
   const approve = (id) => {
-    axios.get("http://localhost:8080/api/loanManagement/manager/request/approve", { params: { id: id } })
+    axios.get("http://localhost:8080/api/loanManagement/manager/request/approve", {params: {id: id}})
     .then((response) => {
       if (response.status === 200 && response.data.code === 300) {
         window.location.reload();
@@ -31,7 +30,7 @@ function Book_Borrow_Management() {
   };
 
   const deny = (id) => {
-    axios.get("http://localhost:8080/api/loanManagement/manager/request/deny", { params: { id: id } })
+    axios.get("http://localhost:8080/api/loanManagement/manager/request/deny", {params: {id: id}})
     .then((response) => {
       if (response.status === 200 && response.data.code === 300) {
         window.location.reload();

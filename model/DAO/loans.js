@@ -8,8 +8,8 @@ function getLoanList(res) {
     });
 }
 
-function approvereq(res, id) {
-    //var id = req.query.id;
+function approvereq(req, res) {
+    var id = req.query.id;
     const currentDate = new Date().toISOString().split('T')[0];
     connect_DB.query(`UPDATE requestborrow SET state = 1, update_date = "${currentDate}" WHERE id = ${id}`, function (err, result, fields) {
         if (err) res.json({ code: 500 });
@@ -17,8 +17,8 @@ function approvereq(res, id) {
     });
 }
 
-function denyreq(res, id) {
-    //var id = req.query.id;
+function denyreq(req, res) {
+    var id = req.query.id;
     const currentDate = new Date().toISOString().split('T')[0];
     connect_DB.query(`UPDATE requestborrow SET state = 2, update_date = "${currentDate}" WHERE id = ${id}`, function (err, result, fields) {
         if (err) res.json({ code: 500 });
@@ -27,25 +27,25 @@ function denyreq(res, id) {
 }
 
 // For customer
-function getLoanHistory(res, id) {
-    //var id = req.query.id;
+function getLoanHistory(req, res) {
+    var id = req.query.id;
     connect_DB.query("SELECT id, request_day, doc_name, state, update_date FROM (requestborrow NATURAL JOIN documents) WHERE student_id =" + id, function (err, result, fields) {
         if (err) res.json({ code: 500 });
         res.json({ loanHistory: JSON.stringify(result) });
     });
 }
 
-function getBorrowHistory(res, id) {
-    //var id = req.query.id;
+function getBorrowHistory(req, res) {
+    var id = req.query.id;
     connect_DB.query(`SELECT document_id, received_day, doc_name, state, returned_day FROM (requestborrow NATURAL JOIN documents) WHERE student_id = ${id} AND (state = 3 OR state = 4)`, function (err, result, fields) {
         if (err) res.json({ code: 500 });
         res.json({ borrowHistory: JSON.stringify(result) });
     });
 }
 
-function request(res, student_id, book_id) {
-    //var student_id = req.query.stu_id;
-    //var book_id = req.query.book_id;
+function request(req, res) {
+    var student_id = req.query.stu_id;
+    var book_id = req.query.book_id;
     const currentDate = new Date().toISOString().split('T')[0];
 
     connect_DB.query(`INSERT INTO requestborrow(student_id, document_id, request_day) VALUES (${student_id}, ${book_id}, "${currentDate}")`, function (err, result, fields) {
