@@ -14,6 +14,7 @@ const loanManagementRoute = require('./routes/loan_management');
 const signinRoute = require('./routes/signin');
 const authorizationRoute = require("./routes/authorization");
 const registrationRoute = require("./routes/registration");
+const reviewRoute = require("./routes/review");
 
 
 const limiter = rateLimit({
@@ -56,6 +57,8 @@ app.use("/api/signin", signinRoute);
 app.use("/api/authorization", authorizationRoute);
 
 app.use("/api/register", registrationRoute);
+
+app.use("/api/review", reviewRoute);
 
 
 app.listen(8080);
