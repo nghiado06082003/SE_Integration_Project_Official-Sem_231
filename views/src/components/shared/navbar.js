@@ -24,7 +24,7 @@ export default function Navbar(props){
     }
     else {
       axios
-        .post('http://localhost:8080/api/publicTest/', {}, {
+        .post('http://localhost:8080/api/authorization/collab', {}, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -39,7 +39,7 @@ export default function Navbar(props){
         });
       
       axios
-        .post('http://localhost:8080/api/protectedTest/authorization', {}, {
+        .post('http://localhost:8080/api/authorization/admin', {}, {
           headers: {
             Authorization: `Bearer ${token}`
           }

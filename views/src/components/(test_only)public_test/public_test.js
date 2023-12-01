@@ -12,7 +12,7 @@ function PublicTest() {
   const navigate = useNavigate();
   useEffect(() => {
     axios
-      .post("/api/publicTest/loadCommentFrame", {}, {
+      .post("/api/authorization/collab", {}, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -43,7 +43,7 @@ function PublicTest() {
       });
     
     axios
-      .post("/api/publicTest/loadMemberConfig", {}, {
+      .post("/api/authorization/admin", {}, {
         headers: {
           Authorization: `Bearer ${token}`
         }

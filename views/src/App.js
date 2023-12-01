@@ -32,7 +32,7 @@ function App() {
         <Route path='signin' element={<SignIn />} />
         <Route path='signup' element={<SignUp />} />
         <Route path='publicTest' element={<PublicTest />} />
-        <Route element={<PrivateRoutes validateRoute={"protectedTest"} />} >
+        <Route element={<PrivateRoutes validatePermission={"admin"} />} >
           <Route path='protectedTest' element={<ProtectedTest />} />
         </Route>
         <Route path='feed'>

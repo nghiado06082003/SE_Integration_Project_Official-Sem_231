@@ -15,24 +15,21 @@ function ProtectedTest() {
     const token = cookies.get("TOKEN");
     const navigate = useNavigate();
     useEffect(() => {
-        axios.post("/api/protectedTest", {}, {
+        axios.post("/api/authorization/admin", {}, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then((response) => {
-            setMessage(response.data.message);
-
-        }).catch((error) => {
-            console.log(error.response);
-        })
+        }).then((response) => { })
+            .catch((error) => {
+                console.log(error.response);
+            })
     }, [])
     return (
         <>
             <h1>Đây là trang dành riêng cho Ban chủ nhiệm, và chỉ nên hiển thị cho Ban chủ nhiệm</h1>
-            <button type="submit" className="btn btn-primary" onClick={() => { cookies.remove("TOKEN", { path: "/" }); navigate("/signin");}}>
+            <button type="submit" className="btn btn-primary" onClick={() => { cookies.remove("TOKEN", { path: "/" }); navigate("/signin"); }}>
                 Đăng xuất
             </button>
-            <h6>{message ? message : "Chờ server authorize quyền..."}</h6>
         </>
 
     )

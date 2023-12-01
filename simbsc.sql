@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 24, 2023 at 08:31 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th12 01, 2023 lúc 08:01 AM
+-- Phiên bản máy phục vụ: 10.4.27-MariaDB
+-- Phiên bản PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `simbsc`
+-- Cơ sở dữ liệu: `simbsc`
 --
 CREATE DATABASE IF NOT EXISTS `simbsc` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `simbsc`;
@@ -26,7 +26,7 @@ USE `simbsc`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `borrow`
+-- Cấu trúc bảng cho bảng `borrow`
 --
 
 CREATE TABLE IF NOT EXISTS `borrow` (
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `borrow` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `documents`
+-- Cấu trúc bảng cho bảng `documents`
 --
 
 CREATE TABLE IF NOT EXISTS `documents` (
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `documents` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `documents`
+-- Đang đổ dữ liệu cho bảng `documents`
 --
 
 INSERT INTO `documents` (`document_id`, `doc_name`, `type`, `author`, `publisher`, `publish_year`, `quantity`, `text`, `description`) VALUES
@@ -74,7 +74,7 @@ INSERT INTO `documents` (`document_id`, `doc_name`, `type`, `author`, `publisher
 -- --------------------------------------------------------
 
 --
--- Table structure for table `members`
+-- Cấu trúc bảng cho bảng `members`
 --
 
 CREATE TABLE IF NOT EXISTS `members` (
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `members` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `members`
+-- Đang đổ dữ liệu cho bảng `members`
 --
 
 INSERT INTO `members` (`student_id`, `student_name`, `email`, `password`, `state`, `join_date`, `permission`) VALUES
@@ -103,7 +103,7 @@ INSERT INTO `members` (`student_id`, `student_name`, `email`, `password`, `state
 -- --------------------------------------------------------
 
 --
--- Table structure for table `requestborrow`
+-- Cấu trúc bảng cho bảng `requestborrow`
 --
 
 CREATE TABLE IF NOT EXISTS `requestborrow` (
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `requestborrow` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `requestborrow`
+-- Đang đổ dữ liệu cho bảng `requestborrow`
 --
 
 INSERT INTO `requestborrow` (`student_id`, `document_id`, `request_day`, `state`, `update_date`, `id`, `received_day`, `returned_day`) VALUES
@@ -129,16 +129,49 @@ INSERT INTO `requestborrow` (`student_id`, `document_id`, `request_day`, `state`
 (5, 2, '2023-11-08', 0, NULL, 4, NULL, NULL),
 (5, 2, '2023-11-09', 0, NULL, 5, NULL, NULL);
 
+-- --------------------------------------------------------
+
 --
--- Constraints for dumped tables
+-- Cấu trúc bảng cho bảng `reviews`
+--
+
+CREATE TABLE IF NOT EXISTS `reviews` (
+  `review_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(1024) NOT NULL,
+  `book_name` varchar(2048) NOT NULL,
+  `book_author` varchar(2048) NOT NULL,
+  `summary` varchar(10000) NOT NULL,
+  `content` mediumtext NOT NULL,
+  `submit_date` date NOT NULL,
+  `status` varchar(128) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  PRIMARY KEY (`review_id`),
+  KEY `student_id` (`student_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `reviews`
+--
+
+INSERT INTO `reviews` (`review_id`, `title`, `book_name`, `book_author`, `summary`, `content`, `submit_date`, `status`, `student_id`) VALUES
+(1, 'Đây là tiêu đề bài review', 'Kỹ thuật lập trình', 'Nguyễn Trung Trực', 'Đây là tóm tắt bài review (tối đa 10000 kí tự)', 'Đây là nội dung bài review', '2023-12-01', 'Chấp nhận', 2000002);
+
+--
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `borrow`
+-- Các ràng buộc cho bảng `borrow`
 --
 ALTER TABLE `borrow`
   ADD CONSTRAINT `borrow_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `members` (`student_id`),
   ADD CONSTRAINT `borrow_ibfk_2` FOREIGN KEY (`document_id`) REFERENCES `documents` (`document_id`);
+
+--
+-- Các ràng buộc cho bảng `reviews`
+--
+ALTER TABLE `reviews`
+  ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `members` (`student_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
