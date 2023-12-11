@@ -54,3 +54,53 @@ API: /api/loanManagement/customer/request?stu_id=<INT>&book_id=<INT>
 Res: 
 	+ Failed:  JSON {code: 500}
 	+ Successed: JSON {code: 300}
+2. Module quản lí bài đăng hoạt động
+* Get post list
+API: /api/post
+Res: 
+	+ Failed:  JSON {500: "Database Error: Cannot fetch from database"}
+	+ Successed: JSON {"postList": [{"post_id": <INT>, "title": <TEXT>, "brief": <TEXT>, "create_date": <DATE>, "last_change": <DATE>}]}
+
+* Get detail of a post (including comments)
+API: /api/post/detail?id=<INT>
+Res: 
+	+ Failed:  JSON {500: "Database Error: Cannot fetch from database"}
+	+ Successed: JSON {
+				"post": [{"post_id": <INT>, "title": <TEXT>, "brief": <TEXT>, "content": <TEXT>, "create_date": <DATE>, "last_change": <DATE>}],
+    				"comments": [{"cmt_id": <INT>, "post_id": <INT>, "student_id": <INT>, "content": <TEXT>, "last_change": <DATE>},{..},..]
+			}
+* Create new post
+API: /api/post/new?title=<TEXT>&brief=<TEXT>&content=<TEXT>
+Res: 
+	+ Failed:  JSON {500: "Database Error: Cannot insert into database"}
+	+ Successed: JSON {300: "OK"}
+
+* Edit post
+API: /api/post/edit?id=<INT>&title=<TEXT>&brief=<TEXT>&content=<TEXT>
+Res: 
+	+ Failed:  JSON {500: "Database Error: Cannot insert into database"}
+	+ Successed: JSON {300: "OK"}
+
+* Delete post
+API: /api/post/delete?id=<INT>
+Res: 
+	+ Failed:  JSON {500: "Database Error: Cannot delete from database"}
+	+ Successed: JSON {300: "OK"}
+
+* Create new comment
+API: /api/post/comment/new?post_id=<INT>&student_id=<INT>&content=<TEXT>
+Res: 
+	+ Failed:  JSON { 500: }
+	+ Successed: JSON { 300: "OK"}
+
+* Edit comment
+API: /api/post/comment/edit?id=<INT>&content=<TEXT>
+Res: 
+	+ Failed:  JSON {500: "Database Error: Cannot insert into database"}
+	+ Successed: JSON {300: "OK"}
+
+* Delete comment
+API: /api/post/comment/delete?id=<INT>
+Res: 
+	+ Failed:  JSON {500: "Database Error: Cannot delete from database"}
+	+ Successed: JSON {300: "OK"}
