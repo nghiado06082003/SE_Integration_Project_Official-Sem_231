@@ -1,0 +1,42 @@
+import { Link } from 'react-router-dom';
+export default function Profile() {
+  return (
+    <div className='flex flex-grow justify-center '>
+      <div className='flex flex-row gap-20'>
+        <div className="mt-6 border-t border-gray-100">
+          <dl className="divide-y divide-gray-100 border border-gray-300 px-10 rounded-xl bg-blue-100">
+            <div class="py-8 px-8 max-w-sm bg-blue-100 rounded-xl  space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6">
+                  <img class="block mx-auto h-24 rounded-full sm:mx-0 sm:shrink-0" src="https://tailwindcss.com/img/erin-lindford.jpg" alt="Woman's Face"/>
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className=" font-medium leading-6 text-blue-700">Họ và Tên: </dt>
+              <dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">Nguyễn Văn A</dd>
+              
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className=" font-medium leading-6 text-blue-700">MSSV: </dt>
+              <dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">2110000</dd>
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className=" font-medium leading-6 text-blue-700">Email: </dt>
+              <dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">abc@hcmut.edu.vn</dd>
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className=" font-medium leading-6 text-blue-700">Số sách đã quyên góp: </dt>
+              <Link to="#"><dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">1 <span className='text-blue-300'>(Click để xem chi tiết)</span></dd></Link>
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className=" font-medium leading-6 text-blue-700">Sách đang mượn: </dt>
+              <Link to="/borrow-history"><dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">1 <span className='text-blue-300'>(Click để xem chi tiết)</span></dd></Link>
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className=" font-medium leading-6 text-blue-700">Các chủ đề đã tạo: </dt>
+              <Link to="/review-history"><dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">1 <span className='text-blue-300'>(Click để xem chi tiết)</span></dd></Link>
+            </div>
+          </dl>
+        </div>
+      </div>
+      
+    </div>
+  )
+}
