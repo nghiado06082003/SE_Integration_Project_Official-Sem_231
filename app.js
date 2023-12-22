@@ -16,6 +16,7 @@ const authorizationRoute = require("./routes/authorization");
 const registrationRoute = require("./routes/registration");
 const reviewRoute = require("./routes/review");
 const postRoute = require('./routes/post_management');
+const userManagement = require('./routes/user_management');
 
 
 const limiter = rateLimit({
@@ -62,6 +63,8 @@ app.use("/api/register", registrationRoute);
 app.use("/api/review", reviewRoute);
 
 app.use("/api/post", postRoute);
+
+app.use("/api/userManagement", userManagement);
 
 
 app.listen(8080);
