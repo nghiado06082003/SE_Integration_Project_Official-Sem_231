@@ -54,6 +54,7 @@ API: /api/loanManagement/customer/request?stu_id=<INT>&book_id=<INT>
 Res: 
 	+ Failed:  JSON {code: 500}
 	+ Successed: JSON {code: 300}
+-------------------------------------------------------------------------------------
 2. Module quản lí bài đăng hoạt động
 * Get post list
 API: /api/post
@@ -104,3 +105,30 @@ API: /api/post/comment/delete?id=<INT>
 Res: 
 	+ Failed:  JSON {500: "Database Error: Cannot delete from database"}
 	+ Successed: JSON {300: "OK"}
+-------------------------------------------------------------------------------------
+3. Module quản lí thành viên:
+   
+* View users list
+API: /api/userManagement
+RES: JSON: {"userList": [{"student_id":<INT>,"student_name":<TEXT>,"state":<TEXT>,"permission":[<role 1>,<role 2>,...]},...]}
+
+* Search users
+API: /api/userManagement/search?term=<TEXT>
+RES: JSON: {"userList": [{"student_id":<INT>,"student_name":<TEXT>,"state":<TEXT>,"permission":[<role 1>,<role 2>,...]},...]}
+
+* View user's detail
+API: /api/userManagement/detail?id=<INT>
+RES: JSON: {"user": {"student_id":<INT>, "student_name":<TEXT>, "email": <TEXT>, "join_date": <TEXT>, "state": <TEXT>, "permission": [<role 1>, <role 2>,...]}}
+
+* Block/Active a User ------ value = <INT> in {1: block, 0: unblocked/active}
+API: /api/userManagement/block?id=<INT>&value=<INT>
+Res: 
+	+ Failed:  JSON {500: "Database Error: Cannot delete from database"}
+	+ Successed: JSON {300: "OK"}
+
+* Change Permission ------ value of each permission in {1: yes, 0: no}
+API: /api/userManagement/permission?id=<INT>&admin=<INT>&collaborator=<INT>&member=<INT>
+Res: 
+	+ Failed:  JSON {500: "Database Error: Cannot delete from database"}
+	+ Successed: JSON {300: "OK"}
+

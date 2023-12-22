@@ -5,3 +5,44 @@
     
 
 */
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+//   const [BorrowList, setBorrowList] = useState([]);
+  
+//   useEffect(() => {
+//     axios.get("http://localhost:8080/api/loanManagement/manager/list")
+//     .then((response) => {
+//       if (response.status === 200 && 'loanList' in response.data) {
+//         setBorrowList(JSON.parse(response.data.loanList));
+//       }
+//     })
+//     .catch((error) => {
+//       console.error("Error!!!!!!", error);
+//     });
+//   }, []);
+
+// const approve = (id) => {
+//     axios.get("http://localhost:8080/api/loanManagement/manager/request/approve", {params: {id: id}})
+//     .then((response) => {
+//       if (response.status === 200 && response.data.code === 300) {
+//         window.location.reload();
+//       }
+//     })
+//     .catch((error) => {
+//       console.error("Error!!!!!!", error);
+//     });
+//   };
+
+//   const deny = (id) => {
+//     axios.get("http://localhost:8080/api/loanManagement/manager/request/deny", {params: {id: id}})
+//     .then((response) => {
+//       if (response.status === 200 && response.data.code === 300) {
+//         window.location.reload();
+//       }
+//     })
+//     .catch((error) => {
+//       console.error("Error!!!!!!", error);
+//     });
+//   };

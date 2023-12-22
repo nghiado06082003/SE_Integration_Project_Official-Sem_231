@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2023 at 05:48 AM
+-- Generation Time: Dec 22, 2023 at 06:40 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -20,8 +20,53 @@ SET time_zone = "+00:00";
 --
 -- Database: `simbsc`
 --
-CREATE DATABASE IF NOT EXISTS `simbsc` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+DROP DATABASE IF EXISTS `simbsc`;
+CREATE DATABASE `simbsc` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `simbsc`;
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_user_by_id` (IN `StudentId` INT(11))   SELECT
+    members.student_id,
+    members.student_name,
+    members.email,
+    members.join_date,
+    members.state,
+    CONCAT('[', GROUP_CONCAT('"', role.role, '"'), ']') AS permission
+FROM
+    members RIGHT OUTER JOIN role ON members.student_id = role.student_id
+WHERE
+	members.student_id = StudentId
+GROUP BY
+    members.student_id$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `search_user` (IN `user_input` TEXT)   SELECT
+    members.student_id,
+    members.student_name,
+    members.state,
+    CONCAT('[', GROUP_CONCAT('"', role.role, '"'), ']') AS permission
+FROM
+    members RIGHT OUTER JOIN role ON members.student_id = role.student_id
+WHERE
+    ((CAST(members.student_id AS CHAR) LIKE CONCAT('%', user_input, '%')) OR
+    (user_input NOT REGEXP '^[0-9]+$' AND members.student_name LIKE CONCAT('%', user_input, '%')))
+GROUP BY
+    members.student_id$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `view_users_list` ()   SELECT
+    members.student_id,
+    members.student_name,
+    members.state,
+    CONCAT('[', GROUP_CONCAT('"', role.role, '"'), ']') AS permission
+FROM
+    members RIGHT OUTER JOIN role ON members.student_id = role.student_id
+GROUP BY
+    members.student_id$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -79,9 +124,16 @@ INSERT INTO `members` (`student_id`, `student_name`, `email`, `password`, `state
 (0, 'Trần Văn A', 'tranvanA@hcmut.edu.vn', 'tranvana', '', '2023-11-09', ''),
 (1, 'a', 'abc', '###v', 'ok', '0000-00-00', 'A'),
 (2, 'a', 'abc', '###v', 'ok', '2023-12-11', 'A'),
-(2000000, 'Admin 1', 'abc@def.com', '$2b$10$UpVm2Pt389EY0anjTZAwIulqMNBSo3Wmqk8inN47l9ABQyk5XfWKK', 'Đang hoạt động', '2023-11-14', 'Thành viên ban chủ nhiệm'),
-(2000001, 'Admin 2', 'abd@def.com', '$2b$10$ExtohTHcom1BvBpujafeQet/o8rMJNppbF4xQ8J8MbLE9eE3oilJO', 'Đang hoạt động', '2023-11-14', 'Thành viên ban chủ nhiệm'),
-(2000002, 'Collab 1', 'abe@def.com', '$2b$10$E30b5YunGc0lJ1G7D/PrZenQXV.oeiHuNaCH2T/QLB6eX3J2DCLFe', 'Đang hoạt động', '2023-11-15', 'Cộng tác viên');
+(4, 'Võ Phúc Tường', 'tuongvo1234@gmail.com', 'tuongvo1234', 'ok', '2023-12-22', ''),
+(5, 'Trần Văn C', 'tranvanC1234@gmail.com', 'tranvanC1234', 'blocked', '2023-12-22', ''),
+(6, 'Nguyễn Thị B', 'nguyenthiB1234@gmail.com', 'nguyenthiB1234', 'ok', '2023-12-13', ''),
+(7, 'Dương Văn D', 'duongvanD1234@gmail.com', 'duongvanD1234', 'ok', '2023-11-30', ''),
+(2000000, 'Admin 1', 'admin1@gmail.com', '$2b$10$UpVm2Pt389EY0anjTZAwIulqMNBSo3Wmqk8inN47l9ABQyk5XfWKK', 'Đang hoạt động', '2023-11-14', 'Thành viên ban chủ nhiệm'),
+(2000001, 'Admin 2', 'admin2@gmail.com', '$2b$10$ExtohTHcom1BvBpujafeQet/o8rMJNppbF4xQ8J8MbLE9eE3oilJO', 'Đang hoạt động', '2023-11-14', 'Thành viên ban chủ nhiệm'),
+(2000002, 'Collab 1', 'collab1@gmail.com', '$2b$10$E30b5YunGc0lJ1G7D/PrZenQXV.oeiHuNaCH2T/QLB6eX3J2DCLFe', 'Đang hoạt động', '2023-11-15', 'Cộng tác viên'),
+(2000003, 'Media 1', 'media1@gmail.com', '$2b$10$moDAhs42MpTxRNkxayBSOOe2z959mhTzD.RP6PQMTkFH0Uc1uA2rS', 'Đang hoạt động', '2023-11-15', 'Thành viên ban truyền thông'),
+(2000004, 'Content 1', 'content1@gmail.com', '$2b$10$K.arbzneeymcCNZTFfqObOrHfNSTXGsWHPIgR9WtC1YVCcSEKnpcu', 'Đang hoạt động', '2023-11-15', 'Thành viên ban nội dung'),
+(2000005, 'Logistic 1', 'logistic1@gmail.com', '$2b$10$nzR46CJ934k6zhXr0y.Pne7frXTbAAXIkgYeFkjNlZIio3okbtEd6', 'Đang hoạt động', '2023-11-15', 'Thành viên ban hậu cần');
 
 -- --------------------------------------------------------
 
@@ -182,6 +234,33 @@ CREATE TABLE `reviews` (
 INSERT INTO `reviews` (`review_id`, `title`, `book_name`, `book_author`, `summary`, `content`, `submit_date`, `status`, `student_id`) VALUES
 (1, 'Đây là tiêu đề bài review', 'Kỹ thuật lập trình', 'Nguyễn Trung Trực', 'Đây là tóm tắt bài review (tối đa 10000 kí tự)', 'Đây là nội dung bài review', '2023-12-01', 'Chấp nhận', 2000002);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role`
+--
+
+CREATE TABLE `role` (
+  `student_id` int(11) NOT NULL,
+  `role` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `role`
+--
+
+INSERT INTO `role` (`student_id`, `role`) VALUES
+(0, 'collaborator'),
+(0, 'member'),
+(5, 'admin'),
+(5, 'member'),
+(6, 'collaborator'),
+(7, 'collaborator'),
+(7, 'member'),
+(2000000, 'admin'),
+(2000001, 'admin'),
+(2000002, 'collaborator');
+
 --
 -- Indexes for dumped tables
 --
@@ -225,6 +304,13 @@ ALTER TABLE `requestborrow`
 --
 ALTER TABLE `reviews`
   ADD PRIMARY KEY (`review_id`),
+  ADD KEY `student_id` (`student_id`);
+
+--
+-- Indexes for table `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`student_id`,`role`),
   ADD KEY `student_id` (`student_id`);
 
 --
@@ -277,6 +363,12 @@ ALTER TABLE `post_comments`
 --
 ALTER TABLE `reviews`
   ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `members` (`student_id`);
+
+--
+-- Constraints for table `role`
+--
+ALTER TABLE `role`
+  ADD CONSTRAINT `role_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `members` (`student_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

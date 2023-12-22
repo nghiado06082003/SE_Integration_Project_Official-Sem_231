@@ -4,6 +4,9 @@
     trong trang cá nhân của thành viên/ trong danh sách của thành viên có thể thực hiện thay đổi quyền: từ admin<->member hoặc thay đổi trạng thái active<->blocked
 
 */
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 const people = [
     {
       name: 'Leslie Alexander',
@@ -56,6 +59,7 @@ const people = [
   ]
   
   export default function MemberManagement() {
+
     return (
         <div className="flex flex-grow justify-center">
             <ul role="list" className="divide-y divide-gray-100 w-full sm:mx-20">
