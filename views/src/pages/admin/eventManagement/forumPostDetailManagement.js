@@ -1,13 +1,8 @@
-/*
-    Vào bài đăng forum chi tiết, hiển thị danh sách cmt của cái topic/review đó theo thời gian
-    dạng như forum trong bkel chăng?
-
-*/
 import React from 'react';
 import ReviewCard from '../../../component/ReviewCard';
 import { useParams } from 'react-router-dom';
 
-import reviews from './reviewdata';
+import reviews from '../../user/forum/reviewdata';
 
 const comments = [
     {
@@ -18,7 +13,7 @@ const comments = [
       content: 'Very straight-to-point article. Really worth time reading. Thank you! But tools are just the instruments for the UX designers. The knowledge of the design tools are as important as the creation of the design strategy.',
     },
   ];
-const DiscussionSection = () => {
+const ForumPostDetailManagement = () => {
   const { id } = useParams();
   return (
     <div className='flex flex-grow justify-center'>
@@ -75,4 +70,4 @@ const DiscussionSection = () => {
   );
 };
 
-export default DiscussionSection;
+export default ForumPostDetailManagement;

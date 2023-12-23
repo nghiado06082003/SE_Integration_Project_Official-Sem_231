@@ -53,7 +53,7 @@ export default function Library() {
   }, []);
   
   return (
-    <div className="container mx-auto">
+    <div className="container max-w-screen-xl mx-auto">
       <div className="flex justify-between top">
         <div className="flex items-center">
           <Link to={"/library/donate-document"}>

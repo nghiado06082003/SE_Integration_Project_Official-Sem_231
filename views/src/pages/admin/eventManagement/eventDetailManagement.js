@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-const EventDetail = () => {
+const EventDetailManagement = () => {
     const [isLiked, setIsLiked] = useState(false);
 
   const handleLike = () => {
@@ -38,7 +38,14 @@ const EventDetail = () => {
             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
 
             </div>
-            <div className="flex justify-end">              
+            <div className="flex">
+            <button className="flex mr-4 text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded">
+                Edit
+              </button>
+              <button className="flex mr-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
+                Delete
+              </button>
+              
               <button onClick={handleLike} className={`rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4 ${heartColor}`}>
                 <svg
                 fill="currentColor"
@@ -101,4 +108,4 @@ const EventDetail = () => {
   );
 };
 
-export default EventDetail;
+export default EventDetailManagement;

@@ -52,11 +52,11 @@ export default function Header(){
                                             <Link to="/borrow-history" className="block px-4 py-1 text-gray-800 border-gray-100 hover:bg-transparent border-0 hover:text-primary-700">Lịch sử mượn </Link>
                                         </li>
                                         <li>
-                                            <Link to="/404" className="block px-4 py-1 text-gray-800 border-gray-100 hover:bg-transparent border-0 hover:text-primary-700">Lịch sử quyên góp </Link>
+                                            <Link to="/contribute-history" className="block px-4 py-1 text-gray-800 border-gray-100 hover:bg-transparent border-0 hover:text-primary-700">Lịch sử quyên góp </Link>
                                         </li>
                                         {isAdmin 
                                         && <li>
-                                            <Link to="/admin" className="block px-4 py-1 text-gray-800 border-gray-100 hover:bg-transparent border-0 hover:text-primary-700">Chế độ quản trị viên</Link>
+                                            <Link to="/admin" className="block px-4 py-1 text-gray-800 border-gray-100 hover:bg-transparent border-0 hover:text-primary-700">Chế độ thành viên clb</Link>
                                         </li>}
 
                                         <li>

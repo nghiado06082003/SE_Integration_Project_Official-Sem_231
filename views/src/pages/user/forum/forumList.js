@@ -7,9 +7,6 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ReviewList from '../../../component/Review';
-import img1 from '../../../img/event1.png';
-import img2 from '../../../img/event2.png';
-import img3 from '../../../img/event3.png';
 import reviews from './reviewdata';
 const Forum = () => {
   const settings = {
