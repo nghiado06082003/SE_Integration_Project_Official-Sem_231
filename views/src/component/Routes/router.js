@@ -26,28 +26,29 @@ import ErrorLayout from "../Layout/ErrorLayout";
 import Error401 from "../../pages/error/401";
 import Error403 from "../../pages/error/403";
 import Error404 from "../../pages/error/404";
-//end erro layout
+//end error layout
 
 export default function Router() {
   const routes = useRoutes([
     {
       element: <UserLayout />,
       children: [
-        {element: <Homepage />, index:true,},
-        { path: "library",
+        { element: <Homepage />, index: true},
+        {
+          path: "library",
           children: [
-            {element: <Library />, index: true,},
-            {path: "document-detail/:document_id", element:<LibDocDetail></LibDocDetail>},
+            { element: <Library />, index: true},
+            { path: "document-detail/:document_id", element:<LibDocDetail></LibDocDetail>},
           ]
         },
-        { path:"log-in", element: <LoginForm></LoginForm>  },
-        { path:"sign-up", element: <SignupForm></SignupForm> },
-        { path:"profile",element:<Profile></Profile>},
-        { path:"borrow-history",element:<BorrowHistory></BorrowHistory>},
-        { path:"review-history",element:<ReviewHistory></ReviewHistory>},
-        {path:"event",element:<Event></Event>},
-        {path:"forum",element:<Forum></Forum>},
-        {path:"forum/:id",element:<DiscussionSection></DiscussionSection>}
+        { path:"sign-in", element: <LoginForm />  },
+        { path:"sign-up", element: <SignupForm /> },
+        { path:"profile", element: <Profile /> },
+        { path:"borrow-history", element: <BorrowHistory /> },
+        { path:"review-history", element: <ReviewHistory /> },
+        { path:"event", element: <Event /> },
+        { path:"forum", element: <Forum /> },
+        { path:"forum/:id", element: <DiscussionSection /> }
       ]
     },
     // Route for Admin Role
@@ -55,18 +56,18 @@ export default function Router() {
       path: "/admin",
       element: <AdminLayout/>,
       children: [
-        {element: <Homepage />, index:true,},
-        {path:"member-management", element:<MemberManagement></MemberManagement>}
-
+        { element: <Homepage />, index: true },
+        { path:"member-management", element:<MemberManagement />}
       ]
     },
-    //Route for error
+    // Route for error
     {
       element: <ErrorLayout/>,
       children: [
-        {path: "401", element: <Error401/>},
-        {path: "403", element: <Error403/>},
-        {path: "404", element: <Error404/>},
+        { path: "401", element: <Error401 /> },
+        { path: "403", element: <Error403 /> },
+        { path: "404", element: <Error404 /> },
+        { path: "*", element: <Error404 /> }
       ]
     },
   ]);

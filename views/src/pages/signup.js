@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { BsInfoCircleFill } from "react-icons/bs";
 import { Link } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 const SignupForm = () => {
   const [formValue, setFormValue] = useState({
@@ -13,6 +14,7 @@ const SignupForm = () => {
   const [error, setError] = useState('');
   const [showErrors, setShowErrors] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const cookies = new Cookies();
   
   const handleChange = (e) => {
     setFormValue({
@@ -30,10 +32,17 @@ const SignupForm = () => {
         student_id: formValue.mssv,
         student_name: formValue.name,
         email: formValue.email,
-        password: formValue.password,
+        password: formValue.password
       };
       const response = await axios.post('http://localhost:8080/api/register', info);
-      console.log(response.data);
+      cookies.set("TOKEN", response.data.token, {
+        path: "/",
+        expires: new Date(Date.now() + 3600 * 1000)
+      });
+      cookies.set('info', response.data.member, {
+        path: "/",
+        expires: new Date(Date.now() + 3600 * 1000)
+      });
       setShowModal(true);
     }
     catch (error) {
@@ -50,7 +59,10 @@ const SignupForm = () => {
   return (
     <div className="flex flex-grow p-10 justify-center bg-blue-100">
       <div className="w-full max-w-sm p-4 bg-blue-300 border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8">
-        <form className="space-y-6" onSubmit={handleSubmit}>
+        <form
+          className="space-y-6"
+          onSubmit={handleSubmit}
+        >
           <div className='flex justify-center'>
             <h5 className="text-2xl font-bold text-gray-900 dark:text-white">Đăng ký</h5>
           </div>

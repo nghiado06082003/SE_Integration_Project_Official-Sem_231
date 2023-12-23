@@ -7,15 +7,15 @@ module.exports = {
         loan_model.getLoanList(res);
     },
 
-    getLoanHistory: [authorization_model.loadCurMember, loan_model.getLoanHistory(req, res), function (req, res) {
+    getLoanHistory: [authorization_model.loadCurMember, loan_model.getLoanHistory, function (req, res) {
         res.status(200).json({});
     }],
 
-    getBorrowHistory: [authorization_model.loadCurMember, loan_model.getBorrowHistory(req, res), function (req, res) {
+    getBorrowHistory: [authorization_model.loadCurMember, loan_model.getBorrowHistory, function (req, res) {
         res.status(200).json({});
     }],
 
-    request: [authorization_model.loadCurMember, loan_model.request(req, res), function (req, res) {
+    request: [authorization_model.loadCurMember, loan_model.request, function (req, res) {
         res.status(200).json({});
     }],
 
