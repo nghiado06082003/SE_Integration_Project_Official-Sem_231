@@ -9,9 +9,9 @@ loan_management_router.get("/manager/request/approve", loan_management_controlle
 loan_management_router.get("/manager/request/deny", loan_management_controller.denyreq);
 
 // For customer
-loan_management_router.get("/customer/loanhistory", loan_management_controller.getLoanHistory);
-loan_management_router.get("/customer/request", loan_management_controller.request);
-loan_management_router.get("/customer/borrowhistory", loan_management_controller.getBorrowHistory);
+loan_management_router.post("/customer/loanhistory", loan_management_controller.getLoanHistory);
+loan_management_router.post("/customer/request", loan_management_controller.request);
+loan_management_router.post("/customer/borrowhistory", loan_management_controller.getBorrowHistory);
 
 
 module.exports = loan_management_router;

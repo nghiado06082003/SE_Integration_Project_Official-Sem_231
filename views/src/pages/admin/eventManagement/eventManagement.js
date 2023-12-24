@@ -50,3 +50,20 @@ const EventManagement = () => {
 
 export default EventManagement;
 
+
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+
+//   const [postList, setPostList] = useState([]);
+  
+//   useEffect(() => {
+//     axios.get("http://localhost:8080/api/post/")
+//     .then((response) => {
+//       if (response.status === 200 && 'responseData' in response.data) {
+//         setPostList(JSON.parse(response.data.responseData));
+//       }
+//     })
+//     .catch((error) => {
+//       console.error("Error!!!!!!", error);
+//     });
+//   }, []);

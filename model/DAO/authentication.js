@@ -28,23 +28,22 @@ function signin(res, obj) {
       .compare(obj.password, result[0].password)
       .then((passwordCheck) => {
         if (!passwordCheck) {
-          res.status(401).json({ message: "Người dùng không tồn tại hoặc sai thông tin đăng nhập. Vui lòng thử lại" });
+          return res.status(401).json({ message: "Người dùng không tồn tại hoặc sai thông tin đăng nhập. Vui lòng thử lại" });
         }
-        else {
-          const member = {
-              student_id: result[0].student_id,
-              email: result[0].email,
-              state: result[0].state,
-              permission: result[0].permission
-          };
-          const token = jwt.sign(member, "RANDOM-TOKEN", { expiresIn: "10m" });
-          res.json({ member: member, token: token });
-        }
+        
+        const member = {
+          student_id: result[0].student_id,
+          email: result[0].email,
+          state: result[0].state,
+          permission: result[0].permission
+        };
+        const token = jwt.sign(member, "RANDOM-TOKEN", { expiresIn: "1h" });
+        res.json({ member: member, token: token });
       })
       .catch((error) => {
-          res.status(500).json({ message: "Hệ thống gặp vấn đề. Vui lòng thử lại sau" });
+        res.status(500).json({ message: "Hệ thống gặp vấn đề. Vui lòng thử lại sau" });
       });
-  })
+  });
 }
 
 module.exports = { checkNoEmpty, signin }

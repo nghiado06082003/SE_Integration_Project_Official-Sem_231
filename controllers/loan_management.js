@@ -1,22 +1,23 @@
 ﻿const path = require("path");
 const loan_model = require("../model/DAO/loans")
+const authorization_model = require('../model/DAO/authorization');
 
 module.exports = {
     getLoanList: function (req, res) {
         loan_model.getLoanList(res);
     },
 
-    getLoanHistory: function (req, res) {
-        loan_model.getLoanHistory(req, res);
-    },
+    getLoanHistory: [authorization_model.loadCurMember, loan_model.getLoanHistory, function (req, res) {
+        res.status(200).json({});
+    }],
 
-    getBorrowHistory: function (req, res) {
-        loan_model.getBorrowHistory(req, res);
-    },
+    getBorrowHistory: [authorization_model.loadCurMember, loan_model.getBorrowHistory, function (req, res) {
+        res.status(200).json({});
+    }],
 
-    request: function (req, res) {
-        loan_model.request(req, res);
-    },
+    request: [authorization_model.loadCurMember, loan_model.request, function (req, res) {
+        res.status(200).json({});
+    }],
 
     approvereq: function (req, res) {
         loan_model.approvereq(req, res);

@@ -40,15 +40,16 @@ import Error401 from "../../pages/error/401";
 import Error403 from "../../pages/error/403";
 import Error404 from "../../pages/error/404";
 
-//end erro layout
+//end error layout
 
 export default function Router() {
   const routes = useRoutes([
     {
       element: <UserLayout />,
       children: [
-        {element: <Homepage />, index:true,},
-        { path: "library",
+        { element: <Homepage />, index: true},
+        {
+          path: "library",
           children: [
             {element: <Library />, index: true,},
             {path: "document-detail/:document_id", element:<LibDocDetail></LibDocDetail>},
@@ -86,17 +87,16 @@ export default function Router() {
         {path: "event-management/create", element: <EventCreation></EventCreation>},
         {path: "forum-management", element: <ForumManagement></ForumManagement>},
         {path: "forum-management/detail/:id", element: <ForumPostDetailManagement></ForumPostDetailManagement>}
-        
-
       ]
     },
-    //Route for error
+    // Route for error
     {
       element: <ErrorLayout/>,
       children: [
-        {path: "401", element: <Error401/>},
-        {path: "403", element: <Error403/>},
-        {path: "404", element: <Error404/>},
+        { path: "401", element: <Error401 /> },
+        { path: "403", element: <Error403 /> },
+        { path: "404", element: <Error404 /> },
+        { path: "*", element: <Error404 /> }
       ]
     },
   ]);

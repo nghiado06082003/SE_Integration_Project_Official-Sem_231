@@ -27,24 +27,26 @@ function denyreq(req, res) {
 }
 
 // For customer
-function getLoanHistory(req, res) {
-    var id = req.query.id;
+async function getLoanHistory(req, res, next) {
+    var id = req.cur_member.student_id;
     connect_DB.query("SELECT id, request_day, doc_name, state, update_date FROM (requestborrow NATURAL JOIN documents) WHERE student_id =" + id, function (err, result, fields) {
         if (err) res.json({ code: 500 });
         res.json({ loanHistory: JSON.stringify(result) });
     });
+    next();
 }
 
-function getBorrowHistory(req, res) {
-    var id = req.query.id;
+async function getBorrowHistory(req, res, next) {
+    var id = req.cur_member.student_id;
     connect_DB.query(`SELECT document_id, received_day, doc_name, state, returned_day FROM (requestborrow NATURAL JOIN documents) WHERE student_id = ${id} AND (state = 3 OR state = 4)`, function (err, result, fields) {
         if (err) res.json({ code: 500 });
         res.json({ borrowHistory: JSON.stringify(result) });
     });
+    next();
 }
 
-function request(req, res) {
-    var student_id = req.query.stu_id;
+async function request(req, res, next) {
+    var student_id = req.cur_member.stu_id;
     var book_id = req.query.book_id;
     const currentDate = new Date().toISOString().split('T')[0];
 
@@ -52,7 +54,7 @@ function request(req, res) {
         if (err) res.json({ code: 500 });
         else res.json({ code: 300 });
     });
-
+    next();
 }
 
 
