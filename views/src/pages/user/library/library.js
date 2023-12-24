@@ -34,15 +34,13 @@ export default function Library() {
   );
   
   return (
-    <div className="container mx-auto">
-      <div className="flex justify-between my-20">
-        <div>
-          <Link
-            to="/library/donate-document"
-            className="flex items-center bg-primary-500 hover:bg-primary-400 text-white font-semibold py-2 px-4 rounded"
-          >
-            <FaUpload className="mr-2" />
-            <span>Quyên góp tài liệu</span>
+    <div className="container max-w-screen-xl mx-auto">
+      <div className="flex justify-between top">
+        <div className="flex items-center">
+          <Link to={"/library/donate-document"}>
+            <button className="flex bg-primary-500 hover:bg-primary-400 text-white font-semibold py-2 px-4 rounded">
+              <FaUpload className="mr-2" />Quyên góp tài liệu
+            </button>
           </Link>
         </div>
         <div className="flex items-center text-darkblue border-b border-primary-300">

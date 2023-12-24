@@ -1,3 +1,12 @@
+/**
+ * trang cá nhân người dùng gồm thông tin cá nhân như mssv, họ và tên, avatar thì hardcode, ...
+ * thống kê số lượng yêu cầu mượn sách/ số lượng sách đang mượn, ấn vào nó sẽ ra trang chi tiết
+ * trang chi tiết này gồm 2 bảng: 1 bảng là thông tin sách đang mượn, 1 bảng là những yêu cầu mượn trước đó
+ * ở dưới sẽ có những thống kê như số lượng sách viết đã quyên góp, ấn vào nó sẽ hiện danh sách
+ * số lượng bài review/topic đã tạo, ấn vào nó sẽ hiện danh sách, ấn vào 1 dòng trong danh sách nó sẽ ra cái bài review/topic chi tiết trong forum
+ * 
+ */
+import { PaperClipIcon } from '@heroicons/react/20/solid'
 import { Link } from 'react-router-dom';
 export default function Profile() {
   return (
