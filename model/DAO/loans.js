@@ -1,3 +1,4 @@
+const { json } = require('body-parser');
 var connect_DB = require('./connect_db')
 
 // For manager
@@ -31,18 +32,18 @@ async function getLoanHistory(req, res, next) {
     var id = req.cur_member.student_id;
     connect_DB.query("SELECT id, request_day, doc_name, state, update_date FROM (requestborrow NATURAL JOIN documents) WHERE student_id =" + id, function (err, result, fields) {
         if (err) res.json({ code: 500 });
-        res.json({ loanHistory: JSON.stringify(result) });
+        else res.json({ loanHistory: JSON.stringify(result) });
+        next();
     });
-    next();
 }
 
 async function getBorrowHistory(req, res, next) {
     var id = req.cur_member.student_id;
     connect_DB.query(`SELECT document_id, received_day, doc_name, state, returned_day FROM (requestborrow NATURAL JOIN documents) WHERE student_id = ${id} AND (state = 3 OR state = 4)`, function (err, result, fields) {
         if (err) res.json({ code: 500 });
-        res.json({ borrowHistory: JSON.stringify(result) });
+        else res.json({ borrowHistory: JSON.stringify(result) });
+        next();
     });
-    next();
 }
 
 async function request(req, res, next) {

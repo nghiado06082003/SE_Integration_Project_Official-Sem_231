@@ -7,58 +7,85 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const people = [
-    {
-      name: 'Leslie Alexander',
-      email: 'leslie.alexander@example.com',
-      role: 'admin',
-      imageUrl:
-        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+// const people = [
+//     {
+//       name: 'Leslie Alexander',
+//       email: 'leslie.alexander@example.com',
+//       role: 'admin',
+//       imageUrl:
+//         'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
      
-    },
-    {
-      name: 'Michael Foster',
-      email: 'michael.foster@example.com',
-      role: 'thành viên',
-      imageUrl:
-        'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//     },
+//     {
+//       name: 'Michael Foster',
+//       email: 'michael.foster@example.com',
+//       role: 'thành viên',
+//       imageUrl:
+//         'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
       
-    },
-    {
-      name: 'Dries Vincent',
-      email: 'dries.vincent@example.com',
-      role: 'thành viên',
-      imageUrl:
-        'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//     },
+//     {
+//       name: 'Dries Vincent',
+//       email: 'dries.vincent@example.com',
+//       role: 'thành viên',
+//       imageUrl:
+//         'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
       
-    },
-    {
-      name: 'Lindsay Walton',
-      email: 'lindsay.walton@example.com',
-      role: 'thành viên',
-      imageUrl:
-        'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//     },
+//     {
+//       name: 'Lindsay Walton',
+//       email: 'lindsay.walton@example.com',
+//       role: 'thành viên',
+//       imageUrl:
+//         'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
      
-    },
-    {
-      name: 'Courtney Henry',
-      email: 'courtney.henry@example.com',
-      role: 'thành viên',
-      imageUrl:
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//     },
+//     {
+//       name: 'Courtney Henry',
+//       email: 'courtney.henry@example.com',
+//       role: 'thành viên',
+//       imageUrl:
+//         'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
      
-    },
-    {
-      name: 'Tom Cook',
-      email: 'tom.cook@example.com',
-      role: 'thành viên',
-      imageUrl:
-        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//     },
+//     {
+//       name: 'Tom Cook',
+//       email: 'tom.cook@example.com',
+//       role: 'thành viên',
+//       imageUrl:
+//         'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
      
-    },
-  ]
+//     },
+//   ]
   
   export default function MemberManagement() {
+
+    const [people, setPeople] = useState([]);
+
+    useEffect(() => {
+      axios.get("http://localhost:8080/api/userManagement")
+      .then((response) => {
+        if (response.status === 200 && 'userList' in response.data) {
+          setPeople(JSON.parse(response.data.userList));
+          console.log(response.data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error!!!!!!", error);
+      });
+    }, []);
+
+    const block = (id, value) => {
+      axios.get("http://localhost:8080/api/userManagement/block", {params: {id: id, value: value}})
+      .then((response) => {
+        if (response.status === 200 && response.data.code === 300) {
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        console.error("Error!!!!!!", error);
+      });
+    };
 
     return (
         <div className="flex flex-grow justify-center">
@@ -78,13 +105,13 @@ const people = [
                 <button
                   type="button"
                   className="text-white rounded-xl bg-red-700 py-2 px-4 mr-5 hover:bg-darkred font-bold"
-                 
+                  onClick={()=>block(person.student_id, 1)}
                 >
                   Block
                 </button>
                 <button
                   className="bg-emerald-600 rounded-xl hover:bg-emerald-700 text-white font-bold py-2 px-4 "
-                  
+                  onClick={()=>block(person.student_id, 0)}
                 >
                   Unblock
                 </button>   

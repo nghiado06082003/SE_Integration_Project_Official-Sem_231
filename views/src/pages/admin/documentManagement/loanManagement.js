@@ -4,13 +4,53 @@
     hiển thị danh sách phê duyệt trả: stt, mssv, tên, tên sách, ngày trả, trạng thái, có 2 lựa chọn (accept hoặc phạt->khóa tài khoản)
 
 */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 const BorrowRequestsTable = () => {
     // Mock data
-    const borrowRequests = [
-        { id: 1, studentId: '123', studentName: 'John Doe', bookName: 'React Mastery', createDate: '2023-01-01' },
-        // Add more data as needed
-    ];
+    // const borrowRequests = [
+    //     { id: 1, studentId: '123', studentName: 'John Doe', bookName: 'React Mastery', createDate: '2023-01-01' },
+    //     // Add more data as needed
+    // ];
+
+    const [borrowRequests, setBorrowRequest] = useState([]);
+
+    useEffect(() => {
+      axios.get("http://localhost:8080/api/loanManagement/manager/list")
+      .then((response) => {
+        if (response.status === 200 && 'loanList' in response.data) {
+          setBorrowRequest(JSON.parse(response.data.loanList));
+        }
+      })
+      .catch((error) => {
+        console.error("Error!!!!!!", error);
+      });
+    }, []);
+
+    const approve = (id) => {
+      axios.get("http://localhost:8080/api/loanManagement/manager/request/approve", {params: {id: id}})
+      .then((response) => {
+        if (response.status === 200 && response.data.code === 300) {
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        console.error("Error!!!!!!", error);
+      });
+    };
+  
+    const deny = (id) => {
+      axios.get("http://localhost:8080/api/loanManagement/manager/request/deny", {params: {id: id}})
+      .then((response) => {
+        if (response.status === 200 && response.data.code === 300) {
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        console.error("Error!!!!!!", error);
+      });
+    };
 
     return (
         <div>
@@ -29,13 +69,13 @@ const BorrowRequestsTable = () => {
             {borrowRequests.map((request, index) => (
                 <tr key={request.id}>
                 <td className="border px-4 py-2">{index + 1}</td>
-                <td className="border px-4 py-2">{request.studentId}</td>
-                <td className="border px-4 py-2">{request.studentName}</td>
-                <td className="border px-4 py-2">{request.bookName}</td>
-                <td className="border px-4 py-2">{request.createDate}</td>
+                <td className="border px-4 py-2">{request.student_id}</td>
+                <td className="border px-4 py-2">{request.student_name}</td>
+                <td className="border px-4 py-2">{request.doc_name}</td>
+                <td className="border px-4 py-2">{(request.request_day).substring(0, 10)}</td>
                 <td className="border px-4 py-2">
-                    <button className="bg-green-500 text-white px-2 py-1 mr-2">Đồng ý</button>
-                    <button className="bg-red-500 text-white px-2 py-1">Từ chối</button>
+                    <button className="bg-green-500 text-white px-2 py-1 mr-2" onClick={()=>approve(request.id)}>Đồng ý</button>
+                    <button className="bg-red-500 text-white px-2 py-1" onClick={()=>deny(request.id)}>Từ chối</button>
                 </td>
                 </tr>
             ))}
@@ -169,40 +209,5 @@ const LoanManagement = () => {
   
 export default LoanManagement;
 
-//   const [BorrowList, setBorrowList] = useState([]);
-  
-//   useEffect(() => {
-//     axios.get("http://localhost:8080/api/loanManagement/manager/list")
-//     .then((response) => {
-//       if (response.status === 200 && 'loanList' in response.data) {
-//         setBorrowList(JSON.parse(response.data.loanList));
-//       }
-//     })
-//     .catch((error) => {
-//       console.error("Error!!!!!!", error);
-//     });
-//   }, []);
 
-// const approve = (id) => {
-//     axios.get("http://localhost:8080/api/loanManagement/manager/request/approve", {params: {id: id}})
-//     .then((response) => {
-//       if (response.status === 200 && response.data.code === 300) {
-//         window.location.reload();
-//       }
-//     })
-//     .catch((error) => {
-//       console.error("Error!!!!!!", error);
-//     });
-//   };
 
-//   const deny = (id) => {
-//     axios.get("http://localhost:8080/api/loanManagement/manager/request/deny", {params: {id: id}})
-//     .then((response) => {
-//       if (response.status === 200 && response.data.code === 300) {
-//         window.location.reload();
-//       }
-//     })
-//     .catch((error) => {
-//       console.error("Error!!!!!!", error);
-//     });
-//   };

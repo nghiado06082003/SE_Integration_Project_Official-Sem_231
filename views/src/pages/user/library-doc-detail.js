@@ -31,6 +31,24 @@ export default function LibDocDetail() {
   if (!selectedDoc) {
     return <div>Document not found</div>;
   }
+
+  const requestLoan = (id) => { 
+    console.log(id)
+    axios.post("http://localhost:8080/api/loanManagement/customer/request", {params: {book_id: id}}, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then((response) => {
+      console.log(response)
+      if (response.status === 200 && response.data.code === 300) {
+        window.location.reload();
+      }
+    })
+    .catch((error) => {
+      console.error("Error!!!!!!", error);
+    });
+  }
   
   return (
     // <div className="container mt-3">
@@ -80,7 +98,7 @@ export default function LibDocDetail() {
                 </button>
             </div>
             <div className="">
-                <button className="flex items-center bg-primary-500 text-white px-4 py-2 rounded">
+                <button className="flex items-center bg-primary-500 text-white px-4 py-2 rounded" onClick={()=>requestLoan(selectedDoc.document_id)}>
                     <FaBook className="mr-2" /> Register Loan
                 </button>
             </div>
