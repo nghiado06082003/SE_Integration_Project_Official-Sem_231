@@ -46,6 +46,38 @@ async function authorizeCollaborator(req, res, next) {
   });
 }
 
+async function authorizeClubMember(req, res, next) {
+  if (!req.cur_member) {
+    return res.status(400).json({ message: "Người dùng không xác định. Vui lòng kiểm tra" });
+  }
+  
+  let sql = "SELECT * FROM members WHERE student_id = ? AND email = ? AND state = ? AND permission = ?";
+  connect_DB.query(sql, [
+    req.cur_member.student_id,
+    req.cur_member.email,
+    req.cur_member.state,
+    req.cur_member.permission
+  ], function (err, result, field) {
+    if (err) {
+      return res.status(500).json({ message: "Hệ thống gặp vấn đề. Vui lòng thử lại sau" });
+    }
+    
+    if (result.length == 0) {
+      return res.status(400).json({ message: "Người dùng không tồn tại. Vui lòng kiểm tra" });
+    }
+    
+    if (result[0].state != "Đang hoạt động") {
+      return res.status(403).json({ message: "Người dùng đang bị khoá!" });
+    }
+
+    if (result[0].permission == "Cộng tác viên") {
+      return res.status(403).json({ message: "Người dùng không phải thành viên câu lạc bộ!" });
+    }
+    
+    next();
+  });
+}
+
 async function authorizeMediaMember(req, res, next) {
   if (!req.cur_member) {
     return res.status(400).json({ message: "Người dùng không xác định. Vui lòng kiểm tra" });
@@ -177,6 +209,7 @@ async function authorizeAdmin(req, res, next) {
 module.exports = {
   loadCurMember,
   authorizeCollaborator,
+  authorizeClubMember,
   authorizeMediaMember,
   authorizeContentMember,
   authorizeLogisticMember,

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 22, 2023 at 06:40 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.0.28
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th12 30, 2023 lúc 09:29 AM
+-- Phiên bản máy phục vụ: 10.4.27-MariaDB
+-- Phiên bản PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,16 +18,14 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `simbsc`
+-- Cơ sở dữ liệu: `simbsc`
 --
-
-DROP DATABASE IF EXISTS `simbsc`;
-CREATE DATABASE `simbsc` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE IF NOT EXISTS `simbsc` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `simbsc`;
 
 DELIMITER $$
 --
--- Procedures
+-- Thủ tục
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_user_by_id` (IN `StudentId` INT(11))   SELECT
     members.student_id,
@@ -71,22 +69,23 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `documents`
+-- Cấu trúc bảng cho bảng `documents`
 --
 
-CREATE TABLE `documents` (
-  `document_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `documents` (
+  `document_id` int(11) NOT NULL AUTO_INCREMENT,
   `doc_name` varchar(256) NOT NULL,
   `type` varchar(256) NOT NULL,
   `author` varchar(256) NOT NULL,
   `publisher` varchar(512) NOT NULL,
   `publish_year` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `description` varchar(4096) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `description` varchar(4096) NOT NULL,
+  PRIMARY KEY (`document_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `documents`
+-- Đang đổ dữ liệu cho bảng `documents`
 --
 
 INSERT INTO `documents` (`document_id`, `doc_name`, `type`, `author`, `publisher`, `publish_year`, `quantity`, `description`) VALUES
@@ -102,21 +101,23 @@ INSERT INTO `documents` (`document_id`, `doc_name`, `type`, `author`, `publisher
 -- --------------------------------------------------------
 
 --
--- Table structure for table `members`
+-- Cấu trúc bảng cho bảng `members`
 --
 
-CREATE TABLE `members` (
+CREATE TABLE IF NOT EXISTS `members` (
   `student_id` int(11) NOT NULL,
   `student_name` varchar(255) NOT NULL,
   `email` varchar(127) NOT NULL,
   `password` varchar(127) NOT NULL,
   `state` varchar(127) NOT NULL,
   `join_date` date NOT NULL DEFAULT current_timestamp(),
-  `permission` varchar(255) NOT NULL
+  `permission` varchar(255) NOT NULL,
+  PRIMARY KEY (`student_id`),
+  KEY `student_id` (`student_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `members`
+-- Đang đổ dữ liệu cho bảng `members`
 --
 
 INSERT INTO `members` (`student_id`, `student_name`, `email`, `password`, `state`, `join_date`, `permission`) VALUES
@@ -137,20 +138,22 @@ INSERT INTO `members` (`student_id`, `student_name`, `email`, `password`, `state
 -- --------------------------------------------------------
 
 --
--- Table structure for table `posts`
+-- Cấu trúc bảng cho bảng `posts`
 --
 
-CREATE TABLE `posts` (
-  `post_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `posts` (
+  `post_id` int(11) NOT NULL AUTO_INCREMENT,
   `title` text NOT NULL,
   `brief` text NOT NULL,
   `content` text NOT NULL,
   `create_date` date NOT NULL,
-  `last_change` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `last_change` date DEFAULT NULL,
+  PRIMARY KEY (`post_id`),
+  UNIQUE KEY `post_id` (`post_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `posts`
+-- Đang đổ dữ liệu cho bảng `posts`
 --
 
 INSERT INTO `posts` (`post_id`, `title`, `brief`, `content`, `create_date`, `last_change`) VALUES
@@ -161,19 +164,22 @@ INSERT INTO `posts` (`post_id`, `title`, `brief`, `content`, `create_date`, `las
 -- --------------------------------------------------------
 
 --
--- Table structure for table `post_comments`
+-- Cấu trúc bảng cho bảng `post_comments`
 --
 
-CREATE TABLE `post_comments` (
-  `cmt_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `post_comments` (
+  `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
   `post_id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
   `content` text NOT NULL,
-  `last_change` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `last_change` date NOT NULL,
+  PRIMARY KEY (`cmt_id`),
+  KEY `post_comments_ibfk_1` (`student_id`),
+  KEY `post_comments_ibfk_2` (`post_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `post_comments`
+-- Đang đổ dữ liệu cho bảng `post_comments`
 --
 
 INSERT INTO `post_comments` (`cmt_id`, `post_id`, `student_id`, `content`, `last_change`) VALUES
@@ -183,22 +189,23 @@ INSERT INTO `post_comments` (`cmt_id`, `post_id`, `student_id`, `content`, `last
 -- --------------------------------------------------------
 
 --
--- Table structure for table `requestborrow`
+-- Cấu trúc bảng cho bảng `requestborrow`
 --
 
-CREATE TABLE `requestborrow` (
+CREATE TABLE IF NOT EXISTS `requestborrow` (
   `student_id` int(11) NOT NULL,
   `document_id` int(11) NOT NULL,
   `request_day` date NOT NULL,
   `state` int(11) NOT NULL DEFAULT 0,
   `update_date` date DEFAULT NULL,
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `received_day` date DEFAULT NULL,
-  `returned_day` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `returned_day` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `requestborrow`
+-- Đang đổ dữ liệu cho bảng `requestborrow`
 --
 
 INSERT INTO `requestborrow` (`student_id`, `document_id`, `request_day`, `state`, `update_date`, `id`, `received_day`, `returned_day`) VALUES
@@ -211,11 +218,11 @@ INSERT INTO `requestborrow` (`student_id`, `document_id`, `request_day`, `state`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reviews`
+-- Cấu trúc bảng cho bảng `reviews`
 --
 
-CREATE TABLE `reviews` (
-  `review_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `reviews` (
+  `review_id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(1024) NOT NULL,
   `book_name` varchar(2048) NOT NULL,
   `book_author` varchar(2048) NOT NULL,
@@ -223,11 +230,13 @@ CREATE TABLE `reviews` (
   `content` mediumtext NOT NULL,
   `submit_date` date NOT NULL,
   `status` varchar(128) NOT NULL,
-  `student_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `student_id` int(11) NOT NULL,
+  PRIMARY KEY (`review_id`),
+  KEY `student_id` (`student_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `reviews`
+-- Đang đổ dữ liệu cho bảng `reviews`
 --
 
 INSERT INTO `reviews` (`review_id`, `title`, `book_name`, `book_author`, `summary`, `content`, `submit_date`, `status`, `student_id`) VALUES
@@ -236,16 +245,35 @@ INSERT INTO `reviews` (`review_id`, `title`, `book_name`, `book_author`, `summar
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role`
+-- Cấu trúc bảng cho bảng `reviews_comments`
 --
 
-CREATE TABLE `role` (
+CREATE TABLE IF NOT EXISTS `reviews_comments` (
+  `cmt_id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
-  `role` varchar(255) NOT NULL
+  `review_id` int(11) NOT NULL,
+  `cmt_content` varchar(10000) NOT NULL,
+  `cmt_datetime` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`cmt_id`),
+  KEY `student_id_FK` (`student_id`),
+  KEY `review_id_FK` (`review_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `role`
+--
+
+CREATE TABLE IF NOT EXISTS `role` (
+  `student_id` int(11) NOT NULL,
+  `role` varchar(255) NOT NULL,
+  PRIMARY KEY (`student_id`,`role`),
+  KEY `student_id` (`student_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `role`
+-- Đang đổ dữ liệu cho bảng `role`
 --
 
 INSERT INTO `role` (`student_id`, `role`) VALUES
@@ -261,110 +289,31 @@ INSERT INTO `role` (`student_id`, `role`) VALUES
 (2000002, 'collaborator');
 
 --
--- Indexes for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Indexes for table `documents`
---
-ALTER TABLE `documents`
-  ADD PRIMARY KEY (`document_id`);
-
---
--- Indexes for table `members`
---
-ALTER TABLE `members`
-  ADD PRIMARY KEY (`student_id`),
-  ADD KEY `student_id` (`student_id`);
-
---
--- Indexes for table `posts`
---
-ALTER TABLE `posts`
-  ADD PRIMARY KEY (`post_id`),
-  ADD UNIQUE KEY `post_id` (`post_id`);
-
---
--- Indexes for table `post_comments`
---
-ALTER TABLE `post_comments`
-  ADD PRIMARY KEY (`cmt_id`),
-  ADD KEY `post_comments_ibfk_1` (`student_id`),
-  ADD KEY `post_comments_ibfk_2` (`post_id`);
-
---
--- Indexes for table `requestborrow`
---
-ALTER TABLE `requestborrow`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `reviews`
---
-ALTER TABLE `reviews`
-  ADD PRIMARY KEY (`review_id`),
-  ADD KEY `student_id` (`student_id`);
-
---
--- Indexes for table `role`
---
-ALTER TABLE `role`
-  ADD PRIMARY KEY (`student_id`,`role`),
-  ADD KEY `student_id` (`student_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `documents`
---
-ALTER TABLE `documents`
-  MODIFY `document_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `posts`
---
-ALTER TABLE `posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `post_comments`
---
-ALTER TABLE `post_comments`
-  MODIFY `cmt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `requestborrow`
---
-ALTER TABLE `requestborrow`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `reviews`
---
-ALTER TABLE `reviews`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `post_comments`
+-- Các ràng buộc cho bảng `post_comments`
 --
 ALTER TABLE `post_comments`
   ADD CONSTRAINT `post_comments_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `members` (`student_id`),
   ADD CONSTRAINT `post_comments_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`);
 
 --
--- Constraints for table `reviews`
+-- Các ràng buộc cho bảng `reviews`
 --
 ALTER TABLE `reviews`
   ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `members` (`student_id`);
 
 --
--- Constraints for table `role`
+-- Các ràng buộc cho bảng `reviews_comments`
+--
+ALTER TABLE `reviews_comments`
+  ADD CONSTRAINT `review_id_FK` FOREIGN KEY (`review_id`) REFERENCES `reviews` (`review_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_id_FK` FOREIGN KEY (`student_id`) REFERENCES `members` (`student_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `role`
 --
 ALTER TABLE `role`
   ADD CONSTRAINT `role_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `members` (`student_id`) ON DELETE CASCADE ON UPDATE CASCADE;
