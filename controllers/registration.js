@@ -15,6 +15,7 @@ module.exports = {
           student_name: req.body.student_name,
           email: req.body.email,
           password: hashedPassword,
+          avatar_url: req.body.avatar_url
         };
         registration_model.register(res, member);
       })

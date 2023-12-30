@@ -15,7 +15,7 @@ function checkNoEmpty(obj) {
 
 function reviewList(review_status, student_id, controller) {
     let sql = `
-    SELECT reviews.review_id, reviews.title, reviews.book_name, reviews.book_author, reviews.summary, reviews.submit_date, reviews.status, members.student_name
+    SELECT reviews.review_id, reviews.title, reviews.book_name, reviews.book_author, reviews.summary, reviews.image_url, reviews.submit_date, reviews.status, members.student_name
     FROM reviews INNER JOIN members
     ON reviews.student_id = members.student_id
     `;
@@ -32,7 +32,7 @@ function reviewList(review_status, student_id, controller) {
 
 function reviewContent(review_id, review_status, student_id, controller) {
     let sql = `
-    SELECT reviews.review_id, reviews.title, reviews.book_name, reviews.book_author, reviews.summary, reviews.content, reviews.submit_date, reviews.status, members.student_name 
+    SELECT reviews.review_id, reviews.title, reviews.book_name, reviews.book_author, reviews.summary, reviews.content, reviews.image_url, reviews.submit_date, reviews.status, members.student_name 
     FROM reviews INNER JOIN members 
     ON reviews.student_id = members.student_id 
     WHERE reviews.review_id = ?
@@ -50,7 +50,7 @@ function reviewContent(review_id, review_status, student_id, controller) {
 
 function searchReview(book_name, review_status, student_id, controller) {
     let sql = `
-    SELECT reviews.review_id, reviews.title, reviews.book_name, reviews.book_author, reviews.summary, reviews.submit_date, reviews.status, members.student_name
+    SELECT reviews.review_id, reviews.title, reviews.book_name, reviews.book_author, reviews.summary, reviews.image_url, reviews.submit_date, reviews.status, members.student_name
     FROM reviews INNER JOIN members
     ON reviews.student_id = members.student_id
     WHERE reviews.book_name LIKE "%${mysql.escape(book_name)}%"
@@ -68,8 +68,8 @@ function searchReview(book_name, review_status, student_id, controller) {
 
 function submitNewReview(review, controller) {
     let sql = `
-    INSERT INTO reviews (title, book_name, book_author, summary, content, submit_date, status, student_id)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO reviews (title, book_name, book_author, summary, content, image_url, submit_date, status, student_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     let currentDate = new Date().toJSON().slice(0, 10);
     connect_DB.query(sql, [
@@ -78,6 +78,7 @@ function submitNewReview(review, controller) {
         review.book_author,
         review.summary,
         review.content,
+        review.image_url,
         currentDate,
         "Chờ duyệt",
         review.student_id
@@ -89,7 +90,7 @@ function submitNewReview(review, controller) {
 function editReview(review, controller) {
     let sql = `
     UPDATE reviews
-    SET title = ?, book_name = ?, book_author = ?, summary = ?, content = ?
+    SET title = ?, book_name = ?, book_author = ?, summary = ?, content = ?, image_url = ?
     WHERE review_id = ?
     `;
     connect_DB.query(sql, [
@@ -98,6 +99,7 @@ function editReview(review, controller) {
         review.book_author,
         review.summary,
         review.content,
+        review.image_url,
         review.review_id
     ], function (err, result) {
         controller(err, result);

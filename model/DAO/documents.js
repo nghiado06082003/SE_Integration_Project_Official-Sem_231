@@ -72,7 +72,7 @@ function getDocDetail(res, document_id) {
 }
 
 function addDoc(res, document) {
-  let sql = "INSERT INTO documents (doc_name, type, author, publisher, publish_year, quantity, description) VALUES (?, ?, ?, ?, ?, ?, ?)";
+  let sql = "INSERT INTO documents (doc_name, type, author, publisher, publish_year, quantity, description, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
   connect_DB.query(sql,
     [
       document.doc_name,
@@ -81,7 +81,8 @@ function addDoc(res, document) {
       document.publisher,
       document.publish_year,
       document.quantity,
-      document.description
+      document.description,
+      document.image_url
     ],
     function (err, result) {
       if (err) {
@@ -103,7 +104,7 @@ function updateDoc(res, document) {
       return res.status(404).json({ message: "Không tìm thấy dữ liệu về tài liệu được yêu cầu." });
     }
     
-    let sql = "UPDATE documents SET doc_name = ?, type = ?, author = ?, publisher = ?, publish_year = ?, quantity = ?, description = ? WHERE document_id = ?";
+    let sql = "UPDATE documents SET doc_name = ?, type = ?, author = ?, publisher = ?, publish_year = ?, quantity = ?, description = ?, image_url = ? WHERE document_id = ?";
     connect_DB.query(sql,
       [
         document.doc_name,
@@ -113,7 +114,8 @@ function updateDoc(res, document) {
         document.publish_year,
         document.quantity,
         document.description,
-        document.document_id,
+        document.image_url,
+        document.document_id
       ],
       function (err, result) {
         if (err) {

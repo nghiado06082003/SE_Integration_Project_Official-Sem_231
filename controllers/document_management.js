@@ -38,7 +38,8 @@ module.exports = {
       publisher: req.body.publisher,
       publish_year: req.body.publish_year,
       quantity: req.body.quantity,
-      description: req.body.description
+      description: req.body.description,
+      image_url: req.body.image_url
     };
     if (document_model.checkEmpty(obj)) {
       return res.status(400).json({ message: 'Thông tin tài liệu không đầy đủ. Vui lòng bổ sung' });
@@ -57,7 +58,8 @@ module.exports = {
       quantity: req.body.quantity,
       description: req.body.description,
       document_id: req.body.document_id,
-      description: req.body.description
+      description: req.body.description,
+      image_url: req.body.image_url
     };
     if (document_model.checkEmpty(obj)) {
       return res.status(400).json({ message: 'Thông tin tài liệu không đầy đủ. Vui lòng bổ sung' });

@@ -159,6 +159,7 @@ module.exports = {
             book_author: req.body.book_author,
             summary: req.body.summary,
             content: req.body.content,
+            image_url: req.body.image_url,
             student_id: req.cur_member.student_id
         };
         if (review_model.checkNoEmpty(review)) {
@@ -182,6 +183,7 @@ module.exports = {
             book_author: req.body.book_author,
             summary: req.body.summary,
             content: req.body.content,
+            image_url: req.body.image_url,
             review_id: req.body.review_id
         };
         if (review_model.checkNoEmpty(review)) {

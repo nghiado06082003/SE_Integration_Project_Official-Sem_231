@@ -58,12 +58,13 @@ function register(res, obj) {
   validate(res, obj, function (valid) {
     if (valid) {
       let currentDate = new Date().toJSON().slice(0, 10);
-      let sql = "INSERT INTO members (student_id, student_name, email, password, state, join_date, permission) VALUES (?, ?, ?, ?, ?, ?, ?)"
+      let sql = "INSERT INTO members (student_id, student_name, email, password, avatar_url, state, join_date, permission) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
       connect_DB.query(sql, [
         obj.student_id,
         obj.student_name,
         obj.email,
         obj.password,
+        obj.avatar_url,
         "Đang hoạt động",
         currentDate,
         "Cộng tác viên"
@@ -75,6 +76,7 @@ function register(res, obj) {
         const member = {
           student_id: obj.student_id,
           email: obj.email,
+          avatar_url: obj.avatar_url,
           state: "Đang hoạt động",
           permission: "Cộng tác viên"
         };

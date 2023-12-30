@@ -34,6 +34,7 @@ function signin(res, obj) {
         const member = {
           student_id: result[0].student_id,
           email: result[0].email,
+          avatar_url: result[0].avatar_url,
           state: result[0].state,
           permission: result[0].permission
         };
