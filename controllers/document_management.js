@@ -38,9 +38,10 @@ module.exports = {
       publisher: req.body.publisher,
       publish_year: req.body.publish_year,
       quantity: req.body.quantity,
+      description: req.body.description
     };
     if (document_model.checkEmpty(obj)) {
-      return res.status(400).json({ message: 'Không có thông tin tài liệu' });
+      return res.status(400).json({ message: 'Thông tin tài liệu không đầy đủ. Vui lòng bổ sung' });
     }
     
     document_model.addDoc(res, obj);
@@ -55,9 +56,10 @@ module.exports = {
       publish_year: req.body.publish_year,
       quantity: req.body.quantity,
       document_id: req.body.document_id,
+      description: req.body.description
     };
     if (document_model.checkEmpty(obj)) {
-      return res.status(400).json({ message: 'Không có thông tin tài liệu' });
+      return res.status(400).json({ message: 'Thông tin tài liệu không đầy đủ. Vui lòng bổ sung' });
     }
     
     document_model.updateDoc(res, obj);
