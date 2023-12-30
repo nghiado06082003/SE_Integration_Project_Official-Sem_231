@@ -55,6 +55,7 @@ module.exports = {
       publisher: req.body.publisher,
       publish_year: req.body.publish_year,
       quantity: req.body.quantity,
+      description: req.body.description,
       document_id: req.body.document_id,
       description: req.body.description
     };

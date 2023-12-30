@@ -27,21 +27,23 @@ function getDocList(res) {
 }
 
 function searchDoc(res, document_id, doc_name, type) {
-  let sql = "SELECT * FROM documents WHERE ";
-  if (document_id) {
-    sql += "document_id = ";
-    sql += mysql.escape(document_id);
-  }
-  if (doc_name) {
-    if (document_id) sql += " AND ";
-    sql += "doc_name = ";
-    sql += mysql.escape(doc_name);
-  }
-  if (type) {
-    if (document_id || doc_name) sql += " AND ";
-    sql += "type = ";
-    sql += mysql.escape(type);
-  }
+  // let sql = "SELECT * FROM documents WHERE ";
+  // if (document_id) {
+  //   sql += "document_id = ";
+  //   sql += mysql.escape(document_id);
+  // }
+  // if (doc_name) {
+  //   if (document_id) sql += " AND ";
+  //   sql += "doc_name = ";
+  //   sql += mysql.escape(doc_name);
+  // }
+  // if (type) {
+  //   if (document_id || doc_name) sql += " AND ";
+  //   sql += "type = ";
+  //   sql += mysql.escape(type);
+  // }
+  let escapedDocName = mysql.escape(doc_name);
+  let sql = `SELECT * FROM documents WHERE LOWER(doc_name) LIKE LOWER('%${escapedDocName.slice(1, escapedDocName.length - 1)}%')`;
   connect_DB.query(sql, function (err, result, fields) {
     if (err) {
       return res.status(500).json({ message: "Hệ thống gặp vấn đề. Vui lòng thử lại sau." });

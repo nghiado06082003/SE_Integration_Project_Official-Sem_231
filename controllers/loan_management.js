@@ -7,6 +7,10 @@ module.exports = {
         loan_model.getLoanList(res);
     },
 
+    getBorrowList: function (req, res){
+        loan_model.getBorrowList(res);
+    },
+
     getLoanHistory: [authorization_model.loadCurMember, loan_model.getLoanHistory, function (req, res) {
         res.status(200).json({});
     }],

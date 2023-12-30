@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaUpload, FaSearch } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import DocItem from "../../../component/LibItem";
 import axios from "axios";
 
@@ -33,17 +33,38 @@ export default function Library() {
     </div>
   );
   
+  const handleSearchInput = async (e) => {
+    if (e.target.value === '') {
+      setTriggerFetch(!triggerFetch);
+      setErrorMessage('');
+      return;
+    }
+    try {
+      const response = await axios.get(`http://localhost:8080/api/documentManagement/search?doc_name=${e.target.value}`);
+      setDocumentList(response.data.docList);
+      setErrorMessage('');
+    }
+    catch (error) {
+      console.log(error);
+      setDocumentList([]);
+      setErrorMessage(error.response?.data?.message ?? "Hệ thống gặp vấn đề. Vui lòng thử lại sau");
+    }
+  }
+  
   return (
     <div className="container max-w-screen-xl mx-auto">
-      <div className="flex justify-between top">
-        <div className="flex items-center">
-          <Link to={"/library/donate-document"}>
-            <button className="flex bg-primary-500 hover:bg-primary-400 text-white font-semibold py-2 px-4 rounded">
-              <FaUpload className="mr-2" />Quyên góp tài liệu
-            </button>
-          </Link>
+      <div className="flex justify-between my-8">
+        <div>
+          {/* <Link
+            to="/library/donate-document"
+            className="flex items-center bg-primary-500 hover:bg-primary-400 text-white font-semibold py-2 px-4 rounded"
+          >
+            <FaUpload className="mr-2" />
+            <span>Quyên góp tài liệu</span>
+          </Link> */}
+          { /* Not developed yet */}
         </div>
-        <div className="flex items-center text-darkblue border-b border-primary-300">
+        <div className="flex items-center text-darkblue border-b border-primary-300 h-10">
           <form className="flex items-center text-darkblue">
             <span className="ml-2">
               <FaSearch className="text-primary-600 mr-5" />
@@ -52,13 +73,14 @@ export default function Library() {
               type="text"
               className="w-full focus:outline-none"
               placeholder="Search..."
+              onChange={handleSearchInput}
             />
-            <select name="sort" className="focus-visible:outline-none">
+            {/* <select name="sort" className="focus-visible:outline-none">
               <option value="datedes" defaultChecked>Latest</option>
               <option value="dateacs">Oldest</option>
               <option value="viewdes">Most View</option>
               <option value="likedes">Most Like</option>
-            </select>
+            </select> */}
           </form>
         </div>
       </div>
@@ -75,7 +97,8 @@ export default function Library() {
         : errorMessage !== '' ?
           <h2 className="text-center text-lg font-semibold">{errorMessage}</h2>
         :
-          loadingElement}
+          loadingElement
+        }
       </div>
     </div>
   );

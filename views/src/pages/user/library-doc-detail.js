@@ -1,6 +1,4 @@
 import axios from 'axios'
-
-
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaDownload, FaBook } from "react-icons/fa"; 
@@ -12,6 +10,7 @@ export default function LibDocDetail() {
   
   const [selectedDoc, setSelectedDoc] = useState({});
   useEffect(() => {
+    console.log("axios call dafnaf");
     axios.get('/api/documentManagement/detail', {
       params: {
         document_id: parseInt(document_id)
@@ -19,7 +18,8 @@ export default function LibDocDetail() {
     })
     .then((response) => {
       if (response.status === 200 && 'docDetail' in response.data) {
-        setSelectedDoc(JSON.parse(response.data.docDetail));
+        //setSelectedDoc(JSON.parse(response.data.docDetail));
+        console.log(response.data.docDetail);
       }
     })
     .catch((error) => {
@@ -49,7 +49,7 @@ export default function LibDocDetail() {
       console.error("Error!!!!!!", error);
     });
   }
-  
+
   return (
     // <div className="container mt-3">
     //     <div className="flex flex-row mb-3 items-center justify-between">

@@ -1,21 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Book from "../img/book.png";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiEdit } from "react-icons/fi";
 import { GoTrash } from "react-icons/go";
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 function DocItem({ doc, triggerFetch, setTriggerFetch }) {
+  const [user, setUser] = useState(null);
+  const isAuthorized = user?.permission === "Thành viên ban chủ nhiệm" || user?.permission === "Thành viên ban hậu cần";
+  const cookies = new Cookies();
+  
+  useEffect(() => {
+    const token = cookies.get("TOKEN");
+    const info = cookies.get("info");
+    if (!token || !info) {
+      cookies.remove("TOKEN", { path: "/" });
+      cookies.remove("info", { path: "/" });
+      return;
+    }
+    axios
+      .post('http://localhost:8080/api/authorization/logistic', {}, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((response) => {
+        setUser(info);
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          cookies.remove("TOKEN", { path: "/" });
+          cookies.remove("info", { path: "/" });
+        }
+        if (error.response.status === 403) {
+          setUser(info);
+        }
+      });
+  }, []);
+  
   const handleDelete = async (e) => {
     e.preventDefault();
-    console.log(doc);
-    try {
-      const response = await axios.get(`http://localhost:8080/api/documentManagement/delete?document_id=${doc.document_id}`)
-      alert(response.data.message);
-      setTriggerFetch(!triggerFetch);
+    if (!isAuthorized) {
+      return;
     }
-    catch (error) {
-      console.log(error.response);
+    if (window.confirm("Bạn có muốn xóa tài liệu này hay không?")) {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/documentManagement/delete?document_id=${doc.document_id}`);
+        alert(response.data.message);
+        setTriggerFetch(!triggerFetch);
+      }
+      catch (error) {
+        console.log(error.response);
+      }
     }
   }
   
@@ -31,7 +68,7 @@ function DocItem({ doc, triggerFetch, setTriggerFetch }) {
           <h3 className="font-bold text-2xl text-primary-800 mb-2">
             {doc.doc_name}
           </h3>
-          <p className="text-bluelight text-base line-clamp-3">{doc.text}</p>
+          <p className="text-bluelight text-base line-clamp-3">{doc.description}</p>
         </div>
       </div>
       <div className="px-4 py-2 pb-4 flex justify-between">
@@ -47,17 +84,18 @@ function DocItem({ doc, triggerFetch, setTriggerFetch }) {
           </span>
         </div>
         <div className="inline-flex items-center rounded-md shadow-sm">
-          <button className="text-slate-800 hover:text-primary-700 text-sm bg-white hover:bg-slate-100 border border-slate-200 rounded-l-lg font-medium px-4 py-2 inline-flex space-x-1 items-center">
+          <button className={`text-slate-800 hover:text-primary-700 text-sm bg-white hover:bg-slate-100 border border-slate-200 ${isAuthorized ? "rounded-l-lg" : "rounded-lg"} font-medium px-4 py-2 inline-flex space-x-1 items-center`}>
             <span>
               <IoEyeOutline className="w-4 h-4" />
             </span>
-            <span>View</span>
+            <span>Xem</span>
           </button>
+          {isAuthorized && <>
           <button className="text-slate-800 hover:text-primary-700 text-sm bg-white hover:bg-slate-100 border-y border-slate-200 font-medium px-4 py-2 inline-flex space-x-1 items-center">
             <span>
               <FiEdit className="w-4 h-4" />
             </span>
-            <span>Edit</span>
+            <span>Sửa</span>
           </button>
           <button
             className="text-slate-800 hover:text-primary-700 text-sm bg-white hover:bg-slate-100 border border-slate-200 rounded-r-lg font-medium px-4 py-2 inline-flex space-x-1 items-center"
@@ -66,8 +104,9 @@ function DocItem({ doc, triggerFetch, setTriggerFetch }) {
             <span>
               <GoTrash className="w-4 h-4" />
             </span>
-            <span>Delete</span>
+            <span>Xóa</span>
           </button>
+          </>}
         </div>
       </div>
     </div>
