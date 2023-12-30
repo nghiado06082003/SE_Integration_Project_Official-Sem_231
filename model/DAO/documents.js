@@ -27,21 +27,23 @@ function getDocList(res) {
 }
 
 function searchDoc(res, document_id, doc_name, type) {
-  let sql = "SELECT * FROM documents WHERE ";
-  if (document_id) {
-    sql += "document_id = ";
-    sql += mysql.escape(document_id);
-  }
-  if (doc_name) {
-    if (document_id) sql += " AND ";
-    sql += "doc_name = ";
-    sql += mysql.escape(doc_name);
-  }
-  if (type) {
-    if (document_id || doc_name) sql += " AND ";
-    sql += "type = ";
-    sql += mysql.escape(type);
-  }
+  // let sql = "SELECT * FROM documents WHERE ";
+  // if (document_id) {
+  //   sql += "document_id = ";
+  //   sql += mysql.escape(document_id);
+  // }
+  // if (doc_name) {
+  //   if (document_id) sql += " AND ";
+  //   sql += "doc_name = ";
+  //   sql += mysql.escape(doc_name);
+  // }
+  // if (type) {
+  //   if (document_id || doc_name) sql += " AND ";
+  //   sql += "type = ";
+  //   sql += mysql.escape(type);
+  // }
+  let escapedDocName = mysql.escape(doc_name);
+  let sql = `SELECT * FROM documents WHERE LOWER(doc_name) LIKE LOWER('%${escapedDocName.slice(1, escapedDocName.length - 1)}%')`;
   connect_DB.query(sql, function (err, result, fields) {
     if (err) {
       return res.status(500).json({ message: "Hệ thống gặp vấn đề. Vui lòng thử lại sau." });
@@ -70,7 +72,7 @@ function getDocDetail(res, document_id) {
 }
 
 function addDoc(res, document) {
-  let sql = "INSERT INTO documents (doc_name, type, author, publisher, publish_year, quantity) VALUES (?, ?, ?, ?, ?, ?)";
+  let sql = "INSERT INTO documents (doc_name, type, author, publisher, publish_year, quantity, description) VALUES (?, ?, ?, ?, ?, ?, ?)";
   connect_DB.query(sql,
     [
       document.doc_name,
@@ -79,6 +81,7 @@ function addDoc(res, document) {
       document.publisher,
       document.publish_year,
       document.quantity,
+      document.description
     ],
     function (err, result) {
       if (err) {
@@ -100,7 +103,7 @@ function updateDoc(res, document) {
       return res.status(404).json({ message: "Không tìm thấy dữ liệu về tài liệu được yêu cầu." });
     }
     
-    let sql = "UPDATE documents SET doc_name = ?, type = ?, author = ?, publisher = ?, publish_year = ?, quantity = ? WHERE document_id = ?";
+    let sql = "UPDATE documents SET doc_name = ?, type = ?, author = ?, publisher = ?, publish_year = ?, quantity = ?, description = ? WHERE document_id = ?";
     connect_DB.query(sql,
       [
         document.doc_name,
@@ -109,6 +112,7 @@ function updateDoc(res, document) {
         document.publisher,
         document.publish_year,
         document.quantity,
+        document.description,
         document.document_id,
       ],
       function (err, result) {

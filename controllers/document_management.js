@@ -38,6 +38,7 @@ module.exports = {
       publisher: req.body.publisher,
       publish_year: req.body.publish_year,
       quantity: req.body.quantity,
+      description: req.body.description
     };
     if (document_model.checkEmpty(obj)) {
       return res.status(400).json({ message: 'Không có thông tin tài liệu' });
@@ -54,6 +55,7 @@ module.exports = {
       publisher: req.body.publisher,
       publish_year: req.body.publish_year,
       quantity: req.body.quantity,
+      description: req.body.description,
       document_id: req.body.document_id,
     };
     if (document_model.checkEmpty(obj)) {
