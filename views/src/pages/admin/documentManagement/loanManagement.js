@@ -17,7 +17,7 @@ const BorrowRequestsTable = () => {
     const [borrowRequests, setBorrowRequest] = useState([]);
 
     useEffect(() => {
-      axios.get("http://localhost:8080/api/loanManagement/manager/list")
+      axios.get("http://localhost:8080/api/loanManagement/manager/loanlist")
       .then((response) => {
         if (response.status === 200 && 'loanList' in response.data) {
           setBorrowRequest(JSON.parse(response.data.loanList));
@@ -87,10 +87,24 @@ const BorrowRequestsTable = () => {
 
 const BorrowedBooksTable = () => {
     // Mock data
-    const borrowedBooks = [
-      { id: 1, studentId: '123', studentName: 'John Doe', bookName: 'React Mastery', requestDate: '2023-01-01', returnDate: '2023-02-01', status: 'Borrowing' },
-      // Add more data as needed
-    ];
+    // const borrowedBooks = [
+    //   { id: 1, studentId: '123', studentName: 'John Doe', bookName: 'React Mastery', requestDate: '2023-01-01', returnDate: '2023-02-01', status: 'Borrowing' },
+    //   // Add more data as needed
+    // ];
+
+    const [borrowedBooks, setBorrowBook] = useState([]);
+
+    useEffect(() => {
+      axios.get("http://localhost:8080/api/loanManagement/manager/borrowlist")
+      .then((response) => {
+        if (response.status === 200 && 'borrowList' in response.data) {
+          setBorrowBook(JSON.parse(response.data.borrowList));
+        }
+      })
+      .catch((error) => {
+        console.error("Error!!!!!!", error);
+      });
+    }, []);
   
     return (
       <div>
@@ -110,12 +124,12 @@ const BorrowedBooksTable = () => {
             {borrowedBooks.map((book, index) => (
               <tr key={book.id}>
                 <td className="border px-4 py-2">{index + 1}</td>
-                <td className="border px-4 py-2">{book.studentId}</td>
-                <td className="border px-4 py-2">{book.studentName}</td>
-                <td className="border px-4 py-2">{book.bookName}</td>
-                <td className="border px-4 py-2">{book.requestDate}</td>
-                <td className="border px-4 py-2">{book.returnDate}</td>
-                <td className="border px-4 py-2">{book.status}</td>
+                <td className="border px-4 py-2">{book.student_id}</td>
+                <td className="border px-4 py-2">{book.student_name}</td>
+                <td className="border px-4 py-2">{book.doc_name}</td>
+                <td className="border px-4 py-2">{(book.received_day).substring(0,10)}</td>
+                <td className="border px-4 py-2">{(book.returned_day).substring(0,10)}</td>
+                <td className="border px-4 py-2">{book.status === 3? "Đã trả" : "Chưa trả"}</td>
               </tr>
             ))}
           </tbody>

@@ -34,10 +34,10 @@ export default function BorrowHistory() {
             <div className='flex items-center border-b border-gray-200 flex justify-between py-4 px-1'>
               <div className='flex flex-col'>
                 <div className='sm:text-lg font-bold text-blue-500'>{item.doc_name}</div>
-                <div style={{ margin: "10px 0 10px" }}> Trạng thái : <span className={item.state === 3 ? "text-green-500" : "text-red-500"}>{item.state === 3 ? "Đã trả" : "Chưa trả"}</span></div>
+                <div style={{ margin: "10px 0 10px" }}> Trạng thái : <span className={item.status === 3 ? "text-green-500" : "text-red-500"}>{item.status === 3 ? "Đã trả" : "Chưa trả"}</span></div>
 
                 <div className='text-gray-400'>Ngày mượn : {(item.received_day).substring(0, 10)}</div>
-                {item.state === 3 && <div className='text-gray-400'>Ngày trả : {(item.returned_day).substring(0, 10)}</div>}
+                {item.status === 3 && <div className='text-gray-400'>Ngày trả : {(item.returned_day).substring(0, 10)}</div>}
               </div>
               <div>
                 <button className='border rounded bg-blue-400 p-2 hover:bg-medium text-white'>Xem chi tiết</button>

@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaDownload, FaBook } from "react-icons/fa";
 import Book from "../../../img/book.png";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
+const token = cookies.get("TOKEN");
 
 export default function LibDocDetail() {
   const { document_id } = useParams();
@@ -25,6 +28,23 @@ export default function LibDocDetail() {
   
   if (!selectedDoc) {
     return <div>Document not found</div>;
+  }
+
+  const requestLoan = (book_id) => { 
+    axios.post("http://localhost:8080/api/loanManagement/customer/request", {book_id: book_id}, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then((response) => {
+      console.log(response)
+      if (response.status === 200 && response.data.code === 300) {
+        window.location.reload();
+      }
+    })
+    .catch((error) => {
+      console.error("Error!!!!!!", error);
+    });
   }
   
   return (
@@ -75,7 +95,7 @@ export default function LibDocDetail() {
           </button>
         </div>
         <div className="">
-          <button className="flex items-center bg-primary-500 text-white px-4 py-2 rounded">
+          <button className="flex items-center bg-primary-500 text-white px-4 py-2 rounded" onClick={()=>requestLoan(selectedDoc.document_id)}>
             <FaBook className="mr-2" /> Register Loan
           </button>
         </div>
