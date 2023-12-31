@@ -65,6 +65,7 @@ import axios from "axios";
     useEffect(() => {
       axios.get("http://localhost:8080/api/userManagement")
       .then((response) => {
+        console.log(response.data)
         if (response.status === 200 && 'userList' in response.data) {
           setPeople(JSON.parse(response.data.userList));
           console.log(response.data);
@@ -79,6 +80,18 @@ import axios from "axios";
       axios.get("http://localhost:8080/api/userManagement/block", {params: {id: id, value: value}})
       .then((response) => {
         if (response.status === 200 && response.data.code === 300) {
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        console.error("Error!!!!!!", error);
+      });
+    };
+
+    const changeRole = (role, id) => {
+      axios.get("http://localhost:8080/api/userManagement/permission", {params: {id: id, role: role}})
+      .then((response) =>{
+        if (response.status === 200 && response.data.code === 300){
           window.location.reload();
         }
       })

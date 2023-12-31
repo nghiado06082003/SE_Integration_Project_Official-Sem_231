@@ -43,31 +43,12 @@ function blockUser(req, res) {
 
 function changePermission(req, res) {
     const id = req.query.id;
-    const admin = req.query.admin;
-    const collaborator = req.query.collaborator;
-    const member = req.query.member;
-    connect_DB.query("DELETE FROM role WHERE student_id = " + id, function (err, result, fields) {
+    const role = req.query.role;
+
+    connect_DB.query("UPDATE members SET permission = " + role + " WHERE student_id = " + id, function (err, result, fields) {
         if (err) res.json({ 500: "Database Error: Cannot update database" });
-        return;
+        else res.json({ 300: "OK" });
     });
-    if (admin == 1) {
-        connect_DB.query("INSERT INTO role (student_id, role) VALUES (" + id + ", 'admin' )", function (err, result, fields) {
-            if (err) res.json({ 500: "Database Error: Cannot update database" });
-            return;
-        });
-    }
-    if (collaborator == 1) {
-        connect_DB.query("INSERT INTO role (student_id, role) VALUES (" + id + ", 'collaborator' )", function (err, result, fields) {
-            if (err) res.json({ 500: "Database Error: Cannot update database" });
-            return;
-        });
-    }
-    if (member == 1) {
-        connect_DB.query("INSERT INTO role (student_id, role) VALUES (" + id + ", 'member' )", function (err, result, fields) {
-            if (err) res.json({ 500: "Database Error: Cannot update database" });
-            return;
-        });
-    }
     res.json({ 300: "OK" });
 
 }

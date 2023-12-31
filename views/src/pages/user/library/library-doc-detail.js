@@ -31,7 +31,7 @@ export default function LibDocDetail() {
   }
 
   const requestLoan = (book_id) => { 
-    axios.post("http://localhost:8080/api/loanManagement/customer/request", {book_id: book_id}, {
+    axios.post("http://localhost:8080/api/loanManagement/customer/loanrequest", {book_id: book_id}, {
       headers: {
         Authorization: `Bearer ${token}`
       }

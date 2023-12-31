@@ -11,6 +11,10 @@ module.exports = {
         loan_model.getBorrowList(res);
     },
 
+    getReturnList: function (req, res){
+        loan_model.getReturnList(res);
+    },
+
     getLoanHistory: [authorization_model.loadCurMember, loan_model.getLoanHistory, function (req, res) {
         res.status(200).json({});
     }],
@@ -19,9 +23,18 @@ module.exports = {
         res.status(200).json({});
     }],
 
-    request: [authorization_model.loadCurMember, loan_model.request, function (req, res) {
+    getReturnHistory: [authorization_model.loadCurMember, loan_model.getReturnHistory, function (req, res) {
         res.status(200).json({});
     }],
+
+    loanRequest: [authorization_model.loadCurMember, loan_model.loanRequest, function (req, res) {
+        res.status(200).json({});
+    }],
+
+    returnRequest: [authorization_model.loadCurMember, loan_model.returnRequest, function (req, res) {
+        res.status(200).json({});
+    }],
+
 
     approvereq: function (req, res) {
         loan_model.approvereq(req, res);
@@ -29,7 +42,14 @@ module.exports = {
 
     denyreq: function (req, res) {
         loan_model.denyreq(req, res);
-    }
+    },
 
+    acceptreq: function (req, res){
+        loan_model.acceptreq(req, res);
+    },
+
+    finereq: function (req, res){
+        loan_model.finereq(req, res);
+    }
 
 }

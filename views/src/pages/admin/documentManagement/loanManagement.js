@@ -32,6 +32,7 @@ const BorrowRequestsTable = () => {
       axios.get("http://localhost:8080/api/loanManagement/manager/request/approve", {params: {id: id}})
       .then((response) => {
         if (response.status === 200 && response.data.code === 300) {
+          //phê duyệt request thành công
           window.location.reload();
         }
       })
@@ -44,6 +45,7 @@ const BorrowRequestsTable = () => {
       axios.get("http://localhost:8080/api/loanManagement/manager/request/deny", {params: {id: id}})
       .then((response) => {
         if (response.status === 200 && response.data.code === 300) {
+          //từ chối request thành công
           window.location.reload();
         }
       })
@@ -116,7 +118,7 @@ const BorrowedBooksTable = () => {
               <th className="border px-4 py-2">Họ và tên</th>
               <th className="border px-4 py-2">Tên sách</th>
               <th className="border px-4 py-2">Ngày mượn</th>
-              <th className="border px-4 py-2">Ngày trả dự kiến</th>
+              <th className="border px-4 py-2">Ngày trả (dự kiến)</th>
               <th className="border px-4 py-2">Trạng thái</th>
             </tr>
           </thead>
@@ -128,8 +130,8 @@ const BorrowedBooksTable = () => {
                 <td className="border px-4 py-2">{book.student_name}</td>
                 <td className="border px-4 py-2">{book.doc_name}</td>
                 <td className="border px-4 py-2">{(book.received_day).substring(0,10)}</td>
-                <td className="border px-4 py-2">{(book.returned_day).substring(0,10)}</td>
-                <td className="border px-4 py-2">{book.status === 3? "Đã trả" : "Chưa trả"}</td>
+                <td className="border px-4 py-2">{book.returned_day ? (book.returned_day).substring(0,10): "Không"}</td>
+                <td className="border px-4 py-2">{book.status === 3? "Đã trả" : (book.status === 4 || book.status === 10) ? "Chưa trả" : "Quá hạn"}</td>
               </tr>
             ))}
           </tbody>
@@ -140,10 +142,50 @@ const BorrowedBooksTable = () => {
 
 const ReturnRequestsTable = () => {
     // Mock data
-    const returnRequests = [
-      { id: 1, studentId: '123', studentName: 'John Doe', bookName: 'React Mastery', requestDate: '2023-01-01', status: 'On Time' },
-      // Add more data as needed
-    ];
+    // const returnRequests = [
+    //   { id: 1, studentId: '123', studentName: 'John Doe', bookName: 'React Mastery', requestDate: '2023-01-01', status: 'On Time' },
+    //   // Add more data as needed
+    // ];
+
+    const [returnRequests, setReturnRequest] = useState([]);
+
+    useEffect(() => {
+      axios.get("http://localhost:8080/api/loanManagement/manager/returnlist")
+      .then((response) => {
+        if (response.status === 200 && 'returnList' in response.data) {
+          setReturnRequest(JSON.parse(response.data.returnList));
+        }
+      })
+      .catch((error) => {
+        console.error("Error!!!!!!", error);
+      });
+    }, []);
+
+    const accept = (id) => {
+      axios.get("http://localhost:8080/api/loanManagement/manager/request/accept", {params: {id: id}})
+      .then((response) => {
+        if (response.status === 200 && response.data.code === 300) {
+          //phê duyệt request thành công
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        console.error("Error!!!!!!", error);
+      });
+    };
+  
+    const fine = (id) => {
+      axios.get("http://localhost:8080/api/loanManagement/manager/request/fine", {params: {id: id}})
+      .then((response) => {
+        if (response.status === 200 && response.data.code === 300) {
+          //phạt request thành công
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        console.error("Error!!!!!!", error);
+      });
+    };
   
     return (
       <div>
@@ -163,14 +205,14 @@ const ReturnRequestsTable = () => {
             {returnRequests.map((request, index) => (
               <tr key={request.id}>
                 <td className="border px-4 py-2">{index + 1}</td>
-                <td className="border px-4 py-2">{request.studentId}</td>
-                <td className="border px-4 py-2">{request.studentName}</td>
-                <td className="border px-4 py-2">{request.bookName}</td>
-                <td className="border px-4 py-2">{request.requestDate}</td>
+                <td className="border px-4 py-2">{request.student_id}</td>
+                <td className="border px-4 py-2">{request.student_name}</td>
+                <td className="border px-4 py-2">{request.doc_name}</td>
+                <td className="border px-4 py-2">{(request.request_day).substring(0, 10)}</td>
                 <td className="border px-4 py-2">{request.status}</td>
                 <td className="border px-4 py-2">
-                  <button className="bg-green-500 text-white px-2 py-1 mr-2">Đồng ý</button>
-                  <button className="bg-red-500 text-white px-2 py-1">Phạt</button>
+                  <button className="bg-green-500 text-white px-2 py-1 mr-2" onClick={()=>accept(request.id)}>Đồng ý</button>
+                  <button className="bg-red-500 text-white px-2 py-1" onClick={()=>fine(request.id)}>Phạt</button>
                 </td>
               </tr>
             ))}
