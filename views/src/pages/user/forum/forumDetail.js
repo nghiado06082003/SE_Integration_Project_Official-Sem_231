@@ -3,9 +3,9 @@
     dạng như forum trong bkel chăng?
 
 */
-import React from 'react';
-import ReviewCard from '../../../component/ReviewCard';
-import { useParams } from 'react-router-dom';
+import React from "react";
+import ReviewCard from "../../../component/ReviewCard";
+import { useParams } from "react-router-dom";
 
 import reviews from './reviewdata';
 
