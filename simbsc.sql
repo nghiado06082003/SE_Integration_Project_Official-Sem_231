@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 30, 2023 lúc 05:22 PM
--- Phiên bản máy phục vụ: 10.4.27-MariaDB
--- Phiên bản PHP: 8.2.0
+-- Host: 127.0.0.1
+-- Generation Time: Dec 31, 2023 at 03:53 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,14 +18,15 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `simbsc`
+-- Database: `simbsc`
 --
+
 CREATE DATABASE IF NOT EXISTS `simbsc` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `simbsc`;
 
 DELIMITER $$
 --
--- Thủ tục
+-- Procedures
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_user_by_id` (IN `StudentId` INT(11))   SELECT
     members.student_id,
@@ -69,11 +70,11 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `documents`
+-- Table structure for table `documents`
 --
 
-CREATE TABLE IF NOT EXISTS `documents` (
-  `document_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `documents` (
+  `document_id` int(11) NOT NULL,
   `doc_name` varchar(256) NOT NULL,
   `type` varchar(256) NOT NULL,
   `author` varchar(256) NOT NULL,
@@ -81,12 +82,11 @@ CREATE TABLE IF NOT EXISTS `documents` (
   `publish_year` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `description` varchar(4096) NOT NULL,
-  `image_url` varchar(512) DEFAULT NULL,
-  PRIMARY KEY (`document_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `image_url` varchar(512) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `documents`
+-- Dumping data for table `documents`
 --
 
 INSERT INTO `documents` (`document_id`, `doc_name`, `type`, `author`, `publisher`, `publish_year`, `quantity`, `description`, `image_url`) VALUES
@@ -102,10 +102,10 @@ INSERT INTO `documents` (`document_id`, `doc_name`, `type`, `author`, `publisher
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `members`
+-- Table structure for table `members`
 --
 
-CREATE TABLE IF NOT EXISTS `members` (
+CREATE TABLE `members` (
   `student_id` int(11) NOT NULL,
   `student_name` varchar(255) NOT NULL,
   `email` varchar(127) NOT NULL,
@@ -113,49 +113,40 @@ CREATE TABLE IF NOT EXISTS `members` (
   `avatar_url` varchar(512) DEFAULT NULL,
   `state` varchar(127) NOT NULL,
   `join_date` date NOT NULL DEFAULT current_timestamp(),
-  `permission` varchar(255) NOT NULL,
-  PRIMARY KEY (`student_id`),
-  KEY `student_id` (`student_id`)
+  `permission` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `members`
+-- Dumping data for table `members`
 --
 
 INSERT INTO `members` (`student_id`, `student_name`, `email`, `password`, `avatar_url`, `state`, `join_date`, `permission`) VALUES
-(0, 'Trần Văn A', 'tranvanA@hcmut.edu.vn', 'tranvana', NULL, '', '2023-11-09', ''),
-(1, 'a', 'abc', '###v', NULL, 'ok', '0000-00-00', 'A'),
-(2, 'a', 'abc', '###v', NULL, 'ok', '2023-12-11', 'A'),
-(4, 'Võ Phúc Tường', 'tuongvo1234@gmail.com', 'tuongvo1234', NULL, 'ok', '2023-12-22', ''),
-(5, 'Trần Văn C', 'tranvanC1234@gmail.com', 'tranvanC1234', NULL, 'blocked', '2023-12-22', ''),
-(6, 'Nguyễn Thị B', 'nguyenthiB1234@gmail.com', 'nguyenthiB1234', NULL, 'ok', '2023-12-13', ''),
-(7, 'Dương Văn D', 'duongvanD1234@gmail.com', 'duongvanD1234', NULL, 'ok', '2023-11-30', ''),
 (2000000, 'Admin 1', 'admin1@gmail.com', '$2b$10$UpVm2Pt389EY0anjTZAwIulqMNBSo3Wmqk8inN47l9ABQyk5XfWKK', 'https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60', 'Đang hoạt động', '2023-11-14', 'Thành viên ban chủ nhiệm'),
 (2000001, 'Admin 2', 'admin2@gmail.com', '$2b$10$ExtohTHcom1BvBpujafeQet/o8rMJNppbF4xQ8J8MbLE9eE3oilJO', 'https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60', 'Đang hoạt động', '2023-11-14', 'Thành viên ban chủ nhiệm'),
 (2000002, 'Collab 1', 'collab1@gmail.com', '$2b$10$E30b5YunGc0lJ1G7D/PrZenQXV.oeiHuNaCH2T/QLB6eX3J2DCLFe', 'https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60', 'Đang hoạt động', '2023-11-15', 'Cộng tác viên'),
 (2000003, 'Media 1', 'media1@gmail.com', '$2b$10$moDAhs42MpTxRNkxayBSOOe2z959mhTzD.RP6PQMTkFH0Uc1uA2rS', 'https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60', 'Đang hoạt động', '2023-11-15', 'Thành viên ban truyền thông'),
 (2000004, 'Content 1', 'content1@gmail.com', '$2b$10$K.arbzneeymcCNZTFfqObOrHfNSTXGsWHPIgR9WtC1YVCcSEKnpcu', 'https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60', 'Đang hoạt động', '2023-11-15', 'Thành viên ban nội dung'),
-(2000005, 'Logistic 1', 'logistic1@gmail.com', '$2b$10$nzR46CJ934k6zhXr0y.Pne7frXTbAAXIkgYeFkjNlZIio3okbtEd6', 'https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60', 'Đang hoạt động', '2023-11-15', 'Thành viên ban hậu cần');
+(2000005, 'Logistic 1', 'logistic1@gmail.com', '$2b$10$nzR46CJ934k6zhXr0y.Pne7frXTbAAXIkgYeFkjNlZIio3okbtEd6', 'https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60', 'Đang hoạt động', '2023-11-15', 'Thành viên ban hậu cần'),
+(2000006, 'Collab 2', 'collab2@gmail.com', '$2b$10$E30b5YunGc0lJ1G7D/PrZenQXV.oeiHuNaCH2T/QLB6eX3J2DCLFe', 'https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60', 'Đã bị khóa', '2023-11-15', 'Cộng tác viên'),
+(2000007, 'Collab 3', 'collab3@gmail.com', '$2b$10$E30b5YunGc0lJ1G7D/PrZenQXV.oeiHuNaCH2T/QLB6eX3J2DCLFe', 'https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60', 'Đã bị khóa', '2023-11-15', 'Cộng tác viên');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `posts`
+-- Table structure for table `posts`
 --
 
-CREATE TABLE IF NOT EXISTS `posts` (
-  `post_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `posts` (
+  `post_id` int(11) NOT NULL,
   `title` text NOT NULL,
   `brief` text NOT NULL,
   `content` text NOT NULL,
   `create_date` date NOT NULL,
-  `last_change` date DEFAULT NULL,
-  PRIMARY KEY (`post_id`),
-  UNIQUE KEY `post_id` (`post_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `last_change` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `posts`
+-- Dumping data for table `posts`
 --
 
 INSERT INTO `posts` (`post_id`, `title`, `brief`, `content`, `create_date`, `last_change`) VALUES
@@ -166,65 +157,62 @@ INSERT INTO `posts` (`post_id`, `title`, `brief`, `content`, `create_date`, `las
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `post_comments`
+-- Table structure for table `post_comments`
 --
 
-CREATE TABLE IF NOT EXISTS `post_comments` (
-  `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `post_comments` (
+  `cmt_id` int(11) NOT NULL,
   `post_id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
   `content` text NOT NULL,
-  `last_change` date NOT NULL,
-  PRIMARY KEY (`cmt_id`),
-  KEY `post_comments_ibfk_1` (`student_id`),
-  KEY `post_comments_ibfk_2` (`post_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `last_change` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `post_comments`
+-- Dumping data for table `post_comments`
 --
 
 INSERT INTO `post_comments` (`cmt_id`, `post_id`, `student_id`, `content`, `last_change`) VALUES
-(1, 1, 0, '\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"', '2023-12-11'),
-(2, 1, 1, 'Trích đoạn chuẩn của Lorem Ipsum được sử dụng từ thế kỉ thứ 16 và được tái bản sau đó cho những người quan tâm đến nó. Đoạn 1.10.32 và 1.10.33 trong cuốn \"De Finibus Bonorum et Malorum\" của Cicero cũng được tái bản lại theo đúng cấu trúc gốc, kèm theo phiên bản tiếng Anh được dịch bởi H. Rackham vào năm 1914.\r\n\r\n', '2023-12-10');
+(1, 1, 2000002, '\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"', '2023-12-11'),
+(2, 1, 2000002, 'Trích đoạn chuẩn của Lorem Ipsum được sử dụng từ thế kỉ thứ 16 và được tái bản sau đó cho những người quan tâm đến nó. Đoạn 1.10.32 và 1.10.33 trong cuốn \"De Finibus Bonorum et Malorum\" của Cicero cũng được tái bản lại theo đúng cấu trúc gốc, kèm theo phiên bản tiếng Anh được dịch bởi H. Rackham vào năm 1914.\r\n\r\n', '2023-12-10');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `requestborrow`
+-- Table structure for table `requestborrow`
 --
 
-CREATE TABLE IF NOT EXISTS `requestborrow` (
+CREATE TABLE `requestborrow` (
   `student_id` int(11) NOT NULL,
   `document_id` int(11) NOT NULL,
   `request_day` date NOT NULL,
   `state` int(11) NOT NULL DEFAULT 0,
   `update_date` date DEFAULT NULL,
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `received_day` date DEFAULT NULL,
-  `returned_day` date DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `returned_day` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `requestborrow`
+-- Dumping data for table `requestborrow`
 --
 
 INSERT INTO `requestborrow` (`student_id`, `document_id`, `request_day`, `state`, `update_date`, `id`, `received_day`, `returned_day`) VALUES
-(1, 1, '2023-11-15', 0, '2023-11-20', 1, NULL, NULL),
-(5, 3, '0000-00-00', 0, NULL, 2, NULL, NULL),
-(5, 1, '2023-12-23', 0, NULL, 3, NULL, NULL),
-(5, 2, '2023-11-08', 0, NULL, 4, NULL, NULL),
-(5, 2, '2023-11-09', 0, NULL, 5, NULL, NULL);
+(2000002, 1, '2023-12-05', 0, NULL, 6, NULL, NULL),
+(2000002, 5, '2023-12-01', 0, NULL, 7, NULL, NULL),
+(2000002, 3, '2023-12-01', 0, NULL, 8, NULL, NULL),
+(2000006, 9, '2023-12-01', 0, NULL, 9, NULL, NULL),
+(2000007, 6, '2023-12-01', 0, NULL, 10, NULL, NULL),
+(2000007, 3, '2023-12-01', 0, NULL, 11, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `reviews`
+-- Table structure for table `reviews`
 --
 
-CREATE TABLE IF NOT EXISTS `reviews` (
-  `review_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `reviews` (
+  `review_id` int(11) NOT NULL,
   `title` varchar(1024) NOT NULL,
   `book_name` varchar(2048) NOT NULL,
   `book_author` varchar(2048) NOT NULL,
@@ -233,13 +221,11 @@ CREATE TABLE IF NOT EXISTS `reviews` (
   `image_url` varchar(512) DEFAULT NULL,
   `submit_date` date NOT NULL,
   `status` varchar(128) NOT NULL,
-  `student_id` int(11) NOT NULL,
-  PRIMARY KEY (`review_id`),
-  KEY `student_id` (`student_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `student_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `reviews`
+-- Dumping data for table `reviews`
 --
 
 INSERT INTO `reviews` (`review_id`, `title`, `book_name`, `book_author`, `summary`, `content`, `image_url`, `submit_date`, `status`, `student_id`) VALUES
@@ -248,78 +234,127 @@ INSERT INTO `reviews` (`review_id`, `title`, `book_name`, `book_author`, `summar
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `reviews_comments`
+-- Table structure for table `reviews_comments`
 --
 
-CREATE TABLE IF NOT EXISTS `reviews_comments` (
+CREATE TABLE `reviews_comments` (
   `cmt_id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
   `review_id` int(11) NOT NULL,
   `cmt_content` varchar(10000) NOT NULL,
-  `cmt_datetime` datetime NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`cmt_id`),
-  KEY `student_id_FK` (`student_id`),
-  KEY `review_id_FK` (`review_id`)
+  `cmt_datetime` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
-
 --
--- Cấu trúc bảng cho bảng `role`
---
-
-CREATE TABLE IF NOT EXISTS `role` (
-  `student_id` int(11) NOT NULL,
-  `role` varchar(255) NOT NULL,
-  PRIMARY KEY (`student_id`,`role`),
-  KEY `student_id` (`student_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `role`
---
-
-INSERT INTO `role` (`student_id`, `role`) VALUES
-(0, 'collaborator'),
-(0, 'member'),
-(5, 'admin'),
-(5, 'member'),
-(6, 'collaborator'),
-(7, 'collaborator'),
-(7, 'member'),
-(2000000, 'admin'),
-(2000001, 'admin'),
-(2000002, 'collaborator');
-
---
--- Các ràng buộc cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Các ràng buộc cho bảng `post_comments`
+-- Indexes for table `documents`
+--
+ALTER TABLE `documents`
+  ADD PRIMARY KEY (`document_id`);
+
+--
+-- Indexes for table `members`
+--
+ALTER TABLE `members`
+  ADD PRIMARY KEY (`student_id`),
+  ADD KEY `student_id` (`student_id`);
+
+--
+-- Indexes for table `posts`
+--
+ALTER TABLE `posts`
+  ADD PRIMARY KEY (`post_id`),
+  ADD UNIQUE KEY `post_id` (`post_id`);
+
+--
+-- Indexes for table `post_comments`
+--
+ALTER TABLE `post_comments`
+  ADD PRIMARY KEY (`cmt_id`),
+  ADD KEY `post_comments_ibfk_1` (`student_id`),
+  ADD KEY `post_comments_ibfk_2` (`post_id`);
+
+--
+-- Indexes for table `requestborrow`
+--
+ALTER TABLE `requestborrow`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `reviews`
+--
+ALTER TABLE `reviews`
+  ADD PRIMARY KEY (`review_id`),
+  ADD KEY `student_id` (`student_id`);
+
+--
+-- Indexes for table `reviews_comments`
+--
+ALTER TABLE `reviews_comments`
+  ADD PRIMARY KEY (`cmt_id`),
+  ADD KEY `student_id_FK` (`student_id`),
+  ADD KEY `review_id_FK` (`review_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `documents`
+--
+ALTER TABLE `documents`
+  MODIFY `document_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `post_comments`
+--
+ALTER TABLE `post_comments`
+  MODIFY `cmt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `requestborrow`
+--
+ALTER TABLE `requestborrow`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `reviews`
+--
+ALTER TABLE `reviews`
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `post_comments`
 --
 ALTER TABLE `post_comments`
   ADD CONSTRAINT `post_comments_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `members` (`student_id`),
   ADD CONSTRAINT `post_comments_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`);
 
 --
--- Các ràng buộc cho bảng `reviews`
+-- Constraints for table `reviews`
 --
 ALTER TABLE `reviews`
   ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `members` (`student_id`);
 
 --
--- Các ràng buộc cho bảng `reviews_comments`
+-- Constraints for table `reviews_comments`
 --
 ALTER TABLE `reviews_comments`
   ADD CONSTRAINT `review_id_FK` FOREIGN KEY (`review_id`) REFERENCES `reviews` (`review_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `student_id_FK` FOREIGN KEY (`student_id`) REFERENCES `members` (`student_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Các ràng buộc cho bảng `role`
---
-ALTER TABLE `role`
-  ADD CONSTRAINT `role_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `members` (`student_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
