@@ -27,13 +27,13 @@ function blockUser(req, res) {
     const value = req.query.value;
     const id = req.query.id;
     if (value == 1) {
-        connect_DB.query("UPDATE members SET state = 'blocked' WHERE student_id = " + id, function (err, result, fields) {
+        connect_DB.query("UPDATE members SET state = 'Đã bị khóa' WHERE student_id = " + id, function (err, result, fields) {
             if (err) res.json({ 500: "Database Error: Cannot update database" });
             else res.json({ 300: "OK" });
         });
     }
     else {
-        connect_DB.query("UPDATE members SET state = 'active' WHERE student_id = " + id, function (err, result, fields) {
+        connect_DB.query("UPDATE members SET state = 'Đang hoạt động' WHERE student_id = " + id, function (err, result, fields) {
             if (err) res.json({ 500: "Database Error: Cannot update database" });
             else res.json({ 300: "OK" });
         });
