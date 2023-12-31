@@ -39,10 +39,31 @@ function getReturnList(res) {
 function approvereq(req, res) {
     var id = req.query.id;
     const currentDate = new Date().toISOString().split('T')[0];
-    connect_DB.query(`UPDATE requestborrow SET status = 1, update_date = "${currentDate}" WHERE id = ${id}`, function (err, result, fields) {
-        if (err) res.json({ code: 500 });
-        else res.json({ code: 300 });
+    connect_DB.query(`SELECT quantity FROM documents WHERE document_id = (SELECT document_id FROM requestborrow WHERE id = ${id})`, function (err, result, fields) {
+        if (err) {
+            res.json({ 500: "Fail to connect to databse" });
+            return;
+        }
+        else {
+            //console.log(result[0]["quantity"]);
+            if (result[0]["quantity"] <= 0) {
+                res.json({ 503: "No more document to be borrowed" });
+                return;
+            }
+        };
     });
+    connect_DB.query(`UPDATE requestborrow SET state = 1, update_date = "${currentDate}" WHERE id = ${id}`, function (err, result, fields) {
+        if (err) {
+            res.json({ 501: "Fail to update request's state" });
+        }
+        else {
+            connect_DB.query(`UPDATE documents SET quantity = quantity - 1  WHERE document_id = (SELECT document_id FROM requestborrow WHERE id = ${id})`, function (err, result, fields) {
+                if (err) res.json({ 502: "Fail to update document's quantity" });
+                else res.json({ 300: "OK" });
+            });
+        }
+    });
+    
 }
 
 function denyreq(req, res) {
@@ -54,12 +75,20 @@ function denyreq(req, res) {
     });
 }
 
+// Accept return request
 function acceptreq(req, res) {
     var id = req.query.id;
     const currentDate = new Date().toISOString().split('T')[0];
-    connect_DB.query(`UPDATE requestborrow SET status = 8, update_date = "${currentDate}" WHERE id = ${id}`, function (err, result, fields) {
-        if (err) res.json({ code: 500 });
-        else res.json({ code: 300 });
+    connect_DB.query(`UPDATE requestborrow SET state = 8, update_date = "${currentDate}" WHERE id = ${id}`, function (err, result, fields) {
+        if (err) {
+            res.json({ 501: "Fail to update request's state" });
+        }
+        else {
+            connect_DB.query(`UPDATE documents SET quantity = quantity + 1  WHERE document_id = (SELECT document_id FROM requestborrow WHERE id = ${id})`, function (err, result, fields) {
+                if (err) res.json({ 502: "Fail to update document's quantity" });
+                else res.json({ 300: "OK" });
+            });
+        }
     });
 }
 
@@ -102,9 +131,23 @@ function loanRequest(req, res) {
     var book_id = req.body.book_id;
     const currentDate = new Date().toISOString().split('T')[0];
 
+    connect_DB.query(`SELECT quantity FROM documents WHERE document_id = ${book_id}`, function (err, result, fields) {
+        if (err) {
+            res.json({ 500: "Fail to connect to databse" });
+            return;
+        }
+        else {
+            //console.log(result[0]["quantity"]);
+            if (result[0]["quantity"] <= 0) {
+                res.json({ 503: "No more document to be borrowed" });
+                return;
+            }
+        };
+    });
+
     connect_DB.query(`INSERT INTO requestborrow(student_id, document_id, request_day, status) VALUES (${student_id}, ${book_id}, "${currentDate}", 0)`, function (err, result, fields) {
-        if (err) res.json({ code: 500 });
-        else res.json({ code: 300 });
+        if (err) res.json({ 500: "Fail to connect to database" });
+        else res.json({ 300: "OK" });
     });
 }
 
