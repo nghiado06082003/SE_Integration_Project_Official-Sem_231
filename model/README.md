@@ -1,11 +1,19 @@
 1. Module mượn sách
 a. Datbase: 
 	REQUESTBORROW (request Book loan) state:
-		+ 0: đang xử lí
-		+ 1: đưuọc chấp thuận, chờ nhaanj tài liệu
-		+ 2: bị từ chối
-		+ 3: đã nhận sách (đang mượn)
-		+ 4: đã trả sách
+	// status:
+	// 0: request mượn chưa được duyệt
+	// 1: request mượn đã được duyệt và chưa trả
+	// 2: request mượn không được duyệt
+	// 3: đã trả
+	// 4: chưa trả chưa request trả
+	// 5: quá hạn chưa request trả
+	// 6: request trả đúng hạn
+	// 7: request trả trễ hạn
+	// 8: request trả đã được đồng ý
+	// 9: phạt
+	// 10: chưa trả đã request trả
+	// 11: quá hạn đã request trả
 b. Code:
 	+ 500: DATABASE_FAILED
 	+ 300: OK
@@ -35,8 +43,16 @@ Res:
 - Manager: 
 API: /api/loanManagement/manager/request/approve?id=<INT>
 Res: 
-	+ Failed:  JSON {code: 500}
-	+ Successed: JSON { code: 300}
+	+ Failed:  
+ 		> Cannot connect to database
+   			JSON { 500: "Fail to connect to databse" }
+   		> Fail to update request's state
+   			JSON { 501: "Fail to update request's state" }
+  		> Fail to update document's quantity
+   			JSON { 502: "Fail to update request's quantity" }
+   		> No more document to be borrowed
+   			JSON { 503: "No more document to be borrowed" }
+	+ Successed: JSON { 300: OK}
 
 * Deny request:
 
