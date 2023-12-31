@@ -75,9 +75,11 @@ function register(res, obj) {
         
         const member = {
           student_id: obj.student_id,
+          student_name: obj.student_name,
           email: obj.email,
           avatar_url: obj.avatar_url,
           state: "Đang hoạt động",
+          join_date: currentDate,
           permission: "Cộng tác viên"
         };
         const token = jwt.sign(member, "RANDOM-TOKEN", { expiresIn: "1h" });

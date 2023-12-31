@@ -33,9 +33,11 @@ function signin(res, obj) {
         
         const member = {
           student_id: result[0].student_id,
+          student_name: result[0].student_name,
           email: result[0].email,
           avatar_url: result[0].avatar_url,
           state: result[0].state,
+          join_date: result[0].join_date,
           permission: result[0].permission
         };
         const token = jwt.sign(member, "RANDOM-TOKEN", { expiresIn: "1h" });
