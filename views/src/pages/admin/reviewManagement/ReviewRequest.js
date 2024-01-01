@@ -74,7 +74,7 @@ function ReviewRequest({ data, triggerFetch, setTriggerFetch }) {
               </td>
               <td className="border px-4 py-2">{new Date(request.submit_date).toLocaleDateString('en-GB')}</td>
               <td className="border px-4 py-2">
-                <button type="button" className="bg-green-500 text-white px-2 py-1 mr-2" onClick={() => handleAcceptRequest(request.review_id)}>Chấp nhận</button>
+                <button type="button" className="bg-green-500 text-white px-2 py-1 mb-2" onClick={() => handleAcceptRequest(request.review_id)}>Chấp nhận</button>
                 <button type="button" className="bg-red-500 text-white px-2 py-1" onClick={() => handleRejectRequest(request.review_id)}>Từ chối</button>
               </td>
             </tr>

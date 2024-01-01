@@ -1,26 +1,20 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
-import { FiMessageCircle } from 'react-icons/fi';
-import { useNavigate } from "react-router-dom";
 
 function CommentReviewForm({ review_id, forceRerender }) {
-  const [id, setID] = review_id;
   const [user, setUser] = useState(null);
   const [cmtContent, setCmtContent] = useState("");
-  const [authorized, setAuthorized] = false;
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
   const cookies = new Cookies();
   const token = cookies.get("TOKEN");
   const info = cookies.get("info");
-  const navigate = useNavigate();
-
+  
   useEffect(() => {
     if (!token || !info) {
       cookies.remove("TOKEN", { path: "/" });
       cookies.remove("info", { path: "/" });
-      setAuthorized(false);
-      return;
+      setUser(null);
     }
     axios
       .post('http://localhost:8080/api/authorization/collab', {}, {
@@ -30,69 +24,47 @@ function CommentReviewForm({ review_id, forceRerender }) {
       })
       .then((response) => {
         setUser(info);
-        setAuthorized(true);
-        setErrorMessage(null);
+        setErrorMessage('');
       })
       .catch((error) => {
-        setAuthorized(false);
+        setErrorMessage(error.response?.data?.message ?? "Hệ thống gặp vấn đề. Vui lòng thử lại sau");
       });
   }, [])
-
+  
   const handleInputChange = (e) => {
     setCmtContent(e.target.value);
   }
-
-  const handleSubmit = (e) => {
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .post('http://localhost:8080/api/authorization/collab', {}, {
+    try {
+      await axios.post('http://localhost:8080/api/review/addComment',
+      {
+        review_id: review_id,
+        cmt_content: cmtContent
+      },
+      {
         headers: {
           Authorization: `Bearer ${token}`
         }
-      })
-      .then((response) => {
-        setErrorMessage(null);
-        axios
-          .post("http://localhost:8080/api/review/addComment", {
-            review_id: id,
-            cmt_content: cmtContent
-          }, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          })
-          .then((response) => {
-            setCmtContent("");
-            setErrorMessage(null);
-            forceRerender();
-          })
-          .catch((error) => {
-            alert(error.response.data.message);
-            setErrorMessage(error.response.data.message);
-          })
-      })
-      .catch((error) => {
-        alert(error.response.data.message);
-        setErrorMessage(error.response.data.message);
       });
+      setCmtContent('');
+      setErrorMessage('');
+      forceRerender();
+    }
+    catch (error) {
+      setErrorMessage(error.response?.data?.message ?? "Hệ thống gặp vấn đề. Vui lòng thử lại sau");
+    }
   }
-
+  
   return (
     <>
-      {authorized && (
-        <div className='mb-10'>
-          <div className="flex items-center gap-2 mb-4">
-            <h2 className="text-lg font-bold text-gray-900">Bình luận</h2>
-            <div className="flex items-center h-full text-gray-700 text-sm">
-              <FiMessageCircle className="w-4 h-4 mr-1" />
-              <span>{10}</span>
-            </div>
-          </div>
+      {user !== null && (
+        <div className='mb-6'>
+          <h2 className="text-lg font-bold text-gray-900 mb-4">Bình luận</h2>
           <form className="mb-6" onSubmit={handleSubmit}>
             <div className="mb-4 rounded-lg border border-gray-200">
-              <label htmlFor="comment" className="sr-only">
-                Hãy viết bình luận về bài review
-              </label>
+              <label htmlFor="comment" className="sr-only">Hãy viết bình luận về bài review</label>
               <textarea
                 id="comment"
                 name="cmtContent"
@@ -106,19 +78,15 @@ function CommentReviewForm({ review_id, forceRerender }) {
             </div>
             <button
               type="submit"
-              className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 "
+              className="py-2.5 px-4 text-xs font-semibold text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200"
             >
               Gửi bình luận
             </button>
-            {errorMessage && (
-              <h6 className="text-lg font-bold text-red">{errorMessage}</h6>
-            )}
+            {errorMessage && <h6 className="font-bold text-lg text-center text-red-500 mt-2">{errorMessage}</h6>}
           </form>
         </div>
       )}
-
     </>
-
   );
 }
 

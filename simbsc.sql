@@ -257,7 +257,7 @@ INSERT INTO `reviews` (`review_id`, `title`, `book_name`, `book_author`, `summar
 --
 
 CREATE TABLE `reviews_comments` (
-  `cmt_id` int(11) NOT NULL,
+  `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
   `student_id` int(11) NOT NULL,
   `review_id` int(11) NOT NULL,
   `cmt_content` varchar(10000) NOT NULL,

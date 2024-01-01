@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import LoadingElement from '../../../component/LoadingElement';
-import CommentReviewForm from '../../user/forum/CommentReviewForm';
 import CommentReviewList from '../../user/forum/CommentReviewList';
 
 function ReviewDetailManagement() {

@@ -3,7 +3,7 @@ var mysql = require("mysql");
 
 function getComment(review_id, student_id, cmt_id, controller) {
     let sql = `
-    SELECT reviews_comments.*, members.student_name
+    SELECT reviews_comments.*, members.student_name, members.avatar_url
     FROM reviews_comments INNER JOIN members
     ON reviews_comments.student_id = members.student_id
     WHERE reviews_comments.review_id = ? 
@@ -14,6 +14,7 @@ function getComment(review_id, student_id, cmt_id, controller) {
     if (cmt_id) {
         sql += ` AND reviews_comments.cmt_id = "${mysql.escape(cmt_id)}"`
     }
+    sql += " ORDER BY reviews_comments.cmt_datetime DESC";
     connect_DB.query(sql, [review_id], function (err, result) {
         controller(err, result);
     })

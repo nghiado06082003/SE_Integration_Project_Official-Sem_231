@@ -6,7 +6,7 @@ import Cookies from "universal-cookie";
 
 function UpdateReview() {
   const { review_id } = useParams();
-  const [user, setUser] = useState(null);
+  const [ , setUser] = useState(null);
   const [reviewData, setReviewData] = useState({
     reviewTitle: '',
     reviewForBook: '',
