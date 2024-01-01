@@ -58,7 +58,7 @@ const EventManagement = () => {
                         Tạo sự kiện mới
                     </Link>
                 </button>
-            <AdminBlogCard data={data} />
+            <AdminBlogCard data={posts} />
         </div>
     </div>
   );

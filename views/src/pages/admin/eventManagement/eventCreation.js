@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
+const token = cookies.get("TOKEN");
 
 export default function EventCreation() {
   const [eventData, setEventData] = useState({
@@ -27,7 +30,11 @@ export default function EventCreation() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.get("/api/post/new", {params: {title: eventData.eventTitle, brief: eventData.description, content: eventData.description}})
+    axios.post("/api/post/new", {title: eventData.eventTitle, brief: eventData.description, content: eventData.description},{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
       .then((response) => {
         console.log(response)
         if (response.status === 200 && '300' in response.data) {

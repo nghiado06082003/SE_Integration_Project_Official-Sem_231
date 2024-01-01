@@ -1,7 +1,7 @@
 var connect_DB = require('./connect_db')
 
 function getPostList(res) {
-    connect_DB.query("SELECT post_id, title, brief, create_date, last_change FROM posts", function (err, result, fields) {
+    connect_DB.query("SELECT student_id, student_name, post_id, title, brief, create_date, last_change FROM (posts NATURAL JOIN members)", function (err, result, fields) {
         if (err) res.json({ 500: "Database Error: Cannot fetch from database"});
         else res.json({postList: JSON.stringify(result)});
     });
@@ -16,12 +16,13 @@ function getPost (req, res) {
 }
 
 function createPost(req, res) {
-    var title = req.query.title;
-    var brief = req.query.brief;
-    var content = req.query.content;
+    var title = req.body.title;
+    var brief = req.body.brief;
+    var content = req.body.content;
+    var student_id = req.cur_member.student_id;
     const create_date = new Date().toISOString().split('T')[0];
 
-    connect_DB.query(`INSERT INTO posts(title, brief, content, create_date) VALUES ("${title}", "${brief}", "${content}" ,"${create_date}")`, function (err, result, fields) {
+    connect_DB.query(`INSERT INTO posts(student_id, title, brief, content, create_date) VALUES (${student_id}, "${title}", "${brief}", "${content}" ,"${create_date}")`, function (err, result, fields) {
         if (err) res.json({ 500: "Database Error: Cannot insert into database"});
         else res.json({ 300: "OK"});
     });

@@ -47,7 +47,7 @@ const Event = () => {
       </div>
 
       <div className="flex-grow overflow-y-auto">
-        <BlogCard data={data} />
+        <BlogCard data={posts} />
       </div>
     </div>
   );

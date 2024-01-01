@@ -11,9 +11,9 @@ module.exports = {
         post_model.getPost(req, res);
     },
 
-    createPost: function (req, res) {
-        post_model.createPost(req, res);
-    },
+    createPost: [authorization_model.loadCurMember, post_model.createPost, function (req, res) {
+        res.status(200).json({});
+    }],
 
     editPost: function (req, res) {
         post_model.editPost(req, res);

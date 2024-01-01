@@ -8,7 +8,7 @@ const AdminBlogCard = ({ data }) => {
             <div className='bg-white border border-gray-200 rounded-lg shadow-xl md:flex-row rounded-lg shadow md:flex-row mt-4 mb-4'>
                  <a
                     key={index}
-                    href={`event-management/detail/${item.index}`}
+                    href={`event-management/detail/${item.post_id}`}
                     className="flex flex-col items-center w-full bg-white md:flex-row md:flex-row"
                 >
                     <img
@@ -18,13 +18,13 @@ const AdminBlogCard = ({ data }) => {
                     />
                     <div className="flex flex-col justify-between p-4 leading-normal w-full">
                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-blue-600 ">
-                        {item.name}
+                        {item.title}
                     </h5>
                     <p className="mb-3 font-normal text-gray-600 ">
-                        {item.description}
+                        {item.brief}
                     </p>
                     <p className="mb-3 font-normal text-gray-400 ">
-                        {item.author} - {item.date}
+                        {item.student_name} - {(item.create_date).substring(0, 10)}
                     </p>
                     </div>
                     
