@@ -1,5 +1,4 @@
 const ReviewMain = ({ item }) => {
-  console.log(item);
   return (
     <div className="mb-10">
       <h1 className='text-4xl font-semibold mb-2'>{item.title}</h1>

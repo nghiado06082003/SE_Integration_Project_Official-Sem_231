@@ -33,8 +33,9 @@ import EventDetailManagement from "../../pages/admin/eventManagement/eventDetail
 import EventCreation from "../../pages/admin/eventManagement/eventCreation";
 import EventEdit from "../../pages/admin/eventManagement/eventEdit";
 
-import ForumManagement from "../../pages/admin/eventManagement/forumManagement";
-import ForumPostDetailManagement from "../../pages/admin/eventManagement/forumPostDetailManagement";
+import ForumManagement from "../../pages/admin/reviewManagement/forumManagement";
+import ReviewDetailManagement from "../../pages/admin/reviewManagement/ReviewDetailManagement";
+import UpdateReview from "../../pages/admin/reviewManagement/UpdateReview";
 // end admin layout
 
 
@@ -94,7 +95,8 @@ export default function Router() {
         { path: "event-management/edit/:id", element: <EventEdit /> },
 
         { path: "forum-management", element: <ForumManagement /> },
-        { path: "forum-management/detail/:id", element: <ForumPostDetailManagement /> }
+        { path: "forum-management/detail/:id", element: <ReviewDetailManagement /> },
+        { path: "forum-management/edit/:review_id", element: <UpdateReview /> }
       ]
     },
     // Route for error
