@@ -15,7 +15,7 @@ function checkNoEmpty(obj) {
 
 function reviewList(review_status, student_id, controller) {
     let sql = `
-    SELECT reviews.review_id, reviews.title, reviews.book_name, reviews.book_author, reviews.summary, reviews.image_url, reviews.submit_date, reviews.status, members.student_name
+    SELECT reviews.review_id, reviews.title, reviews.book_name, reviews.book_author, reviews.summary, reviews.image_url, reviews.submit_date, reviews.status, members.student_name, members.avatar_url
     FROM reviews INNER JOIN members
     ON reviews.student_id = members.student_id
     `;
@@ -32,7 +32,7 @@ function reviewList(review_status, student_id, controller) {
 
 function reviewContent(review_id, review_status, student_id, controller) {
     let sql = `
-    SELECT reviews.review_id, reviews.title, reviews.book_name, reviews.book_author, reviews.summary, reviews.content, reviews.image_url, reviews.submit_date, reviews.status, members.student_name 
+    SELECT reviews.review_id, reviews.title, reviews.book_name, reviews.book_author, reviews.summary, reviews.content, reviews.image_url, reviews.submit_date, reviews.status, members.student_name, members.avatar_url
     FROM reviews INNER JOIN members 
     ON reviews.student_id = members.student_id 
     WHERE reviews.review_id = ?

@@ -21,8 +21,19 @@ const EventDetailManagement = () => {
   };
 
   const [comments, setComment] = useState([]);
+  const [postDetail, setPostDetail] = useState([]);
 
     useEffect(() => {
+      axios.get("http://localhost:8080/api/post/detail", {params: {id: id}})
+      .then((response) => {
+        if (response.status === 200 && 'postDetail' in response.data) {
+          setPostDetail(JSON.parse(response.data.postDetail));
+        }
+      })
+      .catch((error) => {
+        console.error("Error!!!!!!", error);
+      });
+
       axios.get("http://localhost:8080/api/post/comment/list", {params: {id: id}})
       .then((response) => {
         if (response.status === 200 && 'commentList' in response.data) {
@@ -78,17 +89,18 @@ const EventDetailManagement = () => {
             className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
             src="https://www.whitmorerarebooks.com/pictures/medium/2465.jpg"
           />
+          {postDetail.map((post) => (
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-            <h2 className="text-sm title-font text-gray-500 tracking-widest">Date:11/11/2022</h2>
-            <h1 className="text-blue-900 text-3xl title-font font-medium mb-1">Tên sự kiện</h1>
+            <h2 className="text-sm title-font text-gray-500 tracking-widest">Date: {(post.create_date).substring(0, 10)}</h2>
+            <h1 className="text-blue-900 text-3xl title-font font-medium mb-1">{post.title}</h1>
             <div className="flex mb-4">
              
             </div>
            
             <p className="leading-relaxed text-blue-700">Tóm tắt sự kiện</p>
-            <p>ghi tóm tắt</p>
+            <p>{post.brief}</p>
             <p className="leading-relaxed text-blue-700">Mô tả chi tiết sự kiện</p>
-            <p>ghi mô tả chi tiết</p>
+            <p>{post.content}</p>
             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
 
             </div>
@@ -113,7 +125,7 @@ const EventDetailManagement = () => {
                 </svg>
             </button>
             </div>
-          </div>
+          </div>))}
         </div>
         <div className='sm:p-10 m-16'>
         <form className="mb-6">
@@ -130,7 +142,7 @@ const EventDetailManagement = () => {
             ></textarea>
           </div>
           <button
-            type="button"
+            type="submit"
             className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 "
             onClick= {()=>giveComment()}          
           >

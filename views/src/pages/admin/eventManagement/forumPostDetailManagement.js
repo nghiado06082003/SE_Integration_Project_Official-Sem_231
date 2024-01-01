@@ -1,5 +1,5 @@
 import React from 'react';
-import ReviewCard from '../../../component/ReviewCard';
+import ReviewMain from '../../../component/ReviewMain';
 import { useParams } from 'react-router-dom';
 
 import reviews from '../../user/forum/reviewdata';
@@ -19,7 +19,7 @@ const ForumPostDetailManagement = () => {
     <div className='flex flex-grow justify-center'>
       
       <div className="bg-white py-8 lg:py-16 antialiased ">
-      <ReviewCard item={reviews[id]}></ReviewCard>
+      <ReviewMain item={reviews[id]}></ReviewMain>
       <div className=" mx-auto px-4 pl-12 pr-12 pb-12 ml-12 mr-12">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-lg lg:text-2xl font-bold text-gray-900 ">Thảo luận</h2>
