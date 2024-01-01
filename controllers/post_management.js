@@ -31,9 +31,9 @@ module.exports = {
         res.status(200).json({});
     }],
 
-    editPostcmt: [authorization_model.loadCurMember, post_model.editPostcmt, function (req, res) {
-        res.status(200).json({});
-    }],
+    editPostcmt: function (req, res) {
+        post_model.editPostcmt(req, res);
+    },
 
     deletePostcmt: function (req, res) {
         post_model.deletePostcmt(req, res);

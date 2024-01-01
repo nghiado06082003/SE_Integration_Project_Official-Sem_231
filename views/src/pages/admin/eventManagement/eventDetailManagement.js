@@ -68,6 +68,38 @@ const EventDetailManagement = () => {
     });
   }
 
+  const [postData, setPostData] = useState({
+    title: '',
+    brief: '',
+    content: '',
+  });
+
+  const editPost = () => {
+    axios.get("http://localhost:8080/api/post/edit", {params: {id: id, content: postData.content, brief: postData.brief, title: postData.title}})
+    .then((response) => {
+      if (response.status === 200 && '300' in response.data) {
+        //edit thành công
+        window.location.reload();
+      }
+    })
+    .catch((error) => {
+      console.error("Error!!!!!!", error);
+    });
+  }
+
+  const deletePost = () => {
+    axios.get("http://localhost:8080/api/post/delete", {params: {id: id}})
+      .then((response) => {
+        if (response.status === 200 && '300' in response.data) {
+          //xóa post thành công
+          window.location.reload()
+        }
+      })
+      .catch((error) => {
+        console.error("Error!!!!!!", error);
+      });
+  }
+ 
   // const comments = [
   //   {
   //     id: 1,
@@ -105,10 +137,14 @@ const EventDetailManagement = () => {
 
             </div>
             <div className="flex">
-            <button className="flex mr-4 text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded">
+            <button className="flex mr-4 text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded"
+              onClick={()=>editPost()}
+            >
                 Edit
               </button>
-              <button className="flex mr-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
+              <button className="flex mr-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
+              onClick={()=>deletePost()}
+              >
                 Delete
               </button>
               

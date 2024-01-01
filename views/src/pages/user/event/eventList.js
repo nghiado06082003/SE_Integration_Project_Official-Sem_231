@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -18,6 +19,20 @@ const Event = () => {
     autoplay: true, 
     autoplaySpeed: 2000,
   };
+
+  const [posts, setPost] = useState([]);
+
+    useEffect(() => {
+      axios.get("http://localhost:8080/api/post/")
+      .then((response) => {
+        if (response.status === 200 && 'postList' in response.data) {
+          setPost(JSON.parse(response.data.postList));
+        }
+      })
+      .catch((error) => {
+        console.error("Error!!!!!!", error);
+      });
+    }, []);
   
   return (
     <div className="flex-grow flex pl-10 pt-8 bg-blue-50">
