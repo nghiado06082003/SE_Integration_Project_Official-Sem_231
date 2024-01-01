@@ -92,7 +92,7 @@ const SignupForm = () => {
               name="name"
               id="name"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="name@company.com"
+              placeholder="Your name"
               required
               onChange={handleChange}
             />
@@ -104,7 +104,7 @@ const SignupForm = () => {
               name="email"
               id="email"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="name@company.com"
+              placeholder="email@domain.com"
               required
               onChange={handleChange}
             />
@@ -160,7 +160,7 @@ const SignupForm = () => {
                 </div>
               </div>
               <div className="bg-gray-50 p-4">
-                <Link to="/" role="button" className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">Trang chủ</Link>
+                <Link to="/sign-in" role="button" className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">Đăng nhập</Link>
               </div>
             </div>
           </div>

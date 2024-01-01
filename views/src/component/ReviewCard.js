@@ -28,10 +28,6 @@ const ReviewCard = ({ item }) => {
                 {item.content}
               </p>
               <div className="mt-4 flex items-center">
-              <div className="flex mr-2 text-gray-700 text-sm mr-3" onClick={handleLikeClick}>
-                  <FiHeart className="w-4 h-4 mr-1" color={liked ? 'red' : 'gray'} />
-                  <span>{item.likes}</span>
-                </div>
                 <div className="flex mr-2 text-gray-700 text-sm mr-8">
                   <FiMessageCircle className="w-4 h-4 mr-1" />
                   <span>{item.comments}</span>

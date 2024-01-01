@@ -3,7 +3,7 @@ var registration_model = require("../model/DAO/registration");
 
 module.exports = {
   register: function (req, res) {
-    if (!req.body.password) {
+    if (!req.body.password || !req.body.student_id || !req.body.student_name || !req.body.email) {
       return res.status(400).json({ message: "Vui lòng không để trống trường nào!" });
     }
     
@@ -15,7 +15,8 @@ module.exports = {
           student_name: req.body.student_name,
           email: req.body.email,
           password: hashedPassword,
-          avatar_url: req.body.avatar_url
+          //avatar_url: req.body.avatar_url
+          avatar_url: "https://t4.ftcdn.net/jpg/04/08/24/43/360_F_408244382_Ex6k7k8XYzTbiXLNJgIL8gssebpLLBZQ.jpg"
         };
         registration_model.register(res, member);
       })

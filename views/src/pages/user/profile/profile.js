@@ -30,10 +30,11 @@ export default function Profile() {
               <dt className=" font-medium leading-6 text-blue-700">Email: </dt>
               <dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">abc@hcmut.edu.vn</dd>
             </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className=" font-medium leading-6 text-blue-700">Số sách đã quyên góp: </dt>
               <Link to="#"><dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">1 <span className='text-blue-300'>(Click để xem chi tiết)</span></dd></Link>
-            </div>
+            </div> */}
+            {/*Not developed yet*/}
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className=" font-medium leading-6 text-blue-700">Sách đang mượn: </dt>
               <Link to="/borrow-history"><dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">1 <span className='text-blue-300'>(Click để xem chi tiết)</span></dd></Link>

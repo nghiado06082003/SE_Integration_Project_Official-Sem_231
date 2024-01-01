@@ -23,6 +23,7 @@ import AdminLayout from "../Layout/AdminLayout";
 import MemberManagement from "../../pages/admin/memberManagement/memberManagement";
 import LoanManagement from "../../pages/admin/documentManagement/loanManagement";
 import LibraryManagement from "../../pages/admin/documentManagement/libraryManagement";
+import EditBook from "../../pages/admin/documentManagement/libaryManagement.editBook";
 import DonateManagement from "../../pages/admin/documentManagement/donateManagement";
 
 import EventManagement from "../../pages/admin/eventManagement/eventManagement";
@@ -80,6 +81,7 @@ export default function Router() {
         { path: "library-management", element: <LibraryManagement /> },
         { path: "library-management/document-detail/:document_id", element: <LibDocDetail /> },
         { path: "library-management/upload", element: <BookForm /> },
+        { path: "library-management/edit/:document_id", element: <EditBook /> },
         { path: "library-management/donate-management", element: <DonateManagement /> },
         
         { path: "event-management", element: <EventManagement /> },

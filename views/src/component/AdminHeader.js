@@ -45,6 +45,12 @@ export default function AdminHeader() {
     setDropdownOpen(false);
     setDropDownDM(false);
   };
+
+  const handleClick = () => {
+    setDropDownEM(false);
+    setDropdownOpen(false);
+    setDropDownDM(false);
+  }
   
   const handleSignOut = (e) => {
     if (user === null) {
@@ -82,7 +88,7 @@ export default function AdminHeader() {
                   </button>
                   {dropDownEM && (
                     <ul className="absolute mt-2 bg-white border rounded border-gray-300 shadow-md z-10">
-                      <li>
+                      <li onClick={handleClick}>
                         <Link
                           to="/admin/event-management"
                           className="block px-4 py-1 text-gray-800 border-gray-100 hover:bg-transparent border-0 hover:text-primary-700"
@@ -90,7 +96,7 @@ export default function AdminHeader() {
                           Hoạt động
                         </Link>
                       </li>
-                      <li>
+                      <li onClick={handleClick}>
                         <Link
                           to="/admin/forum-management"
                           className="block px-4 py-1 text-gray-800 border-gray-100 hover:bg-transparent border-0 hover:text-primary-700"
@@ -111,7 +117,7 @@ export default function AdminHeader() {
                   </button>
                   {dropDownDM && (
                     <ul className="absolute mt-2 bg-white border rounded border-gray-300 shadow-md z-10">
-                      <li>
+                      <li onClick={handleClick}>
                         <Link
                           to="/admin/loan-management"
                           className="block px-4 py-1 text-gray-800 border-gray-100 hover:bg-transparent border-0 hover:text-primary-700"
@@ -119,7 +125,7 @@ export default function AdminHeader() {
                           Mượn sách
                         </Link>
                       </li>
-                      <li>
+                      <li onClick={handleClick}>
                         <Link
                           to="/admin/library-management"
                           className="block px-4 py-1 text-gray-800 border-gray-100 hover:bg-transparent border-0 hover:text-primary-700"
@@ -148,7 +154,7 @@ export default function AdminHeader() {
                   </button>
                   {isDropdownOpen && (
                     <ul className="absolute mt-2 bg-white border rounded border-gray-300 shadow-md ">
-                      <li>
+                      <li onClick={handleClick}>
                         <Link
                           to="/admin/profile"
                           className="block px-4 py-1 text-gray-800 border-gray-100 hover:bg-transparent border-0 hover:text-primary-700"
@@ -156,7 +162,7 @@ export default function AdminHeader() {
                           Thông tin cá nhân
                         </Link>
                       </li>
-                      <li>
+                      <li onClick={handleClick}>
                         <Link
                           to="/"
                           className="block px-4 py-1 text-gray-800 border-gray-100 hover:bg-transparent border-0 hover:text-primary-700"

@@ -24,13 +24,8 @@ const ReviewList = ({ data }) => {
                   
                 </p>
                 <div className="mt-4 flex items-center">
-                  <div className="flex mr-2 text-gray-700 text-sm mr-3">
-                    <FiHeart className="w-4 h-4 mr-1" />
-                    <span>{item.likes}</span>
-                  </div>
                   <div className="flex mr-2 text-gray-700 text-sm mr-8">
                   <Link to={`/forum/${item.id}`}> <FiMessageCircle className="w-4 h-4 mr-1" /></Link>
-                   
                     <span>{item.comments}</span>
                   </div>
                   <div className="flex mr-2 text-gray-700 text-sm mr-4">
