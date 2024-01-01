@@ -1,48 +1,42 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiHeart, FiMessageCircle, FiShare2 } from 'react-icons/fi'; // Import các icon từ thư viện react-icons
+import { FiMessageCircle } from 'react-icons/fi';
 
 const ReviewList = ({ data }) => {
   return (
-    <div className="flex justify-center items-center">
-      <div className="flex flex-col w-full pl-8 pr-8 pb-8 ml-8 mr-9">
-        {data.map((item, index) => (
-          <Link to={`/forum/${item.id}`} key={index} className="flex rounded-lg bg-white shadow-xl ml-10 mr-10 mb-10">
-            <div className="flex items-start px-4 py-6">
-              <img
-                className="w-20 h-20 rounded-full object-cover mr-4 shadow"
-                src="https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                alt="avatar"
-              />
-              <div className="">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-semibold text-gray-900 -mt-1">{item.author}</h2>
-                </div>
-                <p className="text-gray-700">{item.date}</p>
-                <p className="mt-3 text-gray-700 text-sm">
-                <Link to={`/forum/${item.id}`}>{item.content}</Link>
-                  
+    <div className="px-28 mb-8">
+      {data.map((item, index) => (
+        <Link to={`/forum/${item.review_id}`} key={index} className="block rounded-lg bg-white shadow-xl mb-10">
+          <div className="flex px-4 py-6">
+            <img
+              src={item.image_url}
+              alt="Book Reviewed"
+              className='w-48'
+            />
+            <div className="grow flex flex-col ml-10">
+              <h3 className='font-semibold text-2xl'>{item.title}</h3>
+              <h3 className='font-semibold mb-2'>Sách {item.book_name} - Tác giả: {item.book_author}</h3>
+              <div className="flex items-center gap-3 mb-4">
+                <img
+                  className="w-8 h-8 rounded-full object-cover shadow"
+                  src={item.avatar_url}
+                  alt="Reviewer's avatar"
+                />
+                <p className="text-sm text-gray-500">
+                  Reviewer: <span className='text-gray-950 font-semibold'>{item.student_name}</span> - {new Date(item.submit_date).toLocaleDateString('en-GB')}
                 </p>
-                <div className="mt-4 flex items-center">
-                  <div className="flex mr-2 text-gray-700 text-sm mr-3">
-                    <FiHeart className="w-4 h-4 mr-1" />
-                    <span>{item.likes}</span>
-                  </div>
-                  <div className="flex mr-2 text-gray-700 text-sm mr-8">
-                  <Link to={`/forum/${item.id}`}> <FiMessageCircle className="w-4 h-4 mr-1" /></Link>
-                   
-                    <span>{item.comments}</span>
-                  </div>
-                  <div className="flex mr-2 text-gray-700 text-sm mr-4">
-                    <FiShare2 className="w-4 h-4 mr-1" />
-                    <span>Share</span>
-                  </div>
+              </div>
+              <p className="grow text-gray-700 text-sm">{item.summary}</p>
+              <div className="mt-4">
+                <div className="flex items-center mr-2 text-gray-700 text-sm mr-8">
+                  <FiMessageCircle className="w-4 h-4 mr-1" />
+                  <span>10</span>
                 </div>
               </div>
             </div>
-          </Link>
-        ))}
-      </div>
+          </div>
+        </Link>
+      ))}
     </div>
   );
 };

@@ -9,7 +9,8 @@ const SignupForm = () => {
     mssv: "",
     name: "",
     email: "",
-    password: ""
+    password: "",
+    avatar_url: ""
   });
   const [error, setError] = useState('');
   const [showErrors, setShowErrors] = useState(false);
@@ -26,13 +27,17 @@ const SignupForm = () => {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formValue);
+    let avatar_url = formValue.avatar_url;
+    if (avatar_url === '') {
+      avatar_url = null;
+    }
     try {
       const info = {
         student_id: formValue.mssv,
         student_name: formValue.name,
         email: formValue.email,
-        password: formValue.password
+        password: formValue.password,
+        avatar_url: avatar_url
       };
       const response = await axios.post('http://localhost:8080/api/register', info);
       cookies.set("TOKEN", response.data.token, {
@@ -105,6 +110,18 @@ const SignupForm = () => {
               id="email"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="name@company.com"
+              required
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="avatar_url" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Link Avatar</label>
+            <input
+              type="url"
+              name="avatar_url"
+              id="avatar_url"
+              placeholder="https://www.example.com/"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               required
               onChange={handleChange}
             />

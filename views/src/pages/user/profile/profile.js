@@ -4,11 +4,30 @@
  * trang chi tiết này gồm 2 bảng: 1 bảng là thông tin sách đang mượn, 1 bảng là những yêu cầu mượn trước đó
  * ở dưới sẽ có những thống kê như số lượng sách viết đã quyên góp, ấn vào nó sẽ hiện danh sách
  * số lượng bài review/topic đã tạo, ấn vào nó sẽ hiện danh sách, ấn vào 1 dòng trong danh sách nó sẽ ra cái bài review/topic chi tiết trong forum
- * 
  */
-import { PaperClipIcon } from '@heroicons/react/20/solid'
+// import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+// import Cookies from 'universal-cookie';
+// import axios from "axios";
+
 export default function Profile() {
+  // const [user, setUser] = useState(null);
+  // const cookies = new Cookies();
+  
+  // useEffect(() => {
+  //   const token = cookies.get("TOKEN");
+  //   const info = cookies.get("info");
+  //   if (!token || !info) {
+  //     setUser(null);
+  //     cookies.remove("TOKEN", { path: "/" });
+  //     cookies.remove("info", { path: "/" });
+  //     window.location.assign('/');
+  //   } else {
+  //     setUser(info);
+  //   }
+  //   axios.get()
+  // }, []);
+  
   return (
     <div className='flex flex-grow justify-center '>
       <div className='flex flex-row gap-20'>
