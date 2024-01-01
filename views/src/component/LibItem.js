@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiEdit } from "react-icons/fi";
 import { GoTrash } from "react-icons/go";
@@ -10,6 +10,7 @@ function DocItem({ doc, triggerFetch, setTriggerFetch }) {
   const [user, setUser] = useState(null);
   const isAuthorized = user?.permission === "Thành viên ban chủ nhiệm" || user?.permission === "Thành viên ban hậu cần";
   const cookies = new Cookies();
+  const navigate = useNavigate();
   
   useEffect(() => {
     const token = cookies.get("TOKEN");
@@ -39,6 +40,13 @@ function DocItem({ doc, triggerFetch, setTriggerFetch }) {
       });
   }, []);
   
+  const handleEdit = (e) => {
+    // The following function call (e.preventDefault()) is used to prevent redirecting of an <a> link containing this button
+    // (view "library" file for more details). This line is not a mistake so NEVER REMOVE IT unless you change the <a> tag.
+    e.preventDefault();
+    navigate(`/admin/library-management/edit/${doc.document_id}`);
+  };
+  
   const handleDelete = async (e) => {
     e.preventDefault();
     if (!isAuthorized) {
@@ -54,7 +62,7 @@ function DocItem({ doc, triggerFetch, setTriggerFetch }) {
         console.log(error.response);
       }
     }
-  }
+  };
   
   return (
     <div className="mb-3 rounded overflow-hidden shadow hover:shadow-xl my-4 border border-gray">
@@ -84,23 +92,28 @@ function DocItem({ doc, triggerFetch, setTriggerFetch }) {
           </span>
         </div>
         <div className="inline-flex items-center rounded-md shadow-sm">
-          <button className={`text-slate-800 hover:text-primary-700 text-sm bg-white hover:bg-slate-100 border border-slate-200 ${isAuthorized ? "rounded-l-lg" : "rounded-lg"} font-medium px-4 py-2 inline-flex space-x-1 items-center`}>
+          <button
+            type="button"
+            className={`text-slate-800 hover:text-primary-700 text-sm bg-white hover:bg-slate-100 border border-slate-200 ${isAuthorized ? "rounded-l-lg" : "rounded-lg"} font-medium px-4 py-2 inline-flex space-x-1 items-center`}
+          >
             <span>
               <IoEyeOutline className="w-4 h-4" />
             </span>
             <span>Xem</span>
           </button>
           {isAuthorized && <>
-          <Link 
+          <button
+            type="button"
             className="text-slate-800 hover:text-primary-700 text-sm bg-white hover:bg-slate-100 border-y border-slate-200 font-medium px-4 py-2 inline-flex space-x-1 items-center"
-            to={`/admin/library-management/edit/${doc.document_id}`}
+            onClick={handleEdit}
           >
             <span>
               <FiEdit className="w-4 h-4" />
             </span>
             <span>Sửa</span>
-          </Link>
+          </button>
           <button
+            type="button"
             className="text-slate-800 hover:text-primary-700 text-sm bg-white hover:bg-slate-100 border border-slate-200 rounded-r-lg font-medium px-4 py-2 inline-flex space-x-1 items-center"
             onClick={handleDelete}
           >
