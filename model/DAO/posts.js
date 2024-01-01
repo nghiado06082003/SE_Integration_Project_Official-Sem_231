@@ -10,21 +10,8 @@ function getPostList(res) {
 function getPost (req, res) {
     var id = req.query.id;
     connect_DB.query(`SELECT * FROM posts WHERE post_id = ${id}`, function (err, postResult, fields) {
-        if (err) {
-            res.status(500).json({ error: "Database Error: Cannot fetch post from the database" });
-        } else {
-            connect_DB.query(`SELECT * FROM post_comments WHERE post_id = ${id}`, function (err, commentResult, fields) {
-                if (err) {
-                    res.status(500).json({ error: "Database Error: Cannot fetch comments from the database" });
-                } else {
-                    const responseData = {
-                        post: postResult,
-                        comments: commentResult
-                    };
-                    res.json(responseData);
-                }
-            });
-        }
+        if (err) res.status(500).json({ error: "Database Error: Cannot fetch post from the database" });
+        else res.json({postDetail: JSON.stringify(postResult)})
     });
 }
 
