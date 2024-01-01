@@ -25,6 +25,7 @@ function reviewList(review_status, student_id, controller) {
     else if (student_id) {
         sql += ` WHERE reviews.student_id = ${student_id}`;
     }
+    sql += " ORDER BY reviews.submit_date DESC";
     connect_DB.query(sql, function (err, result) {
         controller(err, result);
     })

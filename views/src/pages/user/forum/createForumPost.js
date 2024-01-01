@@ -14,6 +14,7 @@ export default function ForumCreateReview() {
   });
   
   const handleInputChange = (e) => {
+    console.log(reviewData)
     setReviewData({
       ...reviewData,
       [e.target.name]: e.target.value,
@@ -54,108 +55,107 @@ export default function ForumCreateReview() {
   
   return (
     <div className="w-1/3 mx-auto m-10 p-6 bg-blue-100 rounded-md shadow-md">
-        <h1 className="text-center font-bold mb-4 text-2xl">Tạo bài review mới</h1>
-        <form
+      <h1 className="text-center font-bold mb-4 text-2xl">Tạo bài review mới</h1>
+      <form
         onSubmit={handleSubmit}
-        >
-          <label
-            htmlFor="reviewTitle"
-            className="block text-sm font-semibold text-gray-600"
-        >
-            Tựa đề bài review:
-        </label>
-        <input
-            type="text"
-            id="reviewTitle"
-            name="reviewTitle"
-            value={reviewData.reviewTitle}
-            onChange={handleInputChange}
-            className="w-full px-4 py-2 mt-1 mb-6 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-        />
-
-
+      >
         <label
-            htmlFor="reviewForBook"
-            className="block text-sm font-semibold text-gray-600"
+          htmlFor="reviewTitle"
+          className="block text-sm font-semibold text-gray-600"
         >
-            Tên sách:
+          Tựa đề bài review:
         </label>
         <input
-            type="text"
-            id="reviewForBook"
-            name="reviewForBook"
-            value={reviewData.reviewForBook}
-            onChange={handleInputChange}
-            className="w-full px-4 py-2 mt-1 mb-6 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+          type="text"
+          id="reviewTitle"
+          name="reviewTitle"
+          value={reviewData.reviewTitle}
+          onChange={handleInputChange}
+          className="w-full px-4 py-2 mt-1 mb-6 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
         />
         
         <label
-            htmlFor="bookAuthor"
-            className="block text-sm font-semibold text-gray-600"
+          htmlFor="reviewForBook"
+          className="block text-sm font-semibold text-gray-600"
         >
-            Tác giả:
+          Tên sách:
         </label>
         <input
-            type="text"
-            id="bookAuthor"
-            name="bookAuthor"
-            value={reviewData.bookAuthor}
-            onChange={handleInputChange}
-            className="w-full px-4 py-2 mt-1 mb-6 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+          type="text"
+          id="reviewForBook"
+          name="reviewForBook"
+          value={reviewData.reviewForBook}
+          onChange={handleInputChange}
+          className="w-full px-4 py-2 mt-1 mb-6 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
         />
         
         <label
-            htmlFor="reviewSummary"
-            className="block text-sm font-semibold text-gray-600"
+          htmlFor="bookAuthor"
+          className="block text-sm font-semibold text-gray-600"
         >
-            Tóm tắt nội dung:
+          Tác giả:
         </label>
         <input
-            type="text"
-            id="reviewSummary"
-            name="reviewSummary"
-            value={reviewData.reviewSummary}
-            onChange={handleInputChange}
-            className="w-full px-4 py-2 mt-1 mb-6 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+          type="text"
+          id="bookAuthor"
+          name="bookAuthor"
+          value={reviewData.bookAuthor}
+          onChange={handleInputChange}
+          className="w-full px-4 py-2 mt-1 mb-6 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
         />
         
         <label
-            htmlFor="reviewContent"
-            className="block text-sm font-semibold text-gray-600"
+          htmlFor="reviewSummary"
+          className="block text-sm font-semibold text-gray-600"
         >
-            Nội dung review:
+          Tóm tắt nội dung:
+        </label>
+        <input
+          type="text"
+          id="reviewSummary"
+          name="reviewSummary"
+          value={reviewData.reviewSummary}
+          onChange={handleInputChange}
+          className="w-full px-4 py-2 mt-1 mb-6 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+        />
+        
+        <label
+          htmlFor="reviewContent"
+          className="block text-sm font-semibold text-gray-600"
+        >
+          Nội dung review:
         </label>
         <textarea
-            id="reviewContent"
-            name="reviewContent"
-            value={reviewData.reviewContent}
-            onChange={handleInputChange}
-            rows="4"
-            cols="50"
-            className="w-full px-4 py-2 mt-1 mb-6 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+          id="reviewContent"
+          name="reviewContent"
+          value={reviewData.reviewContent}
+          onChange={handleInputChange}
+          rows="4"
+          cols="50"
+          className="w-full px-4 py-2 mt-1 mb-6 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
         ></textarea>
         
         <label
-            htmlFor="image"
-            className="block text-sm font-semibold text-gray-600"
+          htmlFor="image"
+          className="block text-sm font-semibold text-gray-600"
         >
-            Link hình ảnh:
+          Link hình ảnh:
         </label>
         <input
-            type="text"
-            id="image"
-            name="image"
-            value={reviewData.image}
-            onChange={handleInputChange}
-            className="w-full px-4 py-2 mt-1 mb-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+          type="text"
+          id="image"
+          name="image"
+          value={reviewData.image}
+          onChange={handleInputChange}
+          className="w-full px-4 py-2 mt-1 mb-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
         />
         <button
-            type="submit"
-            className="w-full px-4 py-2 mt-4 text-sm font-semibold text-white bg-indigo-600 rounded-md focus:outline-none hover:bg-indigo-500"
+          type="submit"
+          className="w-full px-4 py-2 mt-4 text-sm font-semibold text-white bg-indigo-600 rounded-md focus:outline-none hover:bg-indigo-500"
         >
-            Gửi bài review
+          Gửi bài review
         </button>
-        </form>
+      </form>
     </div>
   );
 }
