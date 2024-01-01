@@ -35,8 +35,8 @@ const DiscussionSection = () => {
     <div className="px-0 sm:px-36 lg:px-60 xl:px-72 py-8 lg:py-10 w-full">
       {review !== null ? <>
         <ReviewMain item={review} />
-        <CommentReviewForm review_id={id} forceRerender={forceRerender}/>
-        <CommentReviewList review_id={id} rerender={rerender} />
+        <CommentReviewForm review_id={id} forceRerender={forceRerender} />
+        <CommentReviewList review_id={id} rerender={rerender} forceRerender={forceRerender} />
       </>
       : errorMessage !== '' ?
         <h2 className="text-center text-lg font-semibold">{errorMessage}</h2>

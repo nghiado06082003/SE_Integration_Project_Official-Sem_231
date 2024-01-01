@@ -81,14 +81,14 @@ module.exports = {
             }
         })
     }],
-    deleteCommentForced: [authorization_model.loadCurMember, authorization_model.authorizeClubMember, function (err, result) {
+    deleteCommentForced: [authorization_model.loadCurMember, authorization_model.authorizeClubMember, function (req, res) {
         // Tính năng cưỡng chế xoá bình luận của thành viên câu lạc bộ
         review_cmt_model.getComment(req.body.review_id, null, req.body.cmt_id, function (err, result) {
             if (err) {
                 res.status(500).json({ message: "Lỗi tải bình luận. Vui lòng thử lại sau!" });
             }
             else if (result.length === 0) {
-                res.status(400).json({ message: "Bình luận cần chỉnh sửa không tồn tại" })
+                res.status(400).json({ message: "Bình luận cần chỉnh sửa không tồn tại" });
             }
             else {
                 review_cmt_model.deleteComment(req.body.cmt_id, function (err, result) {

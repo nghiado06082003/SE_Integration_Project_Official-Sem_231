@@ -3,13 +3,23 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { FiMessageCircle } from 'react-icons/fi';
 
-function CommentReviewList({ review_id, rerender }) {
+function CommentReviewList({ review_id, rerender, forceRerender }) {
+  const [user, setUser] = useState(null);
+  const isAdmin = ["Thành viên ban chủ nhiệm", "Thành viên ban truyền thông", "Thành viên ban nội dung", "Thành viên ban hậu cần"].includes(user?.permission ?? '');
   const cookies = new Cookies();
   const token = cookies.get("TOKEN");
+  const info = cookies.get("info");
   const [errorMessage, setErrorMessage] = useState('');
   const [commentList, setCommentList] = useState([]);
   
-  useEffect(()=>{
+  useEffect(() => {
+    if (!token || !info) {
+      cookies.remove("TOKEN", { path: "/" });
+      cookies.remove("info", { path: "/" });
+    }
+    else {
+      setUser(info);
+    }
     axios
       .post("http://localhost:8080/api/review/getCommentList",
         {
@@ -34,6 +44,47 @@ function CommentReviewList({ review_id, rerender }) {
         }
       });
   }, [rerender]);
+  
+  const handleDelete = async (student_id, cmt_id) => {
+    setErrorMessage('');
+    try {
+      if (user.student_id === student_id) {
+        const response = await axios.post('http://localhost:8080/api/review/deleteOwnComment',
+        {
+          review_id: review_id,
+          cmt_id: cmt_id
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        alert(response.data.message);
+        forceRerender();
+      }
+      else if (isAdmin) {
+        const response = await axios.post('http://localhost:8080/api/review/deleteCommentForced',
+        {
+          review_id: review_id,
+          cmt_id: cmt_id
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        alert(response.data.message);
+        forceRerender();
+      }
+      else {
+        setErrorMessage('Bạn đang cố thực hiện tác vụ không dành cho bạn. Hãy dừng lại ngay!');
+      }
+    }
+    catch (error) {
+      console.error(error);
+      setErrorMessage(error.response?.data?.message ?? "Hệ thống gặp vấn đề. Vui lòng thử lại sau!!!!");
+    }
+  };
   
   return (
     <div className="mb-6">
@@ -62,6 +113,15 @@ function CommentReviewList({ review_id, rerender }) {
                 {new Date(comment.cmt_datetime).toLocaleDateString('en-GB')}
               </time>
             </p>
+            {(user.student_id === comment.student_id || isAdmin) &&
+            <button
+              type='button'
+              className='flex-grow text-end'
+              onClick={() => handleDelete(comment.student_id, comment.cmt_id)}
+            >
+              Xóa bình luận
+            </button>
+            }
           </div>
           <p className="text-gray-950">{comment.cmt_content}</p>
           {/* <div className="flex items-center text-sm mt-4 space-x-4">

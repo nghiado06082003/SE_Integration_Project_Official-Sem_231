@@ -56,7 +56,7 @@ function ReviewDetailManagement() {
     <div className='px-0 sm:px-36 lg:px-60 xl:px-72 py-8 lg:py-10'>
       {review !== null ? <>
       <ReviewMain item={review} />
-      <CommentReviewList />
+      <CommentReviewList review_id={id} />
       </>
       : errorMessage !== '' ?
         <h2 className="text-center text-lg font-semibold">{errorMessage}</h2>
