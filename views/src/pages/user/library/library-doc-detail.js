@@ -63,7 +63,7 @@ export default function LibDocDetail() {
       <div>
         <div className="flex mx-4 my-4">
           <img
-            src={Book}
+            src={selectedDoc.image_url}
             alt={selectedDoc.doc_name}
             className="w-72 aspect-[3/4] object-cover block my-2"
           />
@@ -98,6 +98,7 @@ export default function LibDocDetail() {
           </div>
         </div>
         <div className="mx-4">
+          <h3 className='text-2xl font-bold text-primary-900'>Mô tả</h3>
           <p className="text-justify" style={{ whiteSpace: "pre-line" }}>
             {selectedDoc.description}
           </p>

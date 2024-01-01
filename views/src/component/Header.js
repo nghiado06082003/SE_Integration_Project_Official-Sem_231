@@ -24,6 +24,10 @@ export default function Header() {
   const handleToggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
+
+  const handleClick = () => {
+    setDropdownOpen(false);
+  }
   
   const handleSignOut = (e) => {
     if (user === null) {
@@ -85,7 +89,7 @@ export default function Header() {
                     </button>
                     {isDropdownOpen && (
                       <ul className="absolute mt-2 bg-white border rounded border-gray-300 shadow-md ">
-                        <li>
+                        <li onClick={handleClick}>
                           <Link
                             to="profile"
                             className="block px-4 py-1 text-gray-800 border-gray-100 hover:bg-transparent border-0 hover:text-primary-700"
@@ -93,7 +97,7 @@ export default function Header() {
                             Thông tin cá nhân
                           </Link>
                         </li>
-                        <li>
+                        <li onClick={handleClick}>
                           <Link
                             to="/review-history"
                             className="block px-4 py-1 text-gray-800 border-gray-100 hover:bg-transparent border-0 hover:text-primary-700"
@@ -101,7 +105,7 @@ export default function Header() {
                             Lịch sử bài đăng diễn đàn
                           </Link>
                         </li>
-                        <li>
+                        <li onClick={handleClick}>
                           <Link
                             to="/borrow-history"
                             className="block px-4 py-1 text-gray-800 border-gray-100 hover:bg-transparent border-0 hover:text-primary-700"
@@ -109,7 +113,7 @@ export default function Header() {
                             Lịch sử mượn
                           </Link>
                         </li>
-                        <li>
+                        <li onClick={handleClick}>
                           <Link
                             to="/contribute-history"
                             className="block px-4 py-1 text-gray-800 border-gray-100 hover:bg-transparent border-0 hover:text-primary-700"
@@ -118,7 +122,7 @@ export default function Header() {
                           </Link>
                         </li>
                         {isAdmin && (
-                          <li>
+                          <li onClick={handleClick}>
                             <Link
                               to="/admin"
                               className="block px-4 py-1 text-gray-800 border-gray-100 hover:bg-transparent border-0 hover:text-primary-700"
@@ -127,7 +131,7 @@ export default function Header() {
                             </Link>
                           </li>
                         )}
-                        <li>
+                        <li onClick={handleClick}>
                           <button
                             type="button"
                             className="block px-4 py-1 text-gray-800 border-gray-100 hover:bg-transparent border-0 hover:text-primary-700"

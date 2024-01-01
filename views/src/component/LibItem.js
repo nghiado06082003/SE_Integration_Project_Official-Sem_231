@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Book from "../img/book.png";
+import { Link } from "react-router-dom";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiEdit } from "react-icons/fi";
 import { GoTrash } from "react-icons/go";
@@ -58,9 +58,9 @@ function DocItem({ doc, triggerFetch, setTriggerFetch }) {
   
   return (
     <div className="mb-3 rounded overflow-hidden shadow hover:shadow-xl my-4 border border-gray">
-      <div key={doc.id} className="flex overflow-hidden">
+      <div key={doc.document_id} className="flex overflow-hidden">
         <img
-          src={Book}
+          src={doc.image_url}
           alt={doc.doc_name}
           className="w-48 aspect-[3/4] object-cover block my-2 mx-2"
         />
@@ -91,12 +91,15 @@ function DocItem({ doc, triggerFetch, setTriggerFetch }) {
             <span>Xem</span>
           </button>
           {isAuthorized && <>
-          <button className="text-slate-800 hover:text-primary-700 text-sm bg-white hover:bg-slate-100 border-y border-slate-200 font-medium px-4 py-2 inline-flex space-x-1 items-center">
+          <Link 
+            className="text-slate-800 hover:text-primary-700 text-sm bg-white hover:bg-slate-100 border-y border-slate-200 font-medium px-4 py-2 inline-flex space-x-1 items-center"
+            to={`/admin/library-management/edit/${doc.document_id}`}
+          >
             <span>
               <FiEdit className="w-4 h-4" />
             </span>
             <span>Sửa</span>
-          </button>
+          </Link>
           <button
             className="text-slate-800 hover:text-primary-700 text-sm bg-white hover:bg-slate-100 border border-slate-200 rounded-r-lg font-medium px-4 py-2 inline-flex space-x-1 items-center"
             onClick={handleDelete}

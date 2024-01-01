@@ -54,7 +54,7 @@ const LoginForm = () => {
   
   return (
     <div className="flex flex-grow p-10 justify-center bg-blue-100">
-      <div className="w-full max-w-sm p-4 bg-blue-300 border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8">
+      <div className="w-full max-w-sm p-4 bg-blue-300 border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 mt-8 mb-16">
         <form
           className="space-y-6"
           onSubmit={handleSubmit}
@@ -83,7 +83,7 @@ const LoginForm = () => {
               name="email"
               id="email"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-              placeholder="name@company.com"
+              placeholder="email@domain.com"
               required
               onChange={handleChange}
             />
@@ -99,7 +99,7 @@ const LoginForm = () => {
               type="password"
               name="password"
               id="password"
-              placeholder="••••••••"
+              placeholder="••••••"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
               required
               onChange={handleChange}

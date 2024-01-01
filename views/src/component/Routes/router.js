@@ -8,6 +8,8 @@ import LibDocDetail from "../../pages/user/library/library-doc-detail";
 import Event from "../../pages/user/event/eventList";
 import EventDetail from "../../pages/user/event/eventDetail";
 import Forum from "../../pages/user/forum/forumList";
+import ForumCreateReview from "../../pages/user/forum/createForumPost";
+
 import DiscussionSection from "../../pages/user/forum/forumDetail";
 import SignupForm from "../../pages/signup";
 import LoginForm from "../../pages/login";
@@ -23,6 +25,7 @@ import AdminLayout from "../Layout/AdminLayout";
 import MemberManagement from "../../pages/admin/memberManagement/memberManagement";
 import LoanManagement from "../../pages/admin/documentManagement/loanManagement";
 import LibraryManagement from "../../pages/admin/documentManagement/libraryManagement";
+import EditBook from "../../pages/admin/documentManagement/libaryManagement.editBook";
 import DonateManagement from "../../pages/admin/documentManagement/donateManagement";
 
 import EventManagement from "../../pages/admin/eventManagement/eventManagement";
@@ -65,6 +68,7 @@ export default function Router() {
         { path: "event", element: <Event /> },
         { path: "event/:id", element: <EventDetail /> },
         { path: "forum", element: <Forum /> },
+        { path: "forum/create-review", element: <ForumCreateReview /> },
         { path: "forum/:id", element: <DiscussionSection /> }
       ]
     },
@@ -80,6 +84,7 @@ export default function Router() {
         { path: "library-management", element: <LibraryManagement /> },
         { path: "library-management/document-detail/:document_id", element: <LibDocDetail /> },
         { path: "library-management/upload", element: <BookForm /> },
+        { path: "library-management/edit/:document_id", element: <EditBook /> },
         { path: "library-management/donate-management", element: <DonateManagement /> },
         
         { path: "event-management", element: <EventManagement /> },
