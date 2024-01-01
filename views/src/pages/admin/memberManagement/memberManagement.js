@@ -80,6 +80,7 @@ import axios from "axios";
       axios.get("http://localhost:8080/api/userManagement/block", {params: {id: id, value: value}})
       .then((response) => {
         if (response.status === 200 && response.data.code === 300) {
+          //block/unblock thành công
           window.location.reload();
         }
       })
@@ -92,6 +93,7 @@ import axios from "axios";
       axios.get("http://localhost:8080/api/userManagement/permission", {params: {id: id, role: role}})
       .then((response) =>{
         if (response.status === 200 && response.data.code === 300){
+          //thay đổi quyền thành công
           window.location.reload();
         }
       })
@@ -108,9 +110,9 @@ import axios from "axios";
             <div className="flex min-w-0 gap-x-4">
               <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={person.imageUrl} alt="" />
               <div className="min-w-0 flex-auto">
-                <p className="text-sm font-semibold leading-6 text-gray-900">{person.name}</p>
+                <p className="text-sm font-semibold leading-6 text-gray-900">{person.student_name}</p>
                 <p className="mt-1 truncate text-xs leading-5 text-gray-500">{person.email}</p>
-                <p className="text-sm leading-6 text-gray-900">{person.role}</p>
+                <p className="text-sm leading-6 text-gray-900">{person.permission}</p>
               </div>
             </div>
             <div className="hidden shrink-0 sm:flex sm:flex-row sm:items-end">
@@ -122,7 +124,9 @@ import axios from "axios";
                 >
                   Block
                 </button>
+
                 <button
+                  type="button"
                   className="bg-emerald-600 rounded-xl hover:bg-emerald-700 text-white font-bold py-2 px-4 "
                   onClick={()=>block(person.student_id, 0)}
                 >

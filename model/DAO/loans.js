@@ -16,21 +16,21 @@ var connect_DB = require('./connect_db')
 // For manager
 function getLoanList(res) {
     connect_DB.query("SELECT id, student_id, student_name, doc_name, request_day FROM ((requestborrow NATURAL JOIN members) NATURAL JOIN documents) WHERE status = 0", function (err, result, fields) {
-        if (err) res.json({ code: 500 });
+        if (err) res.json({ 500: "Fail to connect to database" });
         res.json({loanList: JSON.stringify(result)});
     });
 }
 
 function getBorrowList(res){
     connect_DB.query("SELECT id, student_id, student_name, doc_name, received_day, returned_day, status FROM ((requestborrow NATURAL JOIN members) NATURAL JOIN documents) WHERE status IN (3, 4, 5, 10, 11)", function (err, result, fields) {
-        if (err) res.json({ code: 500 });
+        if (err) res.json({ 500: "Fail to connect to database" });
         res.json({borrowList: JSON.stringify(result)});
     });
 }
 
 function getReturnList(res) {
-    connect_DB.query("SELECT id, student_id, student_name, doc_name, request_day FROM ((requestborrow NATURAL JOIN members) NATURAL JOIN documents) WHERE status = 6 OR status = 7", function (err, result, fields) {
-        if (err) res.json({ code: 500 });
+    connect_DB.query("SELECT id, student_id, student_name, doc_name, request_day, status FROM ((requestborrow NATURAL JOIN members) NATURAL JOIN documents) WHERE status = 6 OR status = 7", function (err, result, fields) {
+        if (err) res.json({ 500: "Fail to connect to database" });
         res.json({returnList: JSON.stringify(result)});
     });
 }
@@ -41,7 +41,7 @@ function approvereq(req, res) {
     const currentDate = new Date().toISOString().split('T')[0];
     connect_DB.query(`SELECT quantity FROM documents WHERE document_id = (SELECT document_id FROM requestborrow WHERE id = ${id})`, function (err, result, fields) {
         if (err) {
-            res.json({ 500: "Fail to connect to databse" });
+            res.json({ 500: "Fail to connect to database" });
             return;
         }
         else {
@@ -49,19 +49,20 @@ function approvereq(req, res) {
             if (result[0]["quantity"] <= 0) {
                 res.json({ 503: "No more document to be borrowed" });
                 return;
+            } else {
+                connect_DB.query(`UPDATE requestborrow SET status = 1, update_date = "${currentDate}" WHERE id = ${id}`, function (err, result, fields) {
+                    if (err) {
+                        res.json({ 501: "Fail to update request's status" });
+                    }
+                    else {
+                        connect_DB.query(`UPDATE documents SET quantity = quantity - 1  WHERE document_id = (SELECT document_id FROM requestborrow WHERE id = ${id})`, function (err, result, fields) {
+                            if (err) res.json({ 502: "Fail to update document's quantity" });
+                            else res.json({ 300: "OK" });
+                        });
+                    }
+                });
             }
         };
-    });
-    connect_DB.query(`UPDATE requestborrow SET state = 1, update_date = "${currentDate}" WHERE id = ${id}`, function (err, result, fields) {
-        if (err) {
-            res.json({ 501: "Fail to update request's state" });
-        }
-        else {
-            connect_DB.query(`UPDATE documents SET quantity = quantity - 1  WHERE document_id = (SELECT document_id FROM requestborrow WHERE id = ${id})`, function (err, result, fields) {
-                if (err) res.json({ 502: "Fail to update document's quantity" });
-                else res.json({ 300: "OK" });
-            });
-        }
     });
     
 }
@@ -70,8 +71,8 @@ function denyreq(req, res) {
     var id = req.query.id;
     const currentDate = new Date().toISOString().split('T')[0];
     connect_DB.query(`UPDATE requestborrow SET status = 2, update_date = "${currentDate}" WHERE id = ${id}`, function (err, result, fields) {
-        if (err) res.json({ code: 500 });
-        else res.json({ code: 300 });
+        if (err) res.json({ 500: "Fail to connect to database" });
+        else res.json({ 300: "OK" });
     });
 }
 
@@ -79,9 +80,9 @@ function denyreq(req, res) {
 function acceptreq(req, res) {
     var id = req.query.id;
     const currentDate = new Date().toISOString().split('T')[0];
-    connect_DB.query(`UPDATE requestborrow SET state = 8, update_date = "${currentDate}" WHERE id = ${id}`, function (err, result, fields) {
+    connect_DB.query(`UPDATE requestborrow SET status = 8, update_date = "${currentDate}" WHERE id = ${id}`, function (err, result, fields) {
         if (err) {
-            res.json({ 501: "Fail to update request's state" });
+            res.json({ 501: "Fail to update request's status" });
         }
         else {
             connect_DB.query(`UPDATE documents SET quantity = quantity + 1  WHERE document_id = (SELECT document_id FROM requestborrow WHERE id = ${id})`, function (err, result, fields) {
@@ -96,8 +97,8 @@ function finereq(req, res) {
     var id = req.query.id;
     const currentDate = new Date().toISOString().split('T')[0];
     connect_DB.query(`UPDATE requestborrow SET status = 9, update_date = "${currentDate}" WHERE id = ${id}`, function (err, result, fields) {
-        if (err) res.json({ code: 500 });
-        else res.json({ code: 300 });
+        if (err) res.json({ 500: "Fail to connect to database" });
+        else res.json({ 300: "OK" });
     });
 }
 
@@ -105,7 +106,7 @@ function finereq(req, res) {
 function getLoanHistory(req, res) {
     var id = req.cur_member.student_id;
     connect_DB.query(`SELECT id, request_day, doc_name, status, update_date FROM (requestborrow NATURAL JOIN documents) WHERE student_id = ${id} AND status IN (0, 1, 2)`, function (err, result, fields) {
-        if (err) res.json({ code: 500 });
+        if (err) res.json({ 500: "Fail to connect to database" });
         else res.json({ loanHistory: JSON.stringify(result) });
     });
 }
@@ -113,7 +114,7 @@ function getLoanHistory(req, res) {
 function getBorrowHistory(req, res) {
     var id = req.cur_member.student_id;
     connect_DB.query(`SELECT id, document_id, received_day, doc_name, status, returned_day FROM (requestborrow NATURAL JOIN documents) WHERE student_id = ${id} AND status IN (3, 4, 5, 10, 11)`, function (err, result, fields) {
-        if (err) res.json({ code: 500 });
+        if (err) res.json({ 500: "Fail to connect to database" });
         else res.json({ borrowHistory: JSON.stringify(result) });
     });
 }
@@ -121,7 +122,7 @@ function getBorrowHistory(req, res) {
 function getReturnHistory(req, res) {
     var id = req.cur_member.student_id;
     connect_DB.query(`SELECT id, request_day, doc_name, status, update_date FROM (requestborrow NATURAL JOIN documents) WHERE student_id = ${id} AND status IN (6, 7, 8, 9)`, function (err, result, fields) {
-        if (err) res.json({ code: 500 });
+        if (err) res.json({ 500: "Fail to connect to database" });
         else res.json({ returnHistory: JSON.stringify(result) });
     });
 }
@@ -159,11 +160,11 @@ function returnRequest(req, res) {
     const currentDate = new Date().toISOString().split('T')[0];
 
     connect_DB.query(`INSERT INTO requestborrow(student_id, document_id, request_day, status) VALUES (${student_id}, ${book_id}, "${currentDate}", ${status + 2})`, function (err, result, fields) {
-        if (err) res.json({ code: 500 });
+        if (err) res.json({ 500: "Fail to connect to database" });
         else {
             connect_DB.query(`UPDATE requestborrow SET status = "${status + 6}", update_date = "${currentDate}" WHERE id = ${id}`, function (err, result, fields) {
-                if (err) res.json({ code: 500 });
-                else res.json({ code: 300 });
+                if (err) res.json({ 500: "Fail to connect to database" });
+                else res.json({ 300: "OK" });
             });
         }
     });

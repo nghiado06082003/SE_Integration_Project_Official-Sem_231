@@ -17,7 +17,7 @@ const BorrowRequestsTable = () => {
     const [borrowRequests, setBorrowRequest] = useState([]);
 
     useEffect(() => {
-      axios.get("http://localhost:8080/api/loanManagement/manager/loanlist")
+      axios.get("/api/loanManagement/manager/loanlist")
       .then((response) => {
         if (response.status === 200 && 'loanList' in response.data) {
           setBorrowRequest(JSON.parse(response.data.loanList));
@@ -29,9 +29,9 @@ const BorrowRequestsTable = () => {
     }, []);
 
     const approve = (id) => {
-      axios.get("http://localhost:8080/api/loanManagement/manager/request/approve", {params: {id: id}})
+      axios.get("/api/loanManagement/manager/request/approve", {params: {id: id}})
       .then((response) => {
-        if (response.status === 200 && response.data.code === 300) {
+        if (response.status === 200 && '300' in response.data) {
           //phê duyệt request thành công
           window.location.reload();
         }
@@ -42,9 +42,9 @@ const BorrowRequestsTable = () => {
     };
   
     const deny = (id) => {
-      axios.get("http://localhost:8080/api/loanManagement/manager/request/deny", {params: {id: id}})
+      axios.get("/api/loanManagement/manager/request/deny", {params: {id: id}})
       .then((response) => {
-        if (response.status === 200 && response.data.code === 300) {
+        if (response.status === 200 && '300' in response.data) {
           //từ chối request thành công
           window.location.reload();
         }
@@ -97,7 +97,7 @@ const BorrowedBooksTable = () => {
     const [borrowedBooks, setBorrowBook] = useState([]);
 
     useEffect(() => {
-      axios.get("http://localhost:8080/api/loanManagement/manager/borrowlist")
+      axios.get("/api/loanManagement/manager/borrowlist")
       .then((response) => {
         if (response.status === 200 && 'borrowList' in response.data) {
           setBorrowBook(JSON.parse(response.data.borrowList));
@@ -150,7 +150,7 @@ const ReturnRequestsTable = () => {
     const [returnRequests, setReturnRequest] = useState([]);
 
     useEffect(() => {
-      axios.get("http://localhost:8080/api/loanManagement/manager/returnlist")
+      axios.get("/api/loanManagement/manager/returnlist")
       .then((response) => {
         if (response.status === 200 && 'returnList' in response.data) {
           setReturnRequest(JSON.parse(response.data.returnList));
@@ -162,9 +162,9 @@ const ReturnRequestsTable = () => {
     }, []);
 
     const accept = (id) => {
-      axios.get("http://localhost:8080/api/loanManagement/manager/request/accept", {params: {id: id}})
+      axios.get("/api/loanManagement/manager/request/accept", {params: {id: id}})
       .then((response) => {
-        if (response.status === 200 && response.data.code === 300) {
+        if (response.status === 200 && '300' in response.data) {
           //phê duyệt request thành công
           window.location.reload();
         }
@@ -175,9 +175,9 @@ const ReturnRequestsTable = () => {
     };
   
     const fine = (id) => {
-      axios.get("http://localhost:8080/api/loanManagement/manager/request/fine", {params: {id: id}})
+      axios.get("/api/loanManagement/manager/request/fine", {params: {id: id}})
       .then((response) => {
-        if (response.status === 200 && response.data.code === 300) {
+        if (response.status === 200 && '300' in response.data) {
           //phạt request thành công
           window.location.reload();
         }
@@ -209,7 +209,7 @@ const ReturnRequestsTable = () => {
                 <td className="border px-4 py-2">{request.student_name}</td>
                 <td className="border px-4 py-2">{request.doc_name}</td>
                 <td className="border px-4 py-2">{(request.request_day).substring(0, 10)}</td>
-                <td className="border px-4 py-2">{request.status}</td>
+                <td className="border px-4 py-2">{request.status === 6 ? "Đúng hạn" : "Quá hạn"}</td>
                 <td className="border px-4 py-2">
                   <button className="bg-green-500 text-white px-2 py-1 mr-2" onClick={()=>accept(request.id)}>Đồng ý</button>
                   <button className="bg-red-500 text-white px-2 py-1" onClick={()=>fine(request.id)}>Phạt</button>

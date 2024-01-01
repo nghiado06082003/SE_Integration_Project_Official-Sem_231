@@ -31,14 +31,14 @@ export default function LibDocDetail() {
   }
 
   const requestLoan = (book_id) => { 
-    axios.post("http://localhost:8080/api/loanManagement/customer/loanrequest", {book_id: book_id}, {
+    axios.post("/api/loanManagement/customer/loanrequest", {book_id: book_id}, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
     .then((response) => {
       console.log(response)
-      if (response.status === 200 && response.data.code === 300) {
+      if (response.status === 200 && '300' in response.data) {
         window.location.reload();
       }
     })
