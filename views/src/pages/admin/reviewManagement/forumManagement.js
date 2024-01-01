@@ -57,7 +57,7 @@ function ForumManagement() {
   }, [triggerFetch]);
   
   const options = [
-    { id: 1, label: 'Bài review đã duyệt' },
+    { id: 1, label: 'Bài review đã duyệt/từ chối' },
     { id: 2, label: 'Bài review chờ duyệt' },
   ];
   const [selectedOption, setSelectedOption] = useState(options[0]);

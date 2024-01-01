@@ -37,7 +37,8 @@ function ReviewManagement({ data, triggerFetch, setTriggerFetch }) {
             <th className="border px-4 py-2">Tên sách</th>
             <th className="border px-4 py-2">Tên bài review</th>
             <th className="border px-4 py-2">Ngày đăng tải</th>
-            <th className="border px-4 py-2">Actions</th>
+            <th className="border px-4 py-2">Trạng thái</th>
+            <th className="border px-4 py-2">Hành động</th>
           </tr>
         </thead>
         <tbody>
@@ -53,8 +54,11 @@ function ReviewManagement({ data, triggerFetch, setTriggerFetch }) {
                 </Link>
               </td>
               <td className="border px-4 py-2">{new Date(post.submit_date).toLocaleDateString('en-GB')}</td>
+              <td className="border px-4 py-2">{post.status}</td>
               <td className="border px-4 py-2">
+                {post.status === 'Chấp nhận' &&
                 <Link role="button" className="inline-block bg-green-500 text-white px-2 py-1 mb-2" to={`edit/${post.review_id}`}>Sửa</Link>
+                }
                 <button type="button" className="bg-red-500 text-white px-2 py-1" onClick={() => handleDeletePost(post.review_id)}>Xóa</button>
               </td>
             </tr>
