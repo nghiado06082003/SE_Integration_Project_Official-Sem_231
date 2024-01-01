@@ -24,6 +24,7 @@ const EventManagement = () => {
     autoplay: true, 
     autoplaySpeed: 2000,
   };
+
   
   return (
     <div className="flex-grow flex pl-10 pt-8 bg-blue-50">

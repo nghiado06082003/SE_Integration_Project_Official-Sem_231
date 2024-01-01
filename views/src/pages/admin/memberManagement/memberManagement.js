@@ -63,12 +63,10 @@ import axios from "axios";
     const [people, setPeople] = useState([]);
 
     useEffect(() => {
-      axios.get("http://localhost:8080/api/userManagement")
+      axios.get("/api/userManagement")
       .then((response) => {
-        console.log(response.data)
         if (response.status === 200 && 'userList' in response.data) {
           setPeople(JSON.parse(response.data.userList));
-          console.log(response.data);
         }
       })
       .catch((error) => {
@@ -77,7 +75,7 @@ import axios from "axios";
     }, []);
 
     const block = (id, value) => {
-      axios.get("http://localhost:8080/api/userManagement/block", {params: {id: id, value: value}})
+      axios.get("/api/userManagement/block", {params: {id: id, value: value}})
       .then((response) => {
         if (response.status === 200 && response.data.code === 300) {
           //block/unblock thành công
@@ -90,7 +88,7 @@ import axios from "axios";
     };
 
     const changeRole = (role, id) => {
-      axios.get("http://localhost:8080/api/userManagement/permission", {params: {id: id, role: role}})
+      axios.get("/api/userManagement/permission", {params: {id: id, role: role}})
       .then((response) =>{
         if (response.status === 200 && response.data.code === 300){
           //thay đổi quyền thành công
@@ -108,7 +106,7 @@ import axios from "axios";
         {people.map((person) => (
           <li key={person.email} className="flex justify-between gap-x-6 py-5">
             <div className="flex min-w-0 gap-x-4">
-              <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={person.imageUrl} alt="" />
+              <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={person.avatar_url} alt="" />
               <div className="min-w-0 flex-auto">
                 <p className="text-sm font-semibold leading-6 text-gray-900">{person.student_name}</p>
                 <p className="mt-1 truncate text-xs leading-5 text-gray-500">{person.email}</p>

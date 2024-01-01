@@ -34,7 +34,7 @@ function createPost(req, res) {
     var content = req.query.content;
     const create_date = new Date().toISOString().split('T')[0];
 
-    connect_DB.query(`INSERT INTO posts(title, brief, content, create_date) VALUES (${title}, ${brief}, ${content} ,"${create_date}")`, function (err, result, fields) {
+    connect_DB.query(`INSERT INTO posts(title, brief, content, create_date) VALUES ("${title}", "${brief}", "${content}" ,"${create_date}")`, function (err, result, fields) {
         if (err) res.json({ 500: "Database Error: Cannot insert into database"});
         else res.json({ 300: "OK"});
     });

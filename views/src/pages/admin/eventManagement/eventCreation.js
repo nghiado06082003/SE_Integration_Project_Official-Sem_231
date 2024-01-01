@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 
 export default function EventCreation() {
@@ -26,6 +27,17 @@ export default function EventCreation() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    axios.get("/api/post/new", {params: {title: eventData.eventTitle, brief: eventData.description, content: eventData.description}})
+      .then((response) => {
+        console.log(response)
+        if (response.status === 200 && '300' in response.data) {
+          //đăng bài thành công
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        console.error("Error!!!!!!", error);
+      });
   };
 
   return (

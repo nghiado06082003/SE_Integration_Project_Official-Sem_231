@@ -14,7 +14,6 @@ export default function BorrowHistory() {
       }
     })
     .then((response) => {
-      console.log(response)
       if (response.status === 200 && 'borrowHistory' in response.data) {
         setBorrowHistory(JSON.parse(response.data.borrowHistory));
       }
@@ -31,7 +30,6 @@ export default function BorrowHistory() {
       }
     })
     .then((response) => {
-      console.log(response)
       if (response.status === 200 && '300' in response.data) {
         //request mượn thành công
         window.location.reload();

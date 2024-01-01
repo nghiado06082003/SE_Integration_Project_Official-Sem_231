@@ -37,7 +37,6 @@ export default function LibDocDetail() {
       }
     })
     .then((response) => {
-      console.log(response)
       if (response.status === 200 && '300' in response.data) {
         window.location.reload();
       }
