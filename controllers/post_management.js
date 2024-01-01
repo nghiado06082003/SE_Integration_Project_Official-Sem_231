@@ -22,6 +22,10 @@ module.exports = {
         post_model.deletePost(req, res);
     },
 
+    getCommentList: function (req, res) {
+        post_model.getCommentList(req, res);
+    },
+
     createPostcmt: function (req, res) {
         post_model.createPostcmt(req, res);
     },

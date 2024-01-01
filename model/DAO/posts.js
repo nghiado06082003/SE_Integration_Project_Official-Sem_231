@@ -62,6 +62,15 @@ function deletePost(req, res) {
     });
 }
 
+function getCommentList(req, res) {
+    var id = req.query.id
+
+    connect_DB.query(`SELECT cmt_id, content, student_name, avatar_url, last_change FROM (post_comments NATURAL JOIN members) WHERE post_id = ${id}`, function (err, result, fields) {
+        if (err) res.json({ 500: "Database Error: Cannot delete from database" });
+        else res.json({commentList: JSON.stringify(result) });
+    });
+}
+
 function createPostcmt(req, res) {
     var post_id = req.query.post_id;
     var student_id = req.query.student_id;
@@ -95,4 +104,4 @@ function deletePostcmt(req, res) {
 }
 
 
-module.exports = { getPostList, getPost, createPost, editPost, deletePost, createPostcmt, editPostcmt, deletePostcmt};
+module.exports = { getPostList, getPost, createPost, editPost, deletePost, getCommentList, createPostcmt, editPostcmt, deletePostcmt};

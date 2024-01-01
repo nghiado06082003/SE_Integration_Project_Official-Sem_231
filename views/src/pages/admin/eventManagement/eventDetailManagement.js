@@ -1,20 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from 'react-router-dom';
+
 const EventDetailManagement = () => {
-    const [isLiked, setIsLiked] = useState(false);
+  const { id } = useParams();
+  const [comments, setComment] = useState([]);
+
+    useEffect(() => {
+      axios.get("http://localhost:8080/api/post/comment/list", {params: {id: id}})
+      .then((response) => {
+        if (response.status === 200 && 'commentList' in response.data) {
+          setComment(JSON.parse(response.data.commentList));
+        }
+      })
+      .catch((error) => {
+        console.error("Error!!!!!!", error);
+      });
+    }, []);
+
+  const [isLiked, setIsLiked] = useState(false);
 
   const handleLike = () => {
     setIsLiked(!isLiked);
   };
-  const comments = [
-    {
-      id: 1,
-      author: 'Michael Gough',
-      profilePic: 'https://flowbite.com/docs/images/people/profile-picture-2.jpg',
-      date: 'Feb. 8, 2022',
-      content: 'Very straight-to-point article. Really worth time reading. Thank you! But tools are just the instruments for the UX designers. The knowledge of the design tools are as important as the creation of the design strategy.',
-    },
-  ];
+
+  // const comments = [
+  //   {
+  //     id: 1,
+  //     author: 'Michael Gough',
+  //     profilePic: 'https://flowbite.com/docs/images/people/profile-picture-2.jpg',
+  //     date: 'Feb. 8, 2022',
+  //     content: 'Very straight-to-point article. Really worth time reading. Thank you! But tools are just the instruments for the UX designers. The knowledge of the design tools are as important as the creation of the design strategy.',
+  //   },
+  // ];
+
   const heartColor = isLiked ? 'text-red-500' : 'text-gray-500';
+
   return (
     <section className="text-gray-700 body-font overflow-hidden bg-white mx-auto">
       <div className="container px-5 py-16 mx-auto">
@@ -85,11 +106,11 @@ const EventDetailManagement = () => {
             <footer className="flex justify-between items-center mb-2">
               <div className="flex items-center">
                 <p className="inline-flex items-center mr-3 text-sm text-gray-900 font-semibold">
-                  <img className="mr-2 w-6 h-6 rounded-full" src={comment.profilePic} alt={comment.author} />
-                  {comment.author}
+                  <img className="mr-2 w-6 h-6 rounded-full" src={comment.avatar_url} alt={comment.student_name} />
+                  {comment.student_name}
                 </p>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  <time pubdate datetime="2022-02-08" title="February 8th, 2022">{comment.date}</time>
+                  <time pubdate datetime="2022-02-08" title="February 8th, 2022">{(comment.last_change).substring(0,10)}</time>
                 </p>
               </div>
 
