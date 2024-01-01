@@ -13,8 +13,8 @@ post_management_router.get("/delete", post_management_controller.deletePost);
 
 // For comment 
 post_management_router.get("/comment/list", post_management_controller.getCommentList); //done
-post_management_router.get("/comment/new", post_management_controller.createPostcmt);
-post_management_router.get("/comment/edit", post_management_controller.editPostcmt);
+post_management_router.post("/comment/new", post_management_controller.createPostcmt); //done
+post_management_router.post("/comment/edit", post_management_controller.editPostcmt); //done
 post_management_router.get("/comment/delete", post_management_controller.deletePostcmt);
 
 

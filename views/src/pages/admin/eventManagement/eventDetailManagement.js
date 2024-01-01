@@ -1,9 +1,25 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
+const token = cookies.get("TOKEN");
 
 const EventDetailManagement = () => {
   const { id } = useParams();
+
+  const [commentData, setCommentData] = useState({
+    content: '',
+  });
+
+  const handleInputChange = (e) => {
+    const {value} = e.target;
+    setCommentData({
+      ...commentData,
+      content: value,
+    });
+  };
+
   const [comments, setComment] = useState([]);
 
     useEffect(() => {
@@ -23,6 +39,23 @@ const EventDetailManagement = () => {
   const handleLike = () => {
     setIsLiked(!isLiked);
   };
+
+  const giveComment = () => {
+    axios.post("http://localhost:8080/api/post/comment/new", {id: id, content: commentData.content}, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then((response) => {
+      if (response.status === 200 && '300' in response.data) {
+        //comment thành công
+        window.location.reload();
+      }
+    })
+    .catch((error) => {
+      console.error("Error!!!!!!", error);
+    });
+  }
 
   // const comments = [
   //   {
@@ -92,11 +125,14 @@ const EventDetailManagement = () => {
               className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none "
               placeholder="Write a comment..."
               required
+              value={commentData.content}
+              onInput={handleInputChange} 
             ></textarea>
           </div>
           <button
-            type="submit"
+            type="button"
             className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 "
+            onClick= {()=>giveComment()}          
           >
             Gửi bình luận
           </button>

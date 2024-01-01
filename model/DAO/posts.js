@@ -72,13 +72,13 @@ function getCommentList(req, res) {
 }
 
 function createPostcmt(req, res) {
-    var post_id = req.query.post_id;
-    var student_id = req.query.student_id;
-    var content = req.query.content;
+    var post_id = req.body.id;
+    var student_id = req.cur_member.student_id;
+    var content = req.body.content;
     const last_change = new Date().toISOString().split('T')[0];
 
-    connect_DB.query(`INSERT INTO post_comments(post_id, student_id, content, last_change) VALUES (${post_id}, ${student_id}, ${content} ,"${last_change}")`, function (err, result, fields) {
-        if (err) res.json({ 500: "Database Error: post_id or stident_id is noi exist" });
+    connect_DB.query(`INSERT INTO post_comments(post_id, student_id, content, last_change) VALUES (${post_id}, ${student_id}, "${content}" ,"${last_change}")`, function (err, result, fields) {
+        if (err) res.json({ 500: "Database Error: post_id or student_id is not exist" });
         else res.json({ 300: "OK" });
     });
 }
@@ -88,7 +88,7 @@ function editPostcmt(req, res) {
     var content = req.query.content;
     const last_change = new Date().toISOString().split('T')[0];
 
-    connect_DB.query(`UPDATE post_comments SET content = ${content}, last_change = "${last_change}" WHERE cmt_id = ${id}`, function (err, result, fields) {
+    connect_DB.query(`UPDATE post_comments SET content = "${content}", last_change = "${last_change}" WHERE cmt_id = ${id}`, function (err, result, fields) {
         if (err) res.json({ 500: "Database Error: Cannot update database" });
         else res.json({ 300: "OK" });
     });
