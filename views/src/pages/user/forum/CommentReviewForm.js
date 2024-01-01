@@ -8,7 +8,7 @@ function CommentReviewForm({ review_id, forceRerender }) {
   const [id, setID] = review_id;
   const [user, setUser] = useState(null);
   const [cmtContent, setCmtContent] = useState("");
-  const [authorized, setAuthorized] = false;
+  const [authorized, setAuthorized] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const cookies = new Cookies();
   const token = cookies.get("TOKEN");
@@ -83,10 +83,10 @@ function CommentReviewForm({ review_id, forceRerender }) {
         <div className='mb-10'>
           <div className="flex items-center gap-2 mb-4">
             <h2 className="text-lg font-bold text-gray-900">Bình luận</h2>
-            <div className="flex items-center h-full text-gray-700 text-sm">
+            {/* <div className="flex items-center h-full text-gray-700 text-sm">
               <FiMessageCircle className="w-4 h-4 mr-1" />
               <span>{10}</span>
-            </div>
+            </div> */}
           </div>
           <form className="mb-6" onSubmit={handleSubmit}>
             <div className="mb-4 rounded-lg border border-gray-200">

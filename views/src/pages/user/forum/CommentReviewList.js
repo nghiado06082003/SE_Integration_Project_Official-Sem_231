@@ -9,6 +9,8 @@ function CommentReviewList({review_id}) {
   const [errorMessage, setErrorMessage] = useState('');
   const [commentList,setCommentList] = useState([]);
 
+  console.log(review_id)
+
   useEffect(()=>{
     axios.post("http://localhost:8080/api/review/getCommentList",{review_id: review_id}, {
       headers:{
@@ -17,6 +19,7 @@ function CommentReviewList({review_id}) {
     })
     .then((response)=>{
       setCommentList(response.data.commentList);
+      console.log(response.data.commentList)
     })
     .catch((error)=>{
       if (error.response?.data?.message) setErrorMessage("Bạn phải đăng nhập để xem bình luận!");

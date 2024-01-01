@@ -41,7 +41,7 @@ const DiscussionSection = () => {
       {review !== null ? <>
         <ReviewMain item={review} />
         <CommentReviewForm review_id={id} forceRerender={forceRerender}/>
-        <CommentReviewList rerender={rerender /* Parent state được pass vào thành prop của con để ép con rerender khi state đổi */} />
+        <CommentReviewList rerender={rerender /* Parent state được pass vào thành prop của con để ép con rerender khi state đổi */} review_id={id} />
       </>
         : errorMessage !== '' ?
           <h2 className="text-center text-lg font-semibold">{errorMessage}</h2>
