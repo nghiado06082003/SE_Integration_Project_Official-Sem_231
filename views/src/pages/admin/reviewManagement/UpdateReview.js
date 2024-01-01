@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { BsInfoCircleFill } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "universal-cookie";
 
-export default function ForumCreateReview() {
+function UpdateReview() {
+  const { review_id } = useParams();
   const [user, setUser] = useState(null);
   const [reviewData, setReviewData] = useState({
     reviewTitle: '',
@@ -28,19 +29,46 @@ export default function ForumCreateReview() {
       navigate('/401');
     }
     axios
-      .post('http://localhost:8080/api/authorization/collab', {}, {
+      .post('http://localhost:8080/api/authorization/content', {}, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
       .then((response) => {
         setUser(info);
+        fetchData();
       })
       .catch((error) => {
-        cookies.remove("TOKEN", { path: "/" });
-        cookies.remove("info", { path: "/" });
+        navigate('/403');
       });
   }, []);
+  
+  const fetchData = async () => {
+    try {
+      const response = await axios.post("http://localhost:8080/api/review/reviewContentAll",
+      {
+        review_id: review_id
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      const review = response.data.review;
+      console.log(review);
+      setReviewData({
+        reviewTitle: review.title,
+        reviewForBook: review.book_name,
+        bookAuthor: review.book_author,
+        reviewSummary: review.summary,
+        reviewContent: review.content,
+        image: review.image_url,
+      });
+    }
+    catch (error) {
+      setError(error.response?.data?.message ?? "Hệ thống gặp vấn đề. Vui lòng thử lại sau");
+    }
+  };
   
   const handleInputChange = (e) => {
     setReviewData({
@@ -53,7 +81,7 @@ export default function ForumCreateReview() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:8080/api/review/submitNewReview`,
+      const response = await axios.post(`http://localhost:8080/api/review/editReview`,
         {
           title: reviewData.reviewTitle,
           book_name: reviewData.reviewForBook,
@@ -61,7 +89,7 @@ export default function ForumCreateReview() {
           summary: reviewData.reviewSummary,
           content: reviewData.reviewContent,
           image_url: reviewData.image,
-          student_id: user.student_id
+          review_id: review_id
         },
         {
           headers: {
@@ -70,7 +98,7 @@ export default function ForumCreateReview() {
         }
       );
       alert(response.data.message);
-      window.location.assign('/forum');
+      window.location.assign('/admin/forum-management');
     }
     catch (error) {
       setError(error.response?.data?.message);
@@ -80,7 +108,8 @@ export default function ForumCreateReview() {
   
   return (
     <div className="w-1/3 mx-auto m-10 p-6 bg-blue-100 rounded-md shadow-md">
-      <h1 className="text-center font-bold mb-4 text-2xl">Tạo bài review mới</h1>
+      <h1 className="text-center font-bold mb-4 text-2xl">Sửa bài review</h1>
+      <p className="text-sm font-semibold text-gray-600 mb-2">Review ID: {review_id}</p>
       {error && showErrors &&
       <div className="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
         <BsInfoCircleFill className='flex-shrink-0 inline w-4 h-4 me-3' />
@@ -184,9 +213,11 @@ export default function ForumCreateReview() {
           type="submit"
           className="w-full px-4 py-2 mt-4 text-sm font-semibold text-white bg-indigo-600 rounded-md focus:outline-none hover:bg-indigo-500"
         >
-          Gửi bài review
+          Chỉnh sửa
         </button>
       </form>
     </div>
   );
 }
+
+export default UpdateReview;

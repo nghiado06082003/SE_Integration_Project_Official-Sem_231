@@ -11,11 +11,11 @@ function CommentReviewForm({ review_id, forceRerender }) {
   const [authorized, setAuthorized] = false;
   const [errorMessage, setErrorMessage] = useState(null);
   const cookies = new Cookies();
+  const token = cookies.get("TOKEN");
+  const info = cookies.get("info");
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = cookies.get("TOKEN");
-    const info = cookies.get("info");
     if (!token || !info) {
       cookies.remove("TOKEN", { path: "/" });
       cookies.remove("info", { path: "/" });
