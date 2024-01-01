@@ -36,7 +36,6 @@ export default function EventCreation() {
       }
     })
       .then((response) => {
-        console.log(response)
         if (response.status === 200 && '300' in response.data) {
           //đăng bài thành công
           window.location.reload();
