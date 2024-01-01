@@ -2,20 +2,12 @@
     Vào bài đăng forum chi tiết, hiển thị danh sách cmt của cái topic/review đó theo thời gian
     dạng như forum trong bkel chăng?
 */
-<<<<<<< HEAD
-import React from "react";
-import { FiHeart, FiMessageCircle, FiShare2 } from 'react-icons/fi'; 
-import { useParams } from "react-router-dom";
-
-import reviews from './reviewdata';
-=======
 import React, { useEffect, useState } from 'react';
 import ReviewMain from '../../../component/ReviewMain';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import LoadingElement from '../../../component/LoadingElement';
 import { FiMessageCircle } from 'react-icons/fi';
->>>>>>> 1849520c970b625b08edac80cacb4820823192ee
 
 const comments = [
   {
