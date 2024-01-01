@@ -28,10 +28,10 @@ const ReviewList = ({ data }) => {
               </div>
               <p className="grow text-gray-700 text-sm">{item.summary}</p>
               <div className="mt-4">
-                <div className="flex items-center mr-2 text-gray-700 text-sm mr-8">
+                {/* <div className="flex items-center mr-2 text-gray-700 text-sm mr-8">
                   <FiMessageCircle className="w-4 h-4 mr-1" />
                   <span>10</span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

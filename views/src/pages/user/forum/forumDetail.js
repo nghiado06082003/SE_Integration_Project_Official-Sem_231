@@ -37,7 +37,7 @@ const DiscussionSection = () => {
   const forceRerender = () => { setRerender(rerender + 1) };
 
   return (
-    <div className="px-0 sm:px-36 lg:px-60 xl:px-72 py-8 lg:py-10">
+    <div className="px-0 sm:px-36 lg:px-60 xl:px-72 py-8 lg:py-10 w-full">
       {review !== null ? <>
         <ReviewMain item={review} />
         <CommentReviewForm review_id={id} forceRerender={forceRerender}/>
