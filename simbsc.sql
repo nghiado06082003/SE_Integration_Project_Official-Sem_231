@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 31, 2023 at 03:53 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.0.28
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th1 01, 2024 lúc 11:31 AM
+-- Phiên bản máy phục vụ: 10.4.27-MariaDB
+-- Phiên bản PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,15 +18,16 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `simbsc`
+-- Cơ sở dữ liệu: `simbsc`
 --
 
-CREATE DATABASE IF NOT EXISTS `simbsc` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+DROP DATABASE IF EXISTS `simbsc`;
+CREATE DATABASE `simbsc` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `simbsc`;
 
 DELIMITER $$
 --
--- Procedures
+-- Thủ tục
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_user_by_id` (IN `StudentId` INT(11))   SELECT
     members.student_id,
@@ -70,11 +71,11 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `documents`
+-- Cấu trúc bảng cho bảng `documents`
 --
 
 CREATE TABLE `documents` (
-  `document_id` int(11) NOT NULL,
+  `document_id` int(11) NOT NULL AUTO_INCREMENT,
   `doc_name` varchar(256) NOT NULL,
   `type` varchar(256) NOT NULL,
   `author` varchar(256) NOT NULL,
@@ -82,15 +83,17 @@ CREATE TABLE `documents` (
   `publish_year` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `description` varchar(4096) NOT NULL,
-  `image_url` varchar(512) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `image_url` varchar(512) DEFAULT NULL,
+  PRIMARY KEY (`document_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `documents`
+-- Đang đổ dữ liệu cho bảng `documents`
 --
 
 INSERT INTO `documents` (`document_id`, `doc_name`, `type`, `author`, `publisher`, `publish_year`, `quantity`, `description`, `image_url`) VALUES
 (1, 'Kiến trúc máy tính', 'Sách cơ sở ngành', 'Phạm Quốc Cường', 'NXB Đại học Quốc gia TPHCM', 2019, 1, 'Kiến trúc máy tính cũng là một trong các môn cơ sở ngành quan trọng, môn học đề cập tới cơ sở về kiến trúc tập lệnh và tổ chức của máy tính, các vấn đề cơ bản trong thiết kế máy tính. Ngoài ra các bạn còn được học cơ bản về ngôn ngữ lập trình gần gũi nhất với máy tính đó là Assembly (cụ thể là MIPS).', 'https://th.bing.com/th/id/R.6148bed16bbd11ac1a9fda2f8a324cd8?rik=6e%2bvwUG3bgHXOg&riu=http%3a%2f%2fwww.bgt.hcmut.edu.vn%2fimages%2fstories%2fvirtuemart%2fproduct%2fkien-truc-may-tinh.jpg&ehk=X%2bCyOmYr3%2fbV4AJwh7%2fEqhYABBdxGrYMhjYjC7t7dPI%3d&risl=&pid=ImgRaw&r=0'),
+(2, 'Ngày cuối cùng của một tử tù', 'Sách văn học', 'Victor Hugo', 'NXB Văn học', 2000, 5, '\"Ngày Cuối Cùng Của Một Tử Tù\" là cuốn sách khá thành công đến từ ngòi bút của nhà văn Victor Hugo. Ông là người có sức ảnh hưởng to lớn đối với nền văn học Pháp nói riêng và văn học thế giới nói chung.', 'https://sach86.com/wp-content/uploads/2021/11/Ngay-Cuoi-Cung-Cua-Mot-Tu-Tu.jpg'),
 (3, 'Cấu trúc dữ liệu và giải thuật', 'Sách cơ sở ngành', 'Nguyễn Trung Trực', 'NXB Đại học Quốc gia TPHCM', 2019, 1, 'Quyển sách Cấu trúc dữ liệu và Giải thuật trình bày cấu trúc dữ liệu tuyến tính (mảng, danh sách liên kết) và cấu trúc dữ liệu phi tuyến (cây, đồ thị) và các giải thuật của các cấu trúc dữ liệu này. Các cấu trúc dữ liệu và giải thuật được trình bày theo kiểu lập trình có cấu trúc (structured programming) (minh họa bằng ngôn ngữ lập trình C++) và theo kiểu lập trình hướng đối tượng (object-oriented programming) (minh họa bằng ngôn ngữ lập trình C#). Các phần phụ lục là các chương trình được viết theo kiểu lập trình tổng quát (generic programming). Quyển sách này bao gồm 12 chương và 9 phụ lục.', 'https://lh3.googleusercontent.com/pw/ACtC-3fMzvqEVNMukfA8PA3KVxvfUWOBWImHMbiERBQcV3Io0HQvE4jxhlorn6udriwihN_ZbdXw-t8SCouZe_5aX-s_W9HiRQcidVf_aS1szGyvgGSkZMrMjaf4ZJ9v4Rl8YnTRU9YncgSqShlrjaIZowFnRg=w384-h576-no?authuser=0'),
 (4, 'Kiến trúc máy tính', 'Sách cơ sở ngành', 'Phạm Quốc Cường', 'NXB Đại học Quốc gia TPHCM', 2019, 1, 'Kiến trúc máy tính cũng là một trong các môn cơ sở ngành quan trọng, môn học đề cập tới cơ sở về kiến trúc tập lệnh và tổ chức của máy tính, các vấn đề cơ bản trong thiết kế máy tính. Ngoài ra các bạn còn được học cơ bản về ngôn ngữ lập trình gần gũi nhất với máy tính đó là Assembly (cụ thể là MIPS).', 'https://th.bing.com/th/id/R.6148bed16bbd11ac1a9fda2f8a324cd8?rik=6e%2bvwUG3bgHXOg&riu=http%3a%2f%2fwww.bgt.hcmut.edu.vn%2fimages%2fstories%2fvirtuemart%2fproduct%2fkien-truc-may-tinh.jpg&ehk=X%2bCyOmYr3%2fbV4AJwh7%2fEqhYABBdxGrYMhjYjC7t7dPI%3d&risl=&pid=ImgRaw&r=0'),
 (5, 'Kiến trúc máy tính', 'Sách cơ sở ngành', 'Phạm Quốc Cường', 'NXB Đại học Quốc gia TPHCM', 2019, 1, 'Kiến trúc máy tính cũng là một trong các môn cơ sở ngành quan trọng, môn học đề cập tới cơ sở về kiến trúc tập lệnh và tổ chức của máy tính, các vấn đề cơ bản trong thiết kế máy tính. Ngoài ra các bạn còn được học cơ bản về ngôn ngữ lập trình gần gũi nhất với máy tính đó là Assembly (cụ thể là MIPS).', 'https://th.bing.com/th/id/R.6148bed16bbd11ac1a9fda2f8a324cd8?rik=6e%2bvwUG3bgHXOg&riu=http%3a%2f%2fwww.bgt.hcmut.edu.vn%2fimages%2fstories%2fvirtuemart%2fproduct%2fkien-truc-may-tinh.jpg&ehk=X%2bCyOmYr3%2fbV4AJwh7%2fEqhYABBdxGrYMhjYjC7t7dPI%3d&risl=&pid=ImgRaw&r=0'),
@@ -102,7 +105,7 @@ INSERT INTO `documents` (`document_id`, `doc_name`, `type`, `author`, `publisher
 -- --------------------------------------------------------
 
 --
--- Table structure for table `members`
+-- Cấu trúc bảng cho bảng `members`
 --
 
 CREATE TABLE `members` (
@@ -113,11 +116,13 @@ CREATE TABLE `members` (
   `avatar_url` varchar(512) DEFAULT NULL,
   `state` varchar(127) NOT NULL,
   `join_date` date NOT NULL DEFAULT current_timestamp(),
-  `permission` varchar(255) NOT NULL
+  `permission` varchar(255) NOT NULL,
+  PRIMARY KEY (`student_id`),
+  KEY `student_id` (`student_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `members`
+-- Đang đổ dữ liệu cho bảng `members`
 --
 
 INSERT INTO `members` (`student_id`, `student_name`, `email`, `password`, `avatar_url`, `state`, `join_date`, `permission`) VALUES
@@ -133,20 +138,22 @@ INSERT INTO `members` (`student_id`, `student_name`, `email`, `password`, `avata
 -- --------------------------------------------------------
 
 --
--- Table structure for table `posts`
+-- Cấu trúc bảng cho bảng `posts`
 --
 
 CREATE TABLE `posts` (
-  `post_id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL AUTO_INCREMENT,
   `title` text NOT NULL,
   `brief` text NOT NULL,
   `content` text NOT NULL,
   `create_date` date NOT NULL,
-  `last_change` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `last_change` date DEFAULT NULL,
+  PRIMARY KEY (`post_id`),
+  UNIQUE KEY `post_id` (`post_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `posts`
+-- Đang đổ dữ liệu cho bảng `posts`
 --
 
 INSERT INTO `posts` (`post_id`, `title`, `brief`, `content`, `create_date`, `last_change`) VALUES
@@ -157,19 +164,22 @@ INSERT INTO `posts` (`post_id`, `title`, `brief`, `content`, `create_date`, `las
 -- --------------------------------------------------------
 
 --
--- Table structure for table `post_comments`
+-- Cấu trúc bảng cho bảng `post_comments`
 --
 
 CREATE TABLE `post_comments` (
-  `cmt_id` int(11) NOT NULL,
+  `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
   `post_id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
   `content` text NOT NULL,
-  `last_change` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `last_change` date NOT NULL,
+  PRIMARY KEY (`cmt_id`),
+  KEY `post_comments_ibfk_1` (`student_id`),
+  KEY `post_comments_ibfk_2` (`post_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `post_comments`
+-- Đang đổ dữ liệu cho bảng `post_comments`
 --
 
 INSERT INTO `post_comments` (`cmt_id`, `post_id`, `student_id`, `content`, `last_change`) VALUES
@@ -179,7 +189,7 @@ INSERT INTO `post_comments` (`cmt_id`, `post_id`, `student_id`, `content`, `last
 -- --------------------------------------------------------
 
 --
--- Table structure for table `requestborrow`
+-- Cấu trúc bảng cho bảng `requestborrow`
 --
 
 CREATE TABLE `requestborrow` (
@@ -188,13 +198,14 @@ CREATE TABLE `requestborrow` (
   `request_day` date NOT NULL,
   `state` int(11) NOT NULL DEFAULT 0,
   `update_date` date DEFAULT NULL,
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `received_day` date DEFAULT NULL,
-  `returned_day` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `returned_day` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `requestborrow`
+-- Đang đổ dữ liệu cho bảng `requestborrow`
 --
 
 INSERT INTO `requestborrow` (`student_id`, `document_id`, `request_day`, `state`, `update_date`, `id`, `received_day`, `returned_day`) VALUES
@@ -208,11 +219,11 @@ INSERT INTO `requestborrow` (`student_id`, `document_id`, `request_day`, `state`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reviews`
+-- Cấu trúc bảng cho bảng `reviews`
 --
 
 CREATE TABLE `reviews` (
-  `review_id` int(11) NOT NULL,
+  `review_id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(1024) NOT NULL,
   `book_name` varchar(2048) NOT NULL,
   `book_author` varchar(2048) NOT NULL,
@@ -221,20 +232,30 @@ CREATE TABLE `reviews` (
   `image_url` varchar(512) DEFAULT NULL,
   `submit_date` date NOT NULL,
   `status` varchar(128) NOT NULL,
-  `student_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `student_id` int(11) NOT NULL,
+  PRIMARY KEY (`review_id`),
+  KEY `student_id` (`student_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `reviews`
+-- Đang đổ dữ liệu cho bảng `reviews`
 --
 
 INSERT INTO `reviews` (`review_id`, `title`, `book_name`, `book_author`, `summary`, `content`, `image_url`, `submit_date`, `status`, `student_id`) VALUES
-(1, 'Đây là tiêu đề bài review', 'Kỹ thuật lập trình', 'Nguyễn Trung Trực', 'Đây là tóm tắt bài review (tối đa 10000 kí tự)', 'Đây là nội dung bài review', 'https://lh3.googleusercontent.com/pw/ACtC-3fMzvqEVNMukfA8PA3KVxvfUWOBWImHMbiERBQcV3Io0HQvE4jxhlorn6udriwihN_ZbdXw-t8SCouZe_5aX-s_W9HiRQcidVf_aS1szGyvgGSkZMrMjaf4ZJ9v4Rl8YnTRU9YncgSqShlrjaIZowFnRg=w384-h576-no?authuser=0', '2023-12-01', 'Chấp nhận', 2000002);
+(1, 'Cấu trúc dữ liệu và giải thuật - Kiến thức nền cho ngành KHMT', 'Kỹ thuật lập trình', 'Nguyễn Trung Trực', 'Đây là tóm tắt bài review (tối đa 10000 kí tự)', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc non blandit massa enim. Ac orci phasellus egestas tellus rutrum tellus pellentesque eu. Sit amet consectetur adipiscing elit duis tristique sollicitudin. Ornare quam viverra orci sagittis eu. Luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor. Ultrices dui sapien eget mi proin. Cursus in hac habitasse platea. Accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu. Diam vel quam elementum pulvinar etiam non.\\n\nUt tellus elementum sagittis vitae et. Nulla pellentesque dignissim enim sit amet venenatis urna cursus eget. Nullam ac tortor vitae purus faucibus ornare. Dui ut ornare lectus sit amet. Libero nunc consequat interdum varius sit amet mattis vulputate enim. Sagittis vitae et leo duis ut. Enim sed faucibus turpis in. Purus viverra accumsan in nisl nisi scelerisque eu ultrices. At consectetur lorem donec massa sapien faucibus et molestie. Egestas maecenas pharetra convallis posuere. Interdum posuere lorem ipsum dolor.\\n\nQuam quisque id diam vel quam elementum pulvinar etiam non. Sed blandit libero volutpat sed. Aliquet enim tortor at auctor. Eu lobortis elementum nibh tellus molestie nunc. Leo in vitae turpis massa sed elementum tempus. Vitae justo eget magna fermentum iaculis eu non. Malesuada fames ac turpis egestas sed tempus urna et. In massa tempor nec feugiat nisl pretium fusce id. Pretium vulputate sapien nec sagittis aliquam malesuada bibendum. Tristique senectus et netus et malesuada fames ac turpis egestas. Risus nullam eget felis eget nunc lobortis. Tincidunt lobortis feugiat vivamus at augue eget arcu dictum varius. Cras sed felis eget velit aliquet sagittis.\\n\nEget duis at tellus at urna. Cras adipiscing enim eu turpis. A diam maecenas sed enim ut sem viverra aliquet. Enim neque volutpat ac tincidunt. Semper viverra nam libero justo laoreet sit amet cursus sit. Nulla aliquet porttitor lacus luctus accumsan. Potenti nullam ac tortor vitae purus faucibus. Eget mauris pharetra et ultrices neque ornare. Orci sagittis eu volutpat odio. Massa massa ultricies mi quis hendrerit dolor. Pellentesque id nibh tortor id aliquet. Lacus sed turpis tincidunt id aliquet. Justo eget magna fermentum iaculis. Vestibulum rhoncus est pellentesque elit ullamcorper. Lorem sed risus ultricies tristique. Habitasse platea dictumst vestibulum rhoncus est pellentesque elit ullamcorper. In ante metus dictum at tempor commodo ullamcorper.\\n\nAmet consectetur adipiscing elit duis tristique sollicitudin. Odio ut sem nulla pharetra. Varius vel pharetra vel turpis nunc eget lorem dolor. Ipsum dolor sit amet consectetur adipiscing elit duis tristique sollicitudin. Aliquam nulla facilisi cras fermentum odio eu. Egestas sed tempus urna et pharetra pharetra massa. Blandit massa enim nec dui nunc mattis enim. Faucibus nisl tincidunt eget nullam non nisi est. Vulputate dignissim suspendisse in est ante in. Arcu non odio euismod lacinia at quis. Arcu cursus euismod quis viverra. Ullamcorper malesuada proin libero nunc.', 'https://lh3.googleusercontent.com/pw/ACtC-3fMzvqEVNMukfA8PA3KVxvfUWOBWImHMbiERBQcV3Io0HQvE4jxhlorn6udriwihN_ZbdXw-t8SCouZe_5aX-s_W9HiRQcidVf_aS1szGyvgGSkZMrMjaf4ZJ9v4Rl8YnTRU9YncgSqShlrjaIZowFnRg=w384-h576-no?authuser=0', '2023-11-01', 'Chấp nhận', 2000002),
+(2, 'Kỹ thuật lập trình - Kiến thức nền cho ngành KHMT', 'Kỹ thuật lập trình', 'Nguyễn Trung Trực', 'Đây là tóm tắt bài review (tối đa 10000 kí tự)', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc non blandit massa enim. Ac orci phasellus egestas tellus rutrum tellus pellentesque eu. Sit amet consectetur adipiscing elit duis tristique sollicitudin. Ornare quam viverra orci sagittis eu. Luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor. Ultrices dui sapien eget mi proin. Cursus in hac habitasse platea. Accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu. Diam vel quam elementum pulvinar etiam non.\r\n\r\nUt tellus elementum sagittis vitae et. Nulla pellentesque dignissim enim sit amet venenatis urna cursus eget. Nullam ac tortor vitae purus faucibus ornare. Dui ut ornare lectus sit amet. Libero nunc consequat interdum varius sit amet mattis vulputate enim. Sagittis vitae et leo duis ut. Enim sed faucibus turpis in. Purus viverra accumsan in nisl nisi scelerisque eu ultrices. At consectetur lorem donec massa sapien faucibus et molestie. Egestas maecenas pharetra convallis posuere. Interdum posuere lorem ipsum dolor.', 'https://th.bing.com/th/id/R.6148bed16bbd11ac1a9fda2f8a324cd8?rik=6e%2bvwUG3bgHXOg&riu=http%3a%2f%2fwww.bgt.hcmut.edu.vn%2fimages%2fstories%2fvirtuemart%2fproduct%2fkien-truc-may-tinh.jpg&ehk=X%2bCyOmYr3%2fbV4AJwh7%2fEqhYABBdxGrYMhjYjC7t7dPI%3d&risl=&pid=ImgRaw&r=0', '2023-11-02', 'Chấp nhận', 2000003),
+(3, 'Ngày cuối cùng của một tử tù và lòng nhân đạo của Victor Hugo', 'Ngày cuối cùng của một tử tù', 'Victor Hugo', 'Ra đời vào năm 1829, không được đồ sộ cả về dung lượng lẫn hệ thống các sự kiện, nhân vật như những Thằng gù nhà thờ Đức bà Paris hay Những người khốn khổ song Ngày cuối cùng của một tử tù vẫn là tác phẩm hết sức tiêu biểu cho phong cách sáng tác và đặc biệt là tinh thần nhân đạo của nhà văn vĩ đại người Pháp Victor Hugo.', 'Ngày cuối cùng của một tử tù, tựa sách đã hé lộ phần nào nội dung tác phẩm: đây là câu chuyện kể về ngày cuối cùng trước khi bị mang lên máy chém của một phạm nhân khoảng bốn mươi tuổi. Trong thời gian đầu, người tử tù bị giam ở nhà ngục Bicetre. Tại đây, ông đã ghi lại tất cả những gì diễn ra trong hơn năm tuần ông bị giam giữ. Sau đó, ông được chuyển đến nhà ngục la Conciergerie và cuối cùng là từ nhà ngục Conciergerie trước khi tới đoạn đầu đài. Cuốn tiểu thuyết chỉ hơn 100 trang với nội dung gói gọn trọn một ngày nhưng đã chất chứa sức nặng vô hình trong giá trị nội dung lẫn giá trị tư tưởng mà Victor Hugo gửi gắm vào từng câu, từng chữ.', 'https://reviewsach.net/wp-content/uploads/2020/04/Ng%C3%A0y-cu%E1%BB%91i-c%C3%B9ng-c%E1%BB%A7a-m%E1%BB%99t-t%E1%BB%AD-t%C3%B9.jpg', '2023-11-11', 'Chấp nhận', 2000003),
+(4, 'Kỹ thuật lập trình - Kiến thức nền cho ngành KHMT', 'Kỹ thuật lập trình', 'Nguyễn Trung Trực', 'Đây là tóm tắt bài review (tối đa 10000 kí tự)', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc non blandit massa enim. Ac orci phasellus egestas tellus rutrum tellus pellentesque eu. Sit amet consectetur adipiscing elit duis tristique sollicitudin. Ornare quam viverra orci sagittis eu. Luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor. Ultrices dui sapien eget mi proin. Cursus in hac habitasse platea. Accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu. Diam vel quam elementum pulvinar etiam non.\r\n\r\nUt tellus elementum sagittis vitae et. Nulla pellentesque dignissim enim sit amet venenatis urna cursus eget. Nullam ac tortor vitae purus faucibus ornare. Dui ut ornare lectus sit amet. Libero nunc consequat interdum varius sit amet mattis vulputate enim. Sagittis vitae et leo duis ut. Enim sed faucibus turpis in. Purus viverra accumsan in nisl nisi scelerisque eu ultrices. At consectetur lorem donec massa sapien faucibus et molestie. Egestas maecenas pharetra convallis posuere. Interdum posuere lorem ipsum dolor.', 'https://th.bing.com/th/id/R.6148bed16bbd11ac1a9fda2f8a324cd8?rik=6e%2bvwUG3bgHXOg&riu=http%3a%2f%2fwww.bgt.hcmut.edu.vn%2fimages%2fstories%2fvirtuemart%2fproduct%2fkien-truc-may-tinh.jpg&ehk=X%2bCyOmYr3%2fbV4AJwh7%2fEqhYABBdxGrYMhjYjC7t7dPI%3d&risl=&pid=ImgRaw&r=0', '2023-11-15', 'Chấp nhận', 2000004),
+(5, 'Cấu trúc dữ liệu và giải thuật - Kiến thức nền cho ngành KHMT', 'Kỹ thuật lập trình', 'Nguyễn Trung Trực', 'Đây là tóm tắt bài review (tối đa 10000 kí tự)', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc non blandit massa enim. Ac orci phasellus egestas tellus rutrum tellus pellentesque eu. Sit amet consectetur adipiscing elit duis tristique sollicitudin. Ornare quam viverra orci sagittis eu. Luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor. Ultrices dui sapien eget mi proin. Cursus in hac habitasse platea. Accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu. Diam vel quam elementum pulvinar etiam non.\r\n\r\nUt tellus elementum sagittis vitae et. Nulla pellentesque dignissim enim sit amet venenatis urna cursus eget. Nullam ac tortor vitae purus faucibus ornare. Dui ut ornare lectus sit amet. Libero nunc consequat interdum varius sit amet mattis vulputate enim. Sagittis vitae et leo duis ut. Enim sed faucibus turpis in. Purus viverra accumsan in nisl nisi scelerisque eu ultrices. At consectetur lorem donec massa sapien faucibus et molestie. Egestas maecenas pharetra convallis posuere. Interdum posuere lorem ipsum dolor.', 'https://lh3.googleusercontent.com/pw/ACtC-3fMzvqEVNMukfA8PA3KVxvfUWOBWImHMbiERBQcV3Io0HQvE4jxhlorn6udriwihN_ZbdXw-t8SCouZe_5aX-s_W9HiRQcidVf_aS1szGyvgGSkZMrMjaf4ZJ9v4Rl8YnTRU9YncgSqShlrjaIZowFnRg=w384-h576-no?authuser=0', '2023-11-15', 'Chấp nhận', 2000005),
+(6, 'Kỹ thuật lập trình - Kiến thức nền cho ngành KHMT', 'Kỹ thuật lập trình', 'Nguyễn Trung Trực', 'Đây là tóm tắt bài review (tối đa 10000 kí tự)', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc non blandit massa enim. Ac orci phasellus egestas tellus rutrum tellus pellentesque eu. Sit amet consectetur adipiscing elit duis tristique sollicitudin. Ornare quam viverra orci sagittis eu. Luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor. Ultrices dui sapien eget mi proin. Cursus in hac habitasse platea. Accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu. Diam vel quam elementum pulvinar etiam non.\r\n\r\nUt tellus elementum sagittis vitae et. Nulla pellentesque dignissim enim sit amet venenatis urna cursus eget. Nullam ac tortor vitae purus faucibus ornare. Dui ut ornare lectus sit amet. Libero nunc consequat interdum varius sit amet mattis vulputate enim. Sagittis vitae et leo duis ut. Enim sed faucibus turpis in. Purus viverra accumsan in nisl nisi scelerisque eu ultrices. At consectetur lorem donec massa sapien faucibus et molestie. Egestas maecenas pharetra convallis posuere. Interdum posuere lorem ipsum dolor.', 'https://th.bing.com/th/id/R.6148bed16bbd11ac1a9fda2f8a324cd8?rik=6e%2bvwUG3bgHXOg&riu=http%3a%2f%2fwww.bgt.hcmut.edu.vn%2fimages%2fstories%2fvirtuemart%2fproduct%2fkien-truc-may-tinh.jpg&ehk=X%2bCyOmYr3%2fbV4AJwh7%2fEqhYABBdxGrYMhjYjC7t7dPI%3d&risl=&pid=ImgRaw&r=0', '2023-11-20', 'Từ chối', 2000002),
+(7, 'Cấu trúc dữ liệu và giải thuật - Kiến thức nền cho ngành KHMT', 'Kỹ thuật lập trình', 'Nguyễn Trung Trực', 'Đây là tóm tắt bài review (tối đa 10000 kí tự)', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc non blandit massa enim. Ac orci phasellus egestas tellus rutrum tellus pellentesque eu. Sit amet consectetur adipiscing elit duis tristique sollicitudin. Ornare quam viverra orci sagittis eu. Luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor. Ultrices dui sapien eget mi proin. Cursus in hac habitasse platea. Accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu. Diam vel quam elementum pulvinar etiam non.\r\n\r\nUt tellus elementum sagittis vitae et. Nulla pellentesque dignissim enim sit amet venenatis urna cursus eget. Nullam ac tortor vitae purus faucibus ornare. Dui ut ornare lectus sit amet. Libero nunc consequat interdum varius sit amet mattis vulputate enim. Sagittis vitae et leo duis ut. Enim sed faucibus turpis in. Purus viverra accumsan in nisl nisi scelerisque eu ultrices. At consectetur lorem donec massa sapien faucibus et molestie. Egestas maecenas pharetra convallis posuere. Interdum posuere lorem ipsum dolor.', 'https://lh3.googleusercontent.com/pw/ACtC-3fMzvqEVNMukfA8PA3KVxvfUWOBWImHMbiERBQcV3Io0HQvE4jxhlorn6udriwihN_ZbdXw-t8SCouZe_5aX-s_W9HiRQcidVf_aS1szGyvgGSkZMrMjaf4ZJ9v4Rl8YnTRU9YncgSqShlrjaIZowFnRg=w384-h576-no?authuser=0', '2023-11-30', 'Từ chối', 2000002),
+(8, 'Kỹ thuật lập trình - Kiến thức nền cho ngành KHMT', 'Kỹ thuật lập trình', 'Nguyễn Trung Trực', 'Đây là tóm tắt bài review (tối đa 10000 kí tự)', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc non blandit massa enim. Ac orci phasellus egestas tellus rutrum tellus pellentesque eu. Sit amet consectetur adipiscing elit duis tristique sollicitudin. Ornare quam viverra orci sagittis eu. Luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor. Ultrices dui sapien eget mi proin. Cursus in hac habitasse platea. Accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu. Diam vel quam elementum pulvinar etiam non.\r\n\r\nUt tellus elementum sagittis vitae et. Nulla pellentesque dignissim enim sit amet venenatis urna cursus eget. Nullam ac tortor vitae purus faucibus ornare. Dui ut ornare lectus sit amet. Libero nunc consequat interdum varius sit amet mattis vulputate enim. Sagittis vitae et leo duis ut. Enim sed faucibus turpis in. Purus viverra accumsan in nisl nisi scelerisque eu ultrices. At consectetur lorem donec massa sapien faucibus et molestie. Egestas maecenas pharetra convallis posuere. Interdum posuere lorem ipsum dolor.', 'https://th.bing.com/th/id/R.6148bed16bbd11ac1a9fda2f8a324cd8?rik=6e%2bvwUG3bgHXOg&riu=http%3a%2f%2fwww.bgt.hcmut.edu.vn%2fimages%2fstories%2fvirtuemart%2fproduct%2fkien-truc-may-tinh.jpg&ehk=X%2bCyOmYr3%2fbV4AJwh7%2fEqhYABBdxGrYMhjYjC7t7dPI%3d&risl=&pid=ImgRaw&r=0', '2023-11-30', 'Đang duyệt', 2000002),
+(9, 'Cấu trúc dữ liệu và giải thuật - Kiến thức nền cho ngành KHMT', 'Kỹ thuật lập trình', 'Nguyễn Trung Trực', 'Đây là tóm tắt bài review (tối đa 10000 kí tự)', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc non blandit massa enim. Ac orci phasellus egestas tellus rutrum tellus pellentesque eu. Sit amet consectetur adipiscing elit duis tristique sollicitudin. Ornare quam viverra orci sagittis eu. Luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor. Ultrices dui sapien eget mi proin. Cursus in hac habitasse platea. Accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu. Diam vel quam elementum pulvinar etiam non.\r\n\r\nUt tellus elementum sagittis vitae et. Nulla pellentesque dignissim enim sit amet venenatis urna cursus eget. Nullam ac tortor vitae purus faucibus ornare. Dui ut ornare lectus sit amet. Libero nunc consequat interdum varius sit amet mattis vulputate enim. Sagittis vitae et leo duis ut. Enim sed faucibus turpis in. Purus viverra accumsan in nisl nisi scelerisque eu ultrices. At consectetur lorem donec massa sapien faucibus et molestie. Egestas maecenas pharetra convallis posuere. Interdum posuere lorem ipsum dolor.', 'https://lh3.googleusercontent.com/pw/ACtC-3fMzvqEVNMukfA8PA3KVxvfUWOBWImHMbiERBQcV3Io0HQvE4jxhlorn6udriwihN_ZbdXw-t8SCouZe_5aX-s_W9HiRQcidVf_aS1szGyvgGSkZMrMjaf4ZJ9v4Rl8YnTRU9YncgSqShlrjaIZowFnRg=w384-h576-no?authuser=0', '2023-12-01', 'Đang duyệt', 2000001);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reviews_comments`
+-- Cấu trúc bảng cho bảng `reviews_comments`
 --
 
 CREATE TABLE `reviews_comments` (
@@ -242,115 +263,41 @@ CREATE TABLE `reviews_comments` (
   `student_id` int(11) NOT NULL,
   `review_id` int(11) NOT NULL,
   `cmt_content` varchar(10000) NOT NULL,
-  `cmt_datetime` datetime NOT NULL DEFAULT current_timestamp()
+  `cmt_datetime` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`cmt_id`),
+  KEY `student_id_FK` (`student_id`),
+  KEY `review_id_FK` (`review_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Indexes for dumped tables
+-- Đang đổ dữ liệu cho bảng `reviews_comments`
+--
+
+INSERT INTO `reviews_comments` (`cmt_id`, `student_id`, `review_id`, `cmt_content`, `cmt_datetime`) VALUES
+(1, 2000000, 1, 'I have to say this book was amazing. The author did a great job of explaining the concepts and applications of data structures and algorithms in a clear and engaging way. The book was full of examples, exercises, and tips that helped me understand and practice the topics. I learned a lot from this book, and I highly recommend it to anyone who wants to improve their coding skills and knowledge of DSA.', '2023-12-01 17:10:53'),
+(2, 2000001, 1, 'I have to say this book was amazing. The author did a great job of explaining the concepts and applications of data structures and algorithms in a clear and engaging way. The book was full of examples, exercises, and tips that helped me understand and practice the topics. I learned a lot from this book, and I highly recommend it to anyone who wants to improve their coding skills and knowledge of DSA.', '2023-12-01 18:10:53'),
+(3, 2000004, 1, 'This book is very clear, engaging and informative. The author did a great job of explaining the concepts and applications of data structures and algorithms. I learned a lot from the examples and exercises. This book is a must-read for anyone who wants to improve their coding skills and problem-solving abilities.', '2023-12-01 22:10:00'),
+(4, 2000006, 3, 'Quả là một cuốn sách có ý nghĩa. Tôi vô cùng xúc động khi đọc qua từng câu từ của tác phẩm này. Nhà văn Victor Hugo thực sự rất tài giỏi.', '2023-12-14 10:10:10');
+
+--
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Indexes for table `documents`
---
-ALTER TABLE `documents`
-  ADD PRIMARY KEY (`document_id`);
-
---
--- Indexes for table `members`
---
-ALTER TABLE `members`
-  ADD PRIMARY KEY (`student_id`),
-  ADD KEY `student_id` (`student_id`);
-
---
--- Indexes for table `posts`
---
-ALTER TABLE `posts`
-  ADD PRIMARY KEY (`post_id`),
-  ADD UNIQUE KEY `post_id` (`post_id`);
-
---
--- Indexes for table `post_comments`
---
-ALTER TABLE `post_comments`
-  ADD PRIMARY KEY (`cmt_id`),
-  ADD KEY `post_comments_ibfk_1` (`student_id`),
-  ADD KEY `post_comments_ibfk_2` (`post_id`);
-
---
--- Indexes for table `requestborrow`
---
-ALTER TABLE `requestborrow`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `reviews`
---
-ALTER TABLE `reviews`
-  ADD PRIMARY KEY (`review_id`),
-  ADD KEY `student_id` (`student_id`);
-
---
--- Indexes for table `reviews_comments`
---
-ALTER TABLE `reviews_comments`
-  ADD PRIMARY KEY (`cmt_id`),
-  ADD KEY `student_id_FK` (`student_id`),
-  ADD KEY `review_id_FK` (`review_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `documents`
---
-ALTER TABLE `documents`
-  MODIFY `document_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `posts`
---
-ALTER TABLE `posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `post_comments`
---
-ALTER TABLE `post_comments`
-  MODIFY `cmt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `requestborrow`
---
-ALTER TABLE `requestborrow`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT for table `reviews`
---
-ALTER TABLE `reviews`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `post_comments`
+-- Các ràng buộc cho bảng `post_comments`
 --
 ALTER TABLE `post_comments`
   ADD CONSTRAINT `post_comments_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `members` (`student_id`),
   ADD CONSTRAINT `post_comments_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`);
 
 --
--- Constraints for table `reviews`
+-- Các ràng buộc cho bảng `reviews`
 --
 ALTER TABLE `reviews`
   ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `members` (`student_id`);
 
 --
--- Constraints for table `reviews_comments`
+-- Các ràng buộc cho bảng `reviews_comments`
 --
 ALTER TABLE `reviews_comments`
   ADD CONSTRAINT `review_id_FK` FOREIGN KEY (`review_id`) REFERENCES `reviews` (`review_id`) ON DELETE CASCADE ON UPDATE CASCADE,
