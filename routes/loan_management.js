@@ -5,6 +5,7 @@ const path = require("path");
 
 // For manager
 loan_management_router.get("/manager/loanlist", loan_management_controller.getLoanList); 
+loan_management_router.get("/manager/loanHistory", loan_management_controller.getAdminLoanHistory); 
 loan_management_router.get("/manager/request/approve", loan_management_controller.approvereq);
 loan_management_router.get("/manager/request/deny", loan_management_controller.denyreq);
 loan_management_router.get("/manager/borrowlist", loan_management_controller.getBorrowList); 

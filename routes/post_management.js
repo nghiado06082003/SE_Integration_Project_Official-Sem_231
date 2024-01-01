@@ -8,7 +8,7 @@ const post_management = require('../controllers/post_management');
 post_management_router.get("", post_management_controller.getPostList);
 post_management_router.get("/detail", post_management_controller.getPost); 
 post_management_router.post("/new", post_management_controller.createPost); 
-post_management_router.get("/edit", post_management_controller.editPost);
+post_management_router.post("/edit", post_management_controller.editPost);
 post_management_router.get("/delete", post_management_controller.deletePost);
 
 // For comment 

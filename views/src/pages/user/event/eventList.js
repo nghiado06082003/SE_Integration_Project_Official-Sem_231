@@ -27,6 +27,7 @@ const Event = () => {
       .then((response) => {
         if (response.status === 200 && 'postList' in response.data) {
           setPost(JSON.parse(response.data.postList));
+          console.log(response.data.postList)
         }
       })
       .catch((error) => {

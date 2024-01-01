@@ -15,6 +15,10 @@ module.exports = {
         loan_model.getReturnList(res);
     },
 
+    getAdminLoanHistory: function (req, res){
+        loan_model.getLoanHistoryForAdmin(res);
+    },
+
     getLoanHistory: [authorization_model.loadCurMember, loan_model.getLoanHistory, function (req, res) {
         res.status(200).json({});
     }],

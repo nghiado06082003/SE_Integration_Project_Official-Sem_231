@@ -9,6 +9,7 @@ export default function EventCreation() {
   const [eventData, setEventData] = useState({
     eventTitle: '',
     description: '',
+    brief: '',
     image: null,
   });
 
@@ -30,7 +31,7 @@ export default function EventCreation() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("/api/post/new", {title: eventData.eventTitle, brief: eventData.description, content: eventData.description},{
+    axios.post("/api/post/new", {title: eventData.eventTitle, brief: eventData.brief, content: eventData.description, image_url: eventData.image},{
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -38,7 +39,7 @@ export default function EventCreation() {
       .then((response) => {
         if (response.status === 200 && '300' in response.data) {
           //đăng bài thành công
-          window.location.reload();
+          window.location.href="/admin/event-management";
         }
       })
       .catch((error) => {
@@ -47,7 +48,8 @@ export default function EventCreation() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto m-10 p-6 bg-blue-100 rounded-md shadow-md max-h-[70vh]">
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto m-10 p-6 bg-blue-100 rounded-md shadow-md max-h-[80vh]">
+      <h1 className="text-center font-bold mb-4 text-2xl">Tạo sự kiện mới</h1>
       <label htmlFor="eventTitle" className="block text-sm font-semibold text-gray-600">
         Tên sự kiện:
       </label>
@@ -61,6 +63,19 @@ export default function EventCreation() {
       /><br /><br />
 
       <label htmlFor="description" className="block text-sm font-semibold text-gray-600">
+        Tóm tắt sự kiện:
+      </label>
+      <textarea
+        id="brief"
+        name="brief"
+        value={eventData.brief}
+        onChange={handleInputChange}
+        rows="2"
+        cols="50"
+        className="w-full px-4 py-2 mt-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+      ></textarea><br /><br />
+
+      <label htmlFor="description" className="block text-sm font-semibold text-gray-600">
         Mô tả:
       </label>
       <textarea
@@ -68,12 +83,12 @@ export default function EventCreation() {
         name="description"
         value={eventData.description}
         onChange={handleInputChange}
-        rows="4"
+        rows="6"
         cols="50"
         className="w-full px-4 py-2 mt-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
       ></textarea><br /><br />
 
-      <label htmlFor="image" className="block text-sm font-semibold text-gray-600">
+      {/* <label htmlFor="image" className="block text-sm font-semibold text-gray-600">
         Hình ảnh:
       </label>
       <input
@@ -83,7 +98,22 @@ export default function EventCreation() {
         accept="image/*"
         onChange={handleImageChange}
         className="w-full px-4 py-2 mt-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-      /><br /><br />
+      /><br /><br /> */}
+      <label
+          htmlFor="image"
+          className="block text-sm font-semibold text-gray-600"
+        >
+          Link hình ảnh:
+        </label>
+        <input
+          type="text"
+          id="image"
+          name="image"
+          value={eventData.image}
+          onChange={handleInputChange}
+          className="w-full px-4 py-2 mt-1 mb-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+        /><br /><br />
+
 
       <button
         type="submit"
