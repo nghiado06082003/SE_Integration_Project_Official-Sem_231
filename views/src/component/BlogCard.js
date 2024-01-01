@@ -12,7 +12,7 @@ const BlogCard = ({ data }) => {
           >
             <img
               className="object-cover w-full rounded-t-lg h-100 md:h-auto md:w-60 md:rounded-none md:rounded-s-lg"
-              src={book}
+              src={item.image_url}
               alt="book"
             />
             <div className="flex flex-col justify-between p-4 leading-normal w-full">

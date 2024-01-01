@@ -31,6 +31,7 @@ import DonateManagement from "../../pages/admin/documentManagement/donateManagem
 import EventManagement from "../../pages/admin/eventManagement/eventManagement";
 import EventDetailManagement from "../../pages/admin/eventManagement/eventDetailManagement";
 import EventCreation from "../../pages/admin/eventManagement/eventCreation";
+import EventEdit from "../../pages/admin/eventManagement/eventEdit";
 
 import ForumManagement from "../../pages/admin/reviewManagement/forumManagement";
 import ReviewDetailManagement from "../../pages/admin/reviewManagement/ReviewDetailManagement";
@@ -91,6 +92,8 @@ export default function Router() {
         { path: "event-management", element: <EventManagement /> },
         { path: "event-management/detail/:id", element: <EventDetailManagement /> },
         { path: "event-management/create", element: <EventCreation /> },
+        { path: "event-management/edit/:id", element: <EventEdit /> },
+
         { path: "forum-management", element: <ForumManagement /> },
         { path: "forum-management/detail/:id", element: <ReviewDetailManagement /> },
         { path: "forum-management/edit/:review_id", element: <UpdateReview /> }

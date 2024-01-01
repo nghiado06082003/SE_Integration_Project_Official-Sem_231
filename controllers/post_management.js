@@ -15,9 +15,9 @@ module.exports = {
         res.status(200).json({});
     }],
 
-    editPost: function (req, res) {
-        post_model.editPost(req, res);
-    },
+    editPost: [authorization_model.loadCurMember, post_model.editPost, function (req, res) {
+        res.status(200).json({});
+    }],
 
     deletePost: function (req, res) {
         post_model.deletePost(req, res);

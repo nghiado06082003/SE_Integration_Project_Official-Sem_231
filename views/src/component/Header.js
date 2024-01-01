@@ -113,14 +113,14 @@ export default function Header() {
                             Lịch sử mượn
                           </Link>
                         </li>
-                        <li onClick={handleClick}>
+                        {/* <li onClick={handleClick}>
                           <Link
                             to="/contribute-history"
                             className="block px-4 py-1 text-gray-800 border-gray-100 hover:bg-transparent border-0 hover:text-primary-700"
                           >
                             Lịch sử quyên góp
                           </Link>
-                        </li>
+                        </li> */}
                         {isAdmin && (
                           <li onClick={handleClick}>
                             <Link
