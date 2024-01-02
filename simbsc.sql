@@ -196,7 +196,7 @@ CREATE TABLE `requestborrow` (
   `student_id` int(11) NOT NULL,
   `document_id` int(11) NOT NULL,
   `request_day` date NOT NULL,
-  `state` int(11) NOT NULL DEFAULT 0,
+  `status` int(11) NOT NULL DEFAULT 0,
   `update_date` date DEFAULT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `received_day` date DEFAULT NULL,
@@ -208,13 +208,17 @@ CREATE TABLE `requestborrow` (
 -- Đang đổ dữ liệu cho bảng `requestborrow`
 --
 
-INSERT INTO `requestborrow` (`student_id`, `document_id`, `request_day`, `state`, `update_date`, `id`, `received_day`, `returned_day`) VALUES
+INSERT INTO `requestborrow` (`student_id`, `document_id`, `request_day`, `status`, `update_date`, `id`, `received_day`, `returned_day`) VALUES
 (2000002, 1, '2023-12-05', 0, NULL, 6, NULL, NULL),
 (2000002, 5, '2023-12-01', 0, NULL, 7, NULL, NULL),
 (2000002, 3, '2023-12-01', 0, NULL, 8, NULL, NULL),
 (2000006, 9, '2023-12-01', 0, NULL, 9, NULL, NULL),
 (2000007, 6, '2023-12-01', 0, NULL, 10, NULL, NULL),
-(2000007, 3, '2023-12-01', 0, NULL, 11, NULL, NULL);
+(2000007, 3, '2023-12-01', 0, NULL, 11, NULL, NULL),
+(2000002, 1, 'NULL', 4, NULL, 12, '2023-12-12', NULL),
+(2000002, 3, 'NULL', 5, NULL, 13, '2023-12-10', NULL),
+(2000006, 1, '2023-12-17', 6, NULL, 14, '2023-12-11', NULL),
+(2000007, 3, '2023-12-18', 7, NULL, 15, '2023-12-10', NULL);
 
 -- --------------------------------------------------------
 
