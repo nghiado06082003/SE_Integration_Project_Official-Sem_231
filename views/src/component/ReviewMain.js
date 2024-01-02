@@ -1,7 +1,12 @@
 const ReviewMain = ({ item }) => {
   return (
     <div className="mb-10">
-      <h1 className='text-4xl font-semibold mb-2'>{item.title}</h1>
+      <div className="flex justify-between">
+        <h1 className='text-4xl font-semibold mb-2'>{item.title}</h1>
+        {item.status !== 'Chấp nhận' &&
+        <div className={`${item.status === 'Chờ duyệt' ? "text-yellow-400" : "text-red-400"} text-lg font-semibold`}>{item.status}</div>
+        }
+      </div>
       <h3 className='font-semibold mb-2'>Sách {item.book_name} - Tác giả: {item.book_author}</h3>
       <div className="flex items-center gap-3 mb-6">
         <img

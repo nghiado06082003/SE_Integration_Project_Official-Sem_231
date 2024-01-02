@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiMessageCircle } from 'react-icons/fi';
 
 const ReviewList = ({ data }) => {
   return (
@@ -14,7 +13,12 @@ const ReviewList = ({ data }) => {
               className='w-48'
             />
             <div className="grow flex flex-col ml-10">
-              <h3 className='font-semibold text-2xl'>{item.title}</h3>
+              <div className='flex justify-between'>
+                <h3 className='font-semibold text-2xl'>{item.title}</h3>
+                {item.status !== 'Chấp nhận' &&
+                <div className={`${item.status === 'Chờ duyệt' ? "text-yellow-400" : "text-red-400"}`}>{item.status}</div>
+                }
+              </div>
               <h3 className='font-semibold mb-2'>Sách {item.book_name} - Tác giả: {item.book_author}</h3>
               <div className="flex items-center gap-3 mb-4">
                 <img
@@ -27,12 +31,6 @@ const ReviewList = ({ data }) => {
                 </p>
               </div>
               <p className="grow text-gray-700 text-sm">{item.summary}</p>
-              <div className="mt-4">
-                {/* <div className="flex items-center mr-2 text-gray-700 text-sm mr-8">
-                  <FiMessageCircle className="w-4 h-4 mr-1" />
-                  <span>10</span>
-                </div> */}
-              </div>
             </div>
           </div>
         </Link>

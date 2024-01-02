@@ -53,7 +53,7 @@ function ReviewDetailManagement() {
   }, [id]);
   
   return (
-    <div className='px-0 sm:px-36 lg:px-60 xl:px-72 py-8 lg:py-10'>
+    <div className='w-full px-0 py-10 sm:px-36 lg:px-60 xl:px-72'>
       {review !== null ? <>
       <ReviewMain item={review} />
       <CommentReviewList review_id={id} />

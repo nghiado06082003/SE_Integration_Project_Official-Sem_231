@@ -87,7 +87,7 @@ const EventDetail = () => {
             src="https://www.whitmorerarebooks.com/pictures/medium/2465.jpg"
           />
           {postDetail.map((post) => (
-          <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+          <div key={post.post_id} className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <h2 className="text-sm title-font text-gray-500 tracking-widest">Date: {(post.create_date).substring(0, 10)}</h2>
             <h1 className="text-blue-900 text-3xl title-font font-medium mb-1">{post.title}</h1>
             <div className="flex mb-4">
@@ -105,9 +105,9 @@ const EventDetail = () => {
               <button onClick={handleLike} className={`rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4 ${heartColor}`}>
                 <svg
                 fill="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 className="w-5 h-5"
                 viewBox="0 0 24 24"
                 >
@@ -140,7 +140,7 @@ const EventDetail = () => {
           </button>
         </form>
             {comments.map((comment) => (
-          <article key={comment.id} className="p-6 text-base bg-white border-t border-gray-200 ">
+          <article key={comment.cmt_id} className="p-6 text-base bg-white border-t border-gray-200 ">
             <footer className="flex justify-between items-center mb-2">
               <div className="flex items-center">
                 <p className="inline-flex items-center mr-3 text-sm text-gray-900 font-semibold">
@@ -148,7 +148,7 @@ const EventDetail = () => {
                   {comment.student_name}
                 </p>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  <time pubdate datetime="2022-02-08" title="February 8th, 2022">{(comment.last_change).substring(0,10)}</time>
+                  <time dateTime="2022-02-08" title="February 8th, 2022">{(comment.last_change).substring(0,10)}</time>
                 </p>
               </div>
 

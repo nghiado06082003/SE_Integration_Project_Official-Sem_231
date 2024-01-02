@@ -12,6 +12,9 @@ import axios from "axios";
 
 export default function Profile() {
   const [user, setUser] = useState(null);
+  const [numOfReviews, setNumOfReviews] = useState(0);
+  // const [numOfBorrow, setNumOfBorrow] = useState(0);
+  const [errorMessage, setErrorMessage] = useState('');
   const cookies = new Cookies();
   const navigate = useNavigate();
   
@@ -25,8 +28,31 @@ export default function Profile() {
       navigate('/401');
     } else {
       setUser(info);
+      // Error: Cannot get borrowhistory so I just comment this
+      // axios.post("http://localhost:8080/api/loanManagement/customer/borrowhistory", {}, {
+      //     headers: {
+      //       Authorization: `Bearer ${token}`
+      //     }
+      //   })
+      //   .then((response) => {
+      //     // setNumOfBorrow(JSON.parse(response.data.borrowHistory));
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error!!!!!!", error);
+      //   });
+      axios
+        .post("http://localhost:8080/api/review/reviewListMember", {}, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        .then((response) => {
+          setNumOfReviews(response.data.reviewList.length);
+        })
+        .catch((error) => {
+          setErrorMessage(error.response?.data?.message ?? "Hệ thống gặp vấn đề. Vui lòng thử lại sau");
+        });
     }
-    // axios.get()
   }, []);
   if (!user) {
     return <></>;
@@ -57,19 +83,19 @@ export default function Profile() {
               <dt className=" font-medium leading-6 text-blue-700">Email: </dt>
               <dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">{user.email}</dd>
             </div>
+            {/*Not developed yet*/}
             {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className=" font-medium leading-6 text-blue-700">Số sách đã quyên góp: </dt>
               <Link to="#"><dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">1 <span className='text-blue-300'>(Click để xem chi tiết)</span></dd></Link>
             </div> */}
-            {/*Not developed yet*/}
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className=" font-medium leading-6 text-blue-700">Sách đang mượn: </dt>
               <Link to="/borrow-history"><dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">1 <span className='text-blue-300'>(Click để xem chi tiết)</span></dd></Link>
-            </div>
-            {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className=" font-medium leading-6 text-blue-700">Các chủ đề đã tạo: </dt>
-              <Link to="/review-history"><dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">1 <span className='text-blue-300'>(Click để xem chi tiết)</span></dd></Link>
             </div> */}
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className=" font-medium leading-6 text-blue-700">Các chủ đề đã tạo: </dt>
+              <Link to="/review-history"><dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">{numOfReviews} <span className='text-blue-300'>(Click để xem chi tiết)</span></dd></Link>
+            </div>
           </dl>
         </div>
       </div>

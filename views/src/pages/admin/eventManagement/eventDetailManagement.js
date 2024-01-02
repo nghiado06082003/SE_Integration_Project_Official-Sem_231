@@ -194,7 +194,7 @@ const EventDetailManagement = () => {
                   {comment.student_name}
                 </p>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  <time pubdate datetime="2022-02-08" title="February 8th, 2022">{(comment.last_change).substring(0,10)}</time>
+                  <time dateTime="2022-02-08" title="February 8th, 2022">{(comment.last_change).substring(0,10)}</time>
                 </p>
               </div>
 
