@@ -61,6 +61,7 @@ import axios from "axios";
   export default function MemberManagement() {
 
     const [people, setPeople] = useState([]);
+    const [reload, setReload] = useState(0);
 
     useEffect(() => {
       axios.get("http://localhost:8080/api/userManagement")
@@ -72,14 +73,14 @@ import axios from "axios";
       .catch((error) => {
         console.error("Error!!!!!!", error);
       });
-    }, []);
+    }, [reload]);
 
     const block = (id, value) => {
       axios.get("http://localhost:8080/api/userManagement/block", {params: {id: id, value: value}})
       .then((response) => {
+        setReload(prevReload => prevReload + 1);
         if (response.status === 200 && response.data.code === 300) {
           //block/unblock thành công
-          window.location.reload();
         }
       })
       .catch((error) => {
@@ -111,6 +112,7 @@ import axios from "axios";
                 <p className="text-sm font-semibold leading-6 text-gray-900">{person.student_name}</p>
                 <p className="mt-1 truncate text-xs leading-5 text-gray-500">{person.email}</p>
                 <p className="text-sm leading-6 text-gray-900">{person.permission}</p>
+                <p className="text-sm leading-6 text-gray-900">{person.state}</p>
               </div>
             </div>
             <div className="hidden shrink-0 sm:flex sm:flex-row sm:items-end">
