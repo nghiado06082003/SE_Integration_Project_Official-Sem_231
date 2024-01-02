@@ -5,49 +5,57 @@
  * ở dưới sẽ có những thống kê như số lượng sách viết đã quyên góp, ấn vào nó sẽ hiện danh sách
  * số lượng bài review/topic đã tạo, ấn vào nó sẽ hiện danh sách, ấn vào 1 dòng trong danh sách nó sẽ ra cái bài review/topic chi tiết trong forum
  */
-// import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-// import Cookies from 'universal-cookie';
-// import axios from "axios";
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+import axios from "axios";
 
 export default function Profile() {
-  // const [user, setUser] = useState(null);
-  // const cookies = new Cookies();
+  const [user, setUser] = useState(null);
+  const cookies = new Cookies();
+  const navigate = useNavigate();
   
-  // useEffect(() => {
-  //   const token = cookies.get("TOKEN");
-  //   const info = cookies.get("info");
-  //   if (!token || !info) {
-  //     setUser(null);
-  //     cookies.remove("TOKEN", { path: "/" });
-  //     cookies.remove("info", { path: "/" });
-  //     window.location.assign('/');
-  //   } else {
-  //     setUser(info);
-  //   }
-  //   axios.get()
-  // }, []);
+  useEffect(() => {
+    const token = cookies.get("TOKEN");
+    const info = cookies.get("info");
+    if (!token || !info) {
+      setUser(null);
+      cookies.remove("TOKEN", { path: "/" });
+      cookies.remove("info", { path: "/" });
+      navigate('/401');
+    } else {
+      setUser(info);
+    }
+    // axios.get()
+  }, []);
+  if (!user) {
+    return <></>;
+  }
   
   return (
     <div className='flex flex-grow justify-center '>
       <div className='flex flex-row gap-20'>
         <div className="mt-6 border-t border-gray-100">
           <dl className="divide-y divide-gray-100 border border-gray-300 px-10 rounded-xl bg-blue-100">
-            <div class="py-8 px-8 max-w-sm bg-blue-100 rounded-xl  space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6">
-                  <img class="block mx-auto h-24 rounded-full sm:mx-0 sm:shrink-0" src="https://tailwindcss.com/img/erin-lindford.jpg" alt="Woman's Face"/>
+            <div className="py-8 px-8 w-full space-y-2 sm:py-4 sm:flex sm:justify-center sm:items-center sm:space-y-0 sm:space-x-6">
+              <img 
+                className="block mx-auto w-24 h-24 object-cover rounded-full sm:mx-0 sm:shrink-0"
+                src={user.avatar_url}
+                alt="Student Avatar"
+              />
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className=" font-medium leading-6 text-blue-700">Họ và Tên: </dt>
-              <dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">Nguyễn Văn A</dd>
+              <dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">{user.student_name}</dd>
               
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className=" font-medium leading-6 text-blue-700">MSSV: </dt>
-              <dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">2110000</dd>
+              <dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">{user.student_id}</dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className=" font-medium leading-6 text-blue-700">Email: </dt>
-              <dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">abc@hcmut.edu.vn</dd>
+              <dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">{user.email}</dd>
             </div>
             {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className=" font-medium leading-6 text-blue-700">Số sách đã quyên góp: </dt>
@@ -58,14 +66,13 @@ export default function Profile() {
               <dt className=" font-medium leading-6 text-blue-700">Sách đang mượn: </dt>
               <Link to="/borrow-history"><dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">1 <span className='text-blue-300'>(Click để xem chi tiết)</span></dd></Link>
             </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className=" font-medium leading-6 text-blue-700">Các chủ đề đã tạo: </dt>
               <Link to="/review-history"><dd className="mt-1  leading-6 text-blue-500 sm:col-span-2 sm:mt-0">1 <span className='text-blue-300'>(Click để xem chi tiết)</span></dd></Link>
-            </div>
+            </div> */}
           </dl>
         </div>
       </div>
-      
     </div>
-  )
+  );
 }
