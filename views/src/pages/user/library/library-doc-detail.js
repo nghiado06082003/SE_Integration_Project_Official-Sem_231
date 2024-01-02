@@ -9,9 +9,29 @@ const token = cookies.get("TOKEN");
 
 export default function LibDocDetail() {
   const { document_id } = useParams();
-  
+  const [authorized, setAuthorized] = useState(false);
+  const cookies = new Cookies();
+  const token = cookies.get("TOKEN");
+  const info = cookies.get("info");
+
   const [selectedDoc, setSelectedDoc] = useState({});
   useEffect(() => {
+    if (!token || !info) {
+      cookies.remove("TOKEN", { path: "/" });
+      cookies.remove("info", { path: "/" });
+    }
+    axios
+      .post('http://localhost:8080/api/authorization/collab', {}, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((response) => {
+        setAuthorized(true);
+      })
+      .catch((error) => {
+        setAuthorized(false);
+      });
     axios
       .get("http://localhost:8080/api/documentManagement/detail", {
         params: {
@@ -25,40 +45,36 @@ export default function LibDocDetail() {
         console.error("Error!!!!!!", error);
       });
   }, []);
-  
+
   if (!selectedDoc) {
     return <div>Document not found</div>;
   }
 
-  const requestLoan = (book_id) => { 
-    axios.post("http://localhost:8080/api/loanManagement/customer/loanrequest", {book_id: book_id}, {
+  const requestLoan = (book_id) => {
+    axios.post("http://localhost:8080/api/loanManagement/customer/loanrequest", { book_id: book_id }, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
-    .then((response) => {
-      if (response.status === 200 && '300' in response.data) {
-        window.location.reload();
-      }
-    })
-    .catch((error) => {
-      console.error("Error!!!!!!", error);
-    });
+      .then((response) => {
+        if (response.status === 200 && '300' in response.data) {
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        console.error("Error!!!!!!", error);
+      });
   }
-  
+
   return (
     <div className="container mx-auto mt-6 p-8 rounded max-w-5xl">
       <div className="flex mx-4">
-        <div className="mr-2">
-          <button className="flex items-center bg-primary-500 text-white px-4 py-2 rounded">
-            <FaDownload className="mr-2" /> Download
+        {authorized && (<div className="mr-2">
+          <button className="flex items-center bg-primary-500 text-white px-4 py-2 rounded" onClick={() => requestLoan(selectedDoc.document_id)}>
+            <FaBook className="mr-2" /> Đăng ký mượn
           </button>
-        </div>
-        <div className="">
-          <button className="flex items-center bg-primary-500 text-white px-4 py-2 rounded" onClick={()=>requestLoan(selectedDoc.document_id)}>
-            <FaBook className="mr-2" /> Register Loan
-          </button>
-        </div>
+        </div>)}
+
       </div>
       <div>
         <div className="flex mx-4 my-4">
