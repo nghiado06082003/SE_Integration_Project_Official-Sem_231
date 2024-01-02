@@ -30,7 +30,7 @@ export default function EventCreation() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("/api/post/new", {title: eventData.eventTitle, brief: eventData.description, content: eventData.description},{
+    axios.post("http://localhost:8080/api/post/new", {title: eventData.eventTitle, brief: eventData.description, content: eventData.description},{
       headers: {
         Authorization: `Bearer ${token}`
       }

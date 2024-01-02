@@ -13,7 +13,7 @@ export default function LibDocDetail() {
   const [selectedDoc, setSelectedDoc] = useState({});
   useEffect(() => {
     axios
-      .get("/api/documentManagement/detail", {
+      .get("http://localhost:8080/api/documentManagement/detail", {
         params: {
           document_id: parseInt(document_id),
         },
@@ -31,7 +31,7 @@ export default function LibDocDetail() {
   }
 
   const requestLoan = (book_id) => { 
-    axios.post("/api/loanManagement/customer/loanrequest", {book_id: book_id}, {
+    axios.post("http://localhost:8080/api/loanManagement/customer/loanrequest", {book_id: book_id}, {
       headers: {
         Authorization: `Bearer ${token}`
       }

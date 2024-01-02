@@ -63,7 +63,7 @@ import axios from "axios";
     const [people, setPeople] = useState([]);
 
     useEffect(() => {
-      axios.get("/api/userManagement")
+      axios.get("http://localhost:8080/api/userManagement")
       .then((response) => {
         if (response.status === 200 && 'userList' in response.data) {
           setPeople(JSON.parse(response.data.userList));
@@ -75,7 +75,7 @@ import axios from "axios";
     }, []);
 
     const block = (id, value) => {
-      axios.get("/api/userManagement/block", {params: {id: id, value: value}})
+      axios.get("http://localhost:8080/api/userManagement/block", {params: {id: id, value: value}})
       .then((response) => {
         if (response.status === 200 && response.data.code === 300) {
           //block/unblock thành công
@@ -88,7 +88,7 @@ import axios from "axios";
     };
 
     const changeRole = (role, id) => {
-      axios.get("/api/userManagement/permission", {params: {id: id, role: role}})
+      axios.get("http://localhost:8080/api/userManagement/permission", {params: {id: id, role: role}})
       .then((response) =>{
         if (response.status === 200 && response.data.code === 300){
           //thay đổi quyền thành công

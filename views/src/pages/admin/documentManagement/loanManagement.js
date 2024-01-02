@@ -17,7 +17,7 @@ const BorrowRequestsTable = () => {
     const [borrowRequests, setBorrowRequest] = useState([]);
 
     useEffect(() => {
-      axios.get("/api/loanManagement/manager/loanlist")
+      axios.get("http://localhost:8080/api/loanManagement/manager/loanlist")
       .then((response) => {
         if (response.status === 200 && 'loanList' in response.data) {
           setBorrowRequest(JSON.parse(response.data.loanList));
@@ -29,7 +29,7 @@ const BorrowRequestsTable = () => {
     }, []);
 
     const approve = (id) => {
-      axios.get("/api/loanManagement/manager/request/approve", {params: {id: id}})
+      axios.get("http://localhost:8080/api/loanManagement/manager/request/approve", {params: {id: id}})
       .then((response) => {
         if (response.status === 200 && '300' in response.data) {
           //phê duyệt request thành công
@@ -42,7 +42,7 @@ const BorrowRequestsTable = () => {
     };
   
     const deny = (id) => {
-      axios.get("/api/loanManagement/manager/request/deny", {params: {id: id}})
+      axios.get("http://localhost:8080/api/loanManagement/manager/request/deny", {params: {id: id}})
       .then((response) => {
         if (response.status === 200 && '300' in response.data) {
           //từ chối request thành công
@@ -97,7 +97,7 @@ const BorrowedBooksTable = () => {
     const [borrowedBooks, setBorrowBook] = useState([]);
 
     useEffect(() => {
-      axios.get("/api/loanManagement/manager/borrowlist")
+      axios.get("http://localhost:8080/api/loanManagement/manager/borrowlist")
       .then((response) => {
         if (response.status === 200 && 'borrowList' in response.data) {
           setBorrowBook(JSON.parse(response.data.borrowList));
@@ -150,7 +150,7 @@ const ReturnRequestsTable = () => {
     const [returnRequests, setReturnRequest] = useState([]);
 
     useEffect(() => {
-      axios.get("/api/loanManagement/manager/returnlist")
+      axios.get("http://localhost:8080/api/loanManagement/manager/returnlist")
       .then((response) => {
         if (response.status === 200 && 'returnList' in response.data) {
           setReturnRequest(JSON.parse(response.data.returnList));
@@ -162,7 +162,7 @@ const ReturnRequestsTable = () => {
     }, []);
 
     const accept = (id) => {
-      axios.get("/api/loanManagement/manager/request/accept", {params: {id: id}})
+      axios.get("http://localhost:8080/api/loanManagement/manager/request/accept", {params: {id: id}})
       .then((response) => {
         if (response.status === 200 && '300' in response.data) {
           //phê duyệt request thành công
@@ -175,7 +175,7 @@ const ReturnRequestsTable = () => {
     };
   
     const fine = (id) => {
-      axios.get("/api/loanManagement/manager/request/fine", {params: {id: id}})
+      axios.get("http://localhost:8080/api/loanManagement/manager/request/fine", {params: {id: id}})
       .then((response) => {
         if (response.status === 200 && '300' in response.data) {
           //phạt request thành công

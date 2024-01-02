@@ -8,7 +8,7 @@ export default function BorrowHistory() {
   const [borrowHistory, setBorrowHistory] = useState([]);
   
   useEffect(() => {
-    axios.post("/api/loanManagement/customer/borrowhistory", {}, {
+    axios.post("http://localhost:8080/api/loanManagement/customer/borrowhistory", {}, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -24,7 +24,7 @@ export default function BorrowHistory() {
   }, []);
 
   const requestReturn = (id, book_id, status) => {
-    axios.post("/api/loanManagement/customer/returnrequest", {id: id, book_id: book_id, status: status}, {
+    axios.post("http://localhost:8080/api/loanManagement/customer/returnrequest", {id: id, book_id: book_id, status: status}, {
       headers: {
         Authorization: `Bearer ${token}`
       }
